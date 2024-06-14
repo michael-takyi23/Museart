@@ -50,11 +50,15 @@ body {
 }
 
 .text-white {
-    color: #fff !important;
+    color: #130101 !important;
 }
 
 .border-white {
-    border: 1px solid white !important;
+    border: 1px solid rgb(7, 0, 0) !important;
+}
+
+.bg-black {
+    background: blue!important;
 }
 
 /* -------------------------------- Media Queries */
