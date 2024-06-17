@@ -6,8 +6,8 @@ body {
     background: url('../../media/artimon1 Small.jpeg') no-repeat center center fixed;
     background-size: cover;
     height: calc(100vh - 164px);
-    color: #ddd; 
-    font-family: 'Arial', sans-serif;
+    color: rgb(255, 255, 0); 
+    font-family: 'Roboto', sans-serif;
 }
 
 .icon {
@@ -20,7 +20,15 @@ body {
 
 .logo-font {
     text-transform: none;
-    text-transform: lowercase;
+    text-transform: uppercase;
+}
+
+.fa-user, .fa-shopping-bag {
+    color: hsl(0, 0%, 0%);
+}
+
+.my-0 {
+    color: yellow;
 }
 
 .main-logo-link {
@@ -28,14 +36,13 @@ body {
 }
 
 .shop-now-button {
-    background: #3498db; 
-    color: white; 
+    background: #040000; 
+    color: rgb(255, 255, 255); 
     min-width: 260px;
 }
 
 .btn-white {
-    background: #3498db;
-    color: white; 
+    background: #000000; 
 }
 
 .shop-now-button:hover,
@@ -49,15 +56,15 @@ body {
 }
 
 .text-white {
-    color: #130101 !important;
+    color: #000000 !important;
 }
 
 .border-white {
-    border: 1px solid #130101 !important; 
+    border: 1px solid rgb(248, 45, 0) !important; 
 }
 
 .bg-black {
-    background: black !important;
+    background: #ffcc02eb !important;
 }
 
 /* -------------------------------- Media Queries */
