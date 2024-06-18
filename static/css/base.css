@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background: url('../../media/artimon1 Small.jpeg') no-repeat center center fixed;
+    background: url('../../media/artimon.jpg') no-repeat center center fixed;
     background-size: cover;
     height: calc(100vh - 164px);
     color: rgb(255, 255, 0); 
@@ -24,15 +24,19 @@ body {
 }
 
 .fa-user, .fa-shopping-bag {
-    color: hsl(0, 0%, 0%);
+    color: hsla(304, 100%, 50%, 0.907);
 }
 
 .my-0 {
-    color: yellow;
+    color: rgb(0, 242, 255);
 }
 
 .main-logo-link {
     width: 100%;
+}
+
+strong {
+    color:rgb(255, 0, 128);
 }
 
 .shop-now-button {
@@ -64,7 +68,7 @@ body {
 }
 
 .bg-black {
-    background: #ffcc02eb !important;
+    background: #f0d05deb !important;
 }
 
 /* -------------------------------- Media Queries */
