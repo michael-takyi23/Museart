@@ -1,0 +1,23 @@
+[
+    {
+        "model": "products.product",
+        "pk": 1,
+        "fields": {
+            "name": "Product A",
+            "description": "This is a sample product.",
+            "price": 29.99,
+            "category": 1
+        }
+    },
+    {
+        "model": "products.product",
+        "pk": 2,
+        "fields": {
+            "name": "Product B",
+            "description": "Another sample product.",
+            "price": 19.99,
+            "category": 2
+        }
+    }
+    
+]

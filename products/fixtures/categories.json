@@ -1,0 +1,18 @@
+[
+    {
+        "model": "products.category",
+        "pk": 1,
+        "fields": {
+            "name": "Paintings",
+            "description": "This is Category A."
+        }
+    },
+    {
+        "model": "products.category",
+        "pk": 2,
+        "fields": {
+            "name": "Drawings",
+            "description": "This is Category B."
+        }
+    }
+]
