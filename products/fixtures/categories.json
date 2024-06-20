@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "Paintings",
-            "description": "This is Category A."
+            "description": "This is Paintings Category."
         }
     },
     {
@@ -12,7 +12,7 @@
         "pk": 2,
         "fields": {
             "name": "Drawings",
-            "description": "This is Category B."
+            "description": "This is Drawings Category."
         }
     }
 ]
