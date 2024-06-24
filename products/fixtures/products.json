@@ -3,11 +3,11 @@
         "model": "products.product",
         "pk": 1,
         "fields": {
-            "image": "painting_2.jpg",
             "name": "Victory",
             "description": "Victory in the midst of chaos",
             "price": 29.99,
-            "category": 1
+            "category": 1,
+            "image": "painting_2.jpg"
         }
     },
     {
@@ -18,7 +18,7 @@
             "description": "When life gift you freinds",
             "price": 19.99,
             "category": 2,
-            "image": "media/painting_2"
+            "image": "painting_2"
         }
     }
     

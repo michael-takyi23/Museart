@@ -4,6 +4,10 @@ from django.db import models
 # Product
 
 class Category(models.Model):
+
+    class Meta:
+        verbose_name_plural = 'Categories'
+        
     name = models.CharField(max_length=254)
     description = models.TextField()
 
