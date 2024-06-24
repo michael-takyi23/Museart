@@ -7,7 +7,7 @@
             "description": "Victory in the midst of chaos",
             "price": 29.99,
             "category": 1,
-            "image": "painting_2.jpg"
+            "image": "painting_1.jpg"
         }
     },
     {
@@ -15,10 +15,10 @@
         "pk": 2,
         "fields": {
             "name": "Solitude in friendship",
-            "description": "When life gift you freinds",
+            "description": "When life gift you friends",
             "price": 19.99,
             "category": 2,
-            "image": "painting_2"
+            "image": "painting_2.jpg"
         }
     }
     
