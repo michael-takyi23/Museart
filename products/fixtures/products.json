@@ -21,7 +21,6 @@
             "image": "painting_2.jpg"
         }
     },
-    
     {
         "model": "products.product",
         "pk": 2,
@@ -33,7 +32,6 @@
             "image": "painting_3.jpg"
         }
     },
-
     {
         "model": "products.product",
         "pk": 2,

@@ -10,16 +10,33 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="overlay"></div>
+<div class="container-fluid">
     <div class="row">
-        {% for product in products %}
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                    {% elif product.image_url %}
-                        <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
-                    {% endif %}
+        <div class="col text-center mt-3">
+            <h2 class="logo-font">Browse Artworks
+                <hr class="w-50 mb-1">  
+            </h2>
+        </div>
+            <div class="row">
+                <div class="product-container col-10 ofset-1">
+                    <div class="row mt-1 mb-2"></div>
+                    <div class="row">
+                        {% for products in product %}
+                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                            <div class="card h-100 border-0"></div>
+                                {% if product.image %}
+                                <a href="">
+                                    <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                </a>
+                                {% else %}
+                                <a href="">
+                                    <img class="card-img-top img-fluid" src="{{ Media_url }}" alt="{{ product.name }}">
+                                </a>
+                                {% endif %}
+                        </div>
+                    </div>
+                    
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
