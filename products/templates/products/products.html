@@ -4,21 +4,28 @@
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
-            <div class="col">
-                <h2 class="col-12 text-center">
-                    Products
-                </h2>
-            </div>
+            <div class="col"></div>
         </div>
     </div>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                {{ products }}
+<div class="container">
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% elif product.image_url %}
+                        <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text"><strong>Price: </strong>${{ product.price }}</p>
+                    </div>
+                </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
-{% endblock %}
