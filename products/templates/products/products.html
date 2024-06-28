@@ -14,35 +14,70 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col text-center mt-3">
-            <h2 class="logo-font">Browse Artworks
+            <h2 class="logo-font">All Products
                 <hr class="w-50 mb-1">  
             </h2>
         </div>
-            <div class="row">
-                <div class="product-container col-10 ofset-1">
-                    <div class="row mt-1 mb-2"></div>
-                    <div class="row">
-                        {% for products in product %}
-                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                            <div class="card h-100 border-0"></div>
-                                {% if product.image %}
-                                <a href="">
-                                    <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
-                                </a>
-                                {% else %}
-                                <a href="">
-                                    <img class="card-img-top img-fluid" src="{{ Media_url }}" alt="{{ product.name }}">
-                                </a>
-                                {% endif %}
+    </div>
+    <div class="row">
+        <div class="product-container col-10 offset-1">
+            <div class="row mt-1 mb-2">
+                {% for product in products %}
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card h-100 border-0">
+                        {% if product.image %}
+                        <a href="">
+                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </a>
+                        {% else %}
+                        <a href="">
+                            <img class="card-img-top img-fluid" src="{{ Media_url }}" alt="{{ product.name }}">
+                        </a>
+                        {% endif %}
+                        <div class="card-body pb-1">
+                            <p class="card-title">{{ product.name }}</p>
+                        </div>
+                        <div>
+                            <p class="card-text">{{ product.description }}</p>
+                        </div>
+                        <div class="card-footer bg-white pt-0 border-0 text-left">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead mb-0 text-left font-weight-bold"><strong>Price: </strong>${{ product.price }}</p>
+                                    {% if product.rating %}
+                                        <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                                    {% else %}
+                                        <small class="text-muted">No Rating</small>
+                                    {% endif %}    
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
-                        <p class="card-text"><strong>Price: </strong>${{ product.price }}</p>
-                    </div>
                 </div>
+
+                <div class="col-12 d-sm-none mb-5">
+                    <hr>
+                </div>
+                
+                {% if forloop.counter|divisibleby:2 %} 
+                    <div class="col-12 d-none d-sm-block d-md-block d-lg-block mb-5">
+                        <hr>
+                    </div>
+                {% endif %}
+
+                {% if forloop.counter|divisibleby:3 %} 
+                    <div class="col-12 d-none d-lg-block d-xl-none mb-5">
+                        <hr>
+                    </div>
+                {% endif %}
+
+                {% if forloop.counter|divisibleby:4 %} 
+                    <div class="col-12 d-none d-xl-block mb-5">
+                        <hr>
+                    </div>
+                {% endif %}
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
     </div>
+</div>
