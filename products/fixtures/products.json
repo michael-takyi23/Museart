@@ -17,32 +17,30 @@
             "name": "Solitude in friendship",
             "description": "When life gift you friends",
             "price": 19.99,
-            "category": 2,
+            "category": 1,
             "image": "painting_2.jpg"
         }
     },
     {
         "model": "products.product",
-        "pk": 2,
+        "pk": 3,
         "fields": {
             "name": "Social Mask",
             "description": "This art piece is a reflection of how most humans present themselves in public",
             "price": 29.99,
-            "category": 2,
+            "category": 1,
             "image": "painting_3.jpg"
         }
     },
     {
         "model": "products.product",
-        "pk": 2,
+        "pk": 4,
         "fields": {
             "name": "Journey into the Unknown",
             "description": "This art piece represents survival in chaos",
             "price": 19.99,
-            "category": 2,
-            "image": "painting_2.jpg"
+            "category": 1,
+            "image": "painting_4.jpg"
         }
     }
-
-    
 ]

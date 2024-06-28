@@ -68,7 +68,17 @@ strong {
 }
 
 .bg-black {
-    background: #f0d05deb !important;
+    background: #ffe100eb !important;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: rgb(255, 255, 255);
+    z-index: -1;
 }
 
 /* -------------------------------- Media Queries */
