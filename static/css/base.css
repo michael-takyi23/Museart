@@ -19,7 +19,6 @@ body {
 }
 
 .logo-font {
-    text-transform: none;
     text-transform: uppercase;
 }
 
@@ -36,7 +35,7 @@ body {
 }
 
 strong {
-    color:rgb(255, 0, 128);
+    color: rgb(255, 0, 128);
 }
 
 .shop-now-button {
@@ -47,6 +46,7 @@ strong {
 
 .btn-white {
     background: #000000; 
+    color: rgb(255, 255, 255);
 }
 
 .shop-now-button:hover,
