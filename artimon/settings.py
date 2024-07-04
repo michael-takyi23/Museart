@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import os
+import dj_database_url
+if os.path.isfile("env.py"): import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$7_jz6y9m(y16nn)mst_(&8&j(@nh)1)42y5_x2v26#=wl+p+6'
+SECRET_KEY = 'tIzKCCwzfnuxTw3tZh8cMsam0tXBzK5eDzvzsJv1n5dVryABSpp5WerrAlLrQsdG5k8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-michaeltakyi2-artimonv1-9vbkifxuo1n.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = ['artimon.herokuapp.com', '8000-michaeltakyi2-artimonv1-9vbkifxuo1n.ws.codeinstitute-ide.net']
+
 
 
 # Application definition
@@ -36,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage'
     'django.contrib.staticfiles',
+    'cloudinary'
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -106,11 +112,9 @@ WSGI_APPLICATION = 'artimon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
 
@@ -151,10 +155,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = 'media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStor age'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
