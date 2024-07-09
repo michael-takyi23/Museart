@@ -1,0 +1,117 @@
+html {
+    height: 100%;
+}
+
+body {
+    background: url('../../media/artimon.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: calc(100vh - 164px);
+    color: rgb(255, 255, 0); 
+    font-family: 'Roboto', sans-serif;
+}
+
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.logo-font {
+    text-transform: uppercase;
+}
+
+.fa-user, .fa-shopping-bag {
+    color: hsla(304, 100%, 50%, 0.907);
+}
+
+.my-0 {
+    color: rgb(0, 242, 255);
+}
+
+.main-logo-link {
+    width: 100%;
+}
+
+strong {
+    color: rgb(255, 0, 128);
+}
+
+.shop-now-button {
+    background: #040000; 
+    color: rgb(255, 255, 255); 
+    min-width: 260px;
+}
+
+.btn-white {
+    background: #000000; 
+    color: rgb(255, 255, 255);
+}
+
+.shop-now-button:hover,
+.shop-now-button:active,
+.shop-now-button:focus,
+.btn-white:hover,
+.btn-white:active,
+.btn-white:focus {
+    background: #f1c40f; 
+    color: black;
+}
+
+.text-white {
+    color: #000000 !important;
+}
+
+.border-white {
+    border: 1px solid rgb(248, 45, 0) !important; 
+}
+
+.bg-black {
+    background: #ffe100eb !important;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: rgb(255, 255, 255);
+    z-index: -1;
+}
+
+/* -------------------------------- Media Queries */
+
+/* Slightly smaller container on xl screens */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 90%;
+  }
+}
+
+/* fixed bottom navbar only on medium and up */
+@media (min-width: 992px) {
+    .fixed-top-desktop-only {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .header-container {
+        padding-bottom: 164px;
+    }
+}
+
+/* pad the top a bit when navbar is collapsed on mobile */
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 116px;
+    }
+
+    body {
+        height: calc(100vh - 116px);
+    }
+}
