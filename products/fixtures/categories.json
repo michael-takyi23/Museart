@@ -14,5 +14,13 @@
             "name": "Drawings",
             "description": "This is Drawings Category."
         }
+    },
+    {
+        "model": "products.category",
+        "pk": 3,
+        "fields": {
+            "name": "Sculptures",
+            "description": "This is Sculptures Category."
+        }
     }
 ]

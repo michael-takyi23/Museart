@@ -81,6 +81,12 @@ strong {
     z-index: -1;
 }
 
+a.cat-badge > span.badge:hover {
+    background: #040000 !important;
+    color: #fff !important;
+}
+
+
 /* -------------------------------- Media Queries */
 
 /* Slightly smaller container on xl screens */
