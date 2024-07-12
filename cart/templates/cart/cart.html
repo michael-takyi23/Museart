@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    <div class="container mb-3">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h1 class="logo-font text-dark mb-3">Shopping Cart</h1>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% if orders %}
+                    <ul>
+                        {% for order in orders %}
+                            <li>{{ order.product.name }} - Quantity: {{ order.quantity }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p>Total Quantity: {{ total_quantity }}</p>
+                    <p>Total Price: {{ total_price }}</p>
+                    <a href="{% url 'checkout' %}" class="btn btn-primary">Checkout</a>
+                {% else %}
+                    <p class="lead text-muted mb-5">Your cart is empty.</p>
+                    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-3 btn-lg">
+                        <span class="icon"><i class="fas fa-chevron-left"></i></span>
+                        <span class="text-uppercase text-black">Continue Shopping</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
