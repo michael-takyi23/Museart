@@ -7,27 +7,26 @@
             <div class="dropdown-menu border-0" aria-labelledby="all-products-link">
                 <a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-item">By Price</a>
                 <a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a>
-                <a href="{% url 'products' %}" class="dropdown-item">All Products</a>
+                <a href="{% url 'products' %}?products=painting,drawing,sculpture,all-products" class="dropdown-item">All Products</a>
             </div>
         </li>
 
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-black" href="#" id="specials-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-black" href="#" id="categories-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Categories
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="specials-link">
-                <a href="{% url 'products' %}?category=paintings" class="dropdown-item">Paintings</a>
-                <a href="{% url 'products' %}?category=drawings" class="dropdown-item">Drawings</a>
-                <a href="{% url 'products' %}?category=sculptures" class="dropdown-item">Sculptures</a>
-                <a href="{% url 'products' %}?category=paintings,drawings,sculptures" class="dropdown-item">All Categories</a>
+            <div class="dropdown-menu border-0" aria-labelledby="categories-link">
+                <a href="{% url 'products' %}?product=painting" class="dropdown-item">Painting</a>
+                <a href="{% url 'products' %}?category=drawing" class="dropdown-item">Drawing</a>
+                <a href="{% url 'products' %}?category=sculpture" class="dropdown-item">Sculpture</a>
             </div>
         </li>
 
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-black" href="#" id="specials-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-black" href="#" id="special-offers-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Special Offers
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="specials-link">
+            <div class="dropdown-menu border-0" aria-labelledby="special-offers-link">
                 <a href="{% url 'products' %}?category=new_arrivals" class="dropdown-item">New Arrivals</a>
                 <a href="{% url 'products' %}?category=deals" class="dropdown-item">Deals</a>
                 <a href="{% url 'products' %}?category=clearance" class="dropdown-item">Clearance</a>
@@ -36,10 +35,10 @@
         </li>
 
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-black" href="#" id="specials-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-black" href="#" id="gallery-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Gallery
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="specials-link">
+            <div class="dropdown-menu border-0" aria-labelledby="gallery-link">
                 <a href="" class="dropdown-item">Artist Profiles</a>
                 <a href="" class="dropdown-item">Artworks</a>
             </div>
