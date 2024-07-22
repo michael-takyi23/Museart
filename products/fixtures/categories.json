@@ -11,8 +11,8 @@
         "model": "products.category",
         "pk": 2,
         "fields": {
-            "name": "Drawings",
-            "description": "This is Drawings Category."
+            "name": "Design",
+            "description": "This is Design Category."
         }
     },
     {
