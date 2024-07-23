@@ -1,0 +1,14 @@
+asgiref==3.8.1
+cloudinary==1.40.0
+dj-database-url==2.2.0
+dj3-cloudinary-storage==0.0.6
+Django==3.2.25
+django-allauth==0.63.3
+django-money==3.5.2
+gunicorn==22.0.0
+pillow==10.4.0
+psycopg2-binary==2.9.9
+py-moneyed==3.0
+pytz==2024.1
+sqlparse==0.5.0
+urllib3==1.26.15
