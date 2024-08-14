@@ -111,6 +111,18 @@ a.cat-badge > span.badge:hover {
     cursor: pointer;
 }
 
+.btn-red {
+    background-color: #FF0000; 
+    color: #ffffff; 
+    border-color: #CC0000; 
+}
+
+.btn-red:hover {
+    background-color: black; 
+    border-color: #A00000; 
+}
+
+
 /* -------------------------------- Media Queries */
 
 /* Slightly smaller container on xl screens */

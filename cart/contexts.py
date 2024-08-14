@@ -10,13 +10,13 @@ def cart_contents(request):
     total = 0
     product_count = 0
 
-    for item_id, quantity in cart.items():
+    for item_id, item_data in cart.items():
         product = get_object_or_404(Product, pk=item_id)
-        total += quantity * product.price
-        product_count += quantity
+        total += item_data * product.price
+        product_count += item_data
         cart_items.append({
             'item_id': item_id,
-            'quantity': quantity,
+            'quantity': item_data,
             'product': product,
         })
 
