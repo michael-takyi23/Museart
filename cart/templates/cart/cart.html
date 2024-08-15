@@ -47,6 +47,20 @@
                                         <p class="my-0">€{{ item.product.price }}</p>
                                     </td>
                                     <td class="p-3 w-25">
+                                        <form class="form modify-form" method="POST" action="" >
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input class="form-control form-control-sm qty_input" type="number" 
+                                                        name="quantity" value="{{ item.quantity }}" min="1" max="99" 
+                                                        data-item_id="{{ item.item_id }}" 
+                                                        id="id_qty_{{ item.item_id }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <a class="update-link text-info float-right"><small>Update</small></a>
+                                        <a class="remove-item text-danger float-left" id="remove_{{ item.item_id }}"><small>Remove</small></a>
                                         <p class="my-0">{{ item.product.quantity }}</p>
                                     </td>
                                     <td class="p-3">
@@ -83,3 +97,34 @@
         </div>
     </div>
 {% endblock %}
+
+{% block postloaddjs %}
+{{ block.super }}
+{% include 'products/include/quantity_input_script.html' %}
+
+<script type="text/javascript">
+    // Quantity update
+    $('.update-link').click(function (e) {
+        var form = $(this).prev('.update-form');
+        form.submit();
+    });
+
+    // Remove Item
+$('.remove-item').click(function (e) {
+    e.preventDefault();
+    var csrfToken = "{{ csrf_token }}";
+    var itemId = $(this).attr('id').split('remove_')[1]; 
+    var url = `/cart/remove/${itemId}`; 
+
+    $.post(url, {
+        csrfmiddlewaretoken: csrfToken 
+    })
+    .done(function() { 
+        location.reload(); 
+    })
+    .fail(function() { // Optional: Handle any errors
+        alert('Error removing item. Please try again.');
+    });
+});
+</script>
+{% endblock%}
