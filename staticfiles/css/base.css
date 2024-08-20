@@ -49,6 +49,19 @@ strong {
     color: rgb(255, 255, 255);
 }
 
+.btn-outline-black {
+    background: white;
+    color: black !important; /* use important to override link colors for <a> elements */
+    border: 1px solid black;
+}
+
+.btn-outline-black:hover,
+.btn-outline-black:active,
+.btn-outline-black:focus {
+    background: black;
+    color: white !important;
+}
+
 .shop-now-button:hover,
 .shop-now-button:active,
 .shop-now-button:focus,
@@ -80,6 +93,37 @@ strong {
     background: rgb(255, 255, 255);
     z-index: -1;
 }
+
+a.cat-badge > span.badge:hover {
+    background: #040000 !important;
+    color: #fff !important;
+}
+
+.btt-btn {
+    height: 42px;
+    width: 42px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.btt-link,
+.update-link,
+.remove-item {
+    cursor: pointer;
+}
+
+.btn-red {
+    background-color: #FF0000; 
+    color: #ffffff; 
+    border-color: #CC0000; 
+}
+
+.btn-red:hover {
+    background-color: black; 
+    border-color: #A00000; 
+}
+
 
 /* -------------------------------- Media Queries */
 
