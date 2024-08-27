@@ -46,10 +46,11 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'djmoney',
     'home',
     'products',
-    'djmoney',
     'cart',
+    'checkout',
 ]
 
 MIDDLEWARE = [
