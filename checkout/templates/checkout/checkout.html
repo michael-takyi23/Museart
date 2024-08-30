@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cart_tools %}
+{% load crispy_forms_tags %} 
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h1 class="logo-font text-dark mb-3">Shopping Cart</h1>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 order-lg-last-mb-5">
+                <p class="text-muted">Order Summary {{{ product_count }}}</p>
+                <div class="row">
+                    <div class="col-7 offset-2">
+                        <p class="mb-2 mt-0 small text-muted">Item</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        <p class="mb-2 mt-0 small text-muted">Subtotal</p>
+                    </div>
+                </div>
+                {% for item in cart_items %}
+                <div class="row">
+                    <div class="clo-2 mb-1">
+                        <a href="{% url 'product_detail' item.product.id %}">
+                            {% if item.product.image %}
+                            <img class="w-100" src="{{item.product.image.url }}" alt="{{ product.name }}">
+                            {% else%}
+                            <img class="w-100" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                    <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                </div>
+                <div class="col-3 text-right">
+                    <p class="my-0 small text-muted">€{{ item.product.price | calc_sunbtotal:item.quantity}}</p>
+                </div>
+                {% endfor %}
+                <hr class="my-0">
+                <div class="row text-black text-right">
+                    <div class="col-7 offset-2">
+                        <p class="my-0">Order Total</p>
+                        <p class="my-0">Delivery</p>
+                        <p class="my-0">Grand Total</p>
+                    </div>
+                    <div class="col-3">
+                        <p class="my-0">€{{ total | floatformat:2 }}</p>
+                        <p class="my-0">€{{ delivery | floatformat:2 }}</p>
+                        <p class="my-0"><strong>€{{ grand_total | floatformat:2 }}</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                <p>Please fill out the form below to complete your order</p>
+
+                <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+                    {% csrf_token %}
+                    
+                    <!-- Details Fieldset -->
+                    <fieldset class="border p-4 mb-4">
+                        <legend class="w-auto">Details</legend>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.full_name|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.email|as_crispy_field }}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Delivery Fieldset -->
+                    <fieldset class="border p-4 mb-4">
+                        <legend class="w-auto">Delivery</legend>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.phone_number|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.country|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.postcode|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.town_or_city|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                {{ form.street_address1|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                {{ form.street_address2|as_crispy_field }}
+                            </div>
+                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="save-info" name="save_info">
+                                <label class="form-check-label" for="save-info">Save this information for next time</label>
+                            </div>
+                        {% else %}
+                            <p class="mt-3">Already have an account? <a href="{% url 'account_login' %}">Log in</a> or <a href="{% url 'account_signup' %}">Sign up</a>.</p>
+                        {% endif %}
+                    </fieldset>
+
+                    <!-- Payment Information Fieldset -->
+                    <fieldset class="border p-4 mb-4">
+                        <legend class="w-auto">Payment Information</legend>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <div id="card-element" class="form-control">
+                                    <!-- Stripe Card Element will be inserted here. -->
+                                </div>
+                                <div id="card-errors" role="alert" class="text-danger mt-2"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 d-flex justify-content-between align-items-center">
+                                <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary">Back to Cart</a>
+                                <button type="submit" class="btn btn-primary w-50 ml-2">Pay</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 text-center">
+                                <small class="text-muted">By clicking "Pay", your card will be charged.</small>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe('{{ stripe_public_key }}');
+    var elements = stripe.elements();
+    var card = elements.create('card');
+    card.mount('#card-element');
+
+    card.on('change', function(event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', result.token.id);
+                form.appendChild(hiddenInput);
+
+                form.submit();
+            }
+        });
+    });
+</script>
+{% endblock %}

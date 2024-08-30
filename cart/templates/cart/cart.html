@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cart_tools %}
 
 {% block page_header %}
     <div class="container header-container">
@@ -15,7 +16,7 @@
         <div class="row">
             <div class="col">
                 <hr>
-                <h1 class="logo-font text-dark mb-3">Shopping Cart</h1>
+                <h1 class="logo-font text-dark mb-3">Checkout</h1>
                 <hr>
             </div>
         </div>
@@ -82,7 +83,7 @@
                                     <span class="icon"><i class="fas fa-chevron-left"></i></span>
                                     <span class="text-uppercase text-black">Continue Shopping</span>
                                 </a>
-                                <a href="" class="btn btn-lg rounded-0">
+                                <a href="{% url 'checkout' %}" class="btn btn-lg rounded-0">
                                     <span class="icon"><i class="fas fa-lock"></i> </span>
                                     <span class="text-uppercase">Checkout</span>
                                 </a>
