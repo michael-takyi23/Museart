@@ -46,7 +46,6 @@ def checkout(request):
                 messages.error(request, "Your card was declined. Please try again.")
             except Exception as e:
                 messages.error(request, f"An error occurred during checkout: {e}")
-                # Optionally, log the error or take other actions as needed
 
     else:
         form = OrderForm()

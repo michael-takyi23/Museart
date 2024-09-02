@@ -68,4 +68,4 @@ def confirm_order(request):
     # Clear the cart after order confirmation
     request.session['cart'] = {}
     messages.success(request, 'Order confirmed successfully!')
-    return redirect('order_confirmation_page')  # Replace with the actual URL where you want to redirect the user
+    return redirect('order_confirmation_page')

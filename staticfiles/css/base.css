@@ -124,6 +124,17 @@ a.cat-badge > span.badge:hover {
     border-color: #A00000; 
 }
 
+.message-container {
+    margin-top: 100px;
+}
+
+.toast-container {
+    bottom: 20px;
+    right: 20px;
+    position: fixed;
+}
+
+
 
 /* -------------------------------- Media Queries */
 
