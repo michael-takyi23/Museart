@@ -1,8 +1,10 @@
 asgiref==3.8.1
 cloudinary==1.40.0
+crispy-bootstrap4==2024.1
+crispy-bootstrap5==2024.2
 dj-database-url==2.2.0
 dj3-cloudinary-storage==0.0.6
-Django==3.2.25
+Django==5.1
 django-allauth==0.63.3
 django-crispy-forms==2.3
 django-money==3.5.2

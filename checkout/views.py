@@ -10,6 +10,16 @@ from cart.contexts import cart_contents
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def checkout(request):
+    cart = request.session.get('cart', {})
+    if not cart:
+        messages.error(request, "There is nothing in your cart at the moment")
+        return redirect(reverse('products'))
+
+    # Ensure that cart_items is initialized before any operation
+    cart_items = cart_contents(request)['cart_items']
+    for item in cart_items:
+        item['subtotal'] = item['product'].price * item['quantity']
+
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -18,14 +28,12 @@ def checkout(request):
                     order = form.save(commit=False)
                     order.save()
 
-                    # order line items from the cart
-                    cart_items = cart_contents(request)['cart_items']
                     for item in cart_items:
                         OrderLineItem.objects.create(
                             order=order,
                             product=item['product'],
                             quantity=item['quantity'],
-                            lineitem_total=item['total']
+                            lineitem_total=item['subtotal']
                         )
 
                     # Stripe Payment
@@ -52,7 +60,9 @@ def checkout(request):
 
     context = {
         'form': form,
+        'cart_items': cart_items,
         'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
     }
 
-    return render(request, 'checkout/checkout.html', context)
+    template = 'checkout/checkout.html'
+    return render(request, template, context)

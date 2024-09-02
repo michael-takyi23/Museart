@@ -22,9 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+# DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = ['artimon.herokuapp.com', '8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net']
+
+
+CSRF_TRUSTED_ORIGINS = ['https://8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net']
 
 
 
@@ -48,6 +52,7 @@ INSTALLED_APPS = [
     'products',
     'cart',
     'crispy_forms',
+    'crispy_bootstrap5',
     'checkout',
 
 ]
@@ -65,7 +70,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'artimon.urls'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 TEMPLATES = [
     {
