@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret_key')
 # DEBUG = os.getenv('DEBUG', 'False') == 'True'
 DEBUG = True
 
-ALLOWED_HOSTS = ['artimon.herokuapp.com', '8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = ['8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'artimon-aabcae13027f.herokuapp.com']
 
 
 CSRF_TRUSTED_ORIGINS = ['https://8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net']
