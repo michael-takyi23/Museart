@@ -1,6 +1,6 @@
 import stripe
 from django.conf import settings
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db import transaction
 from .forms import OrderForm
@@ -66,3 +66,8 @@ def checkout(request):
 
     template = 'checkout/checkout.html'
     return render(request, template, context)
+
+def order_confirmation(request, order_number):
+    order = get_object_or_404(Order, order_number=order_number)
+    return render(request, 'checkout/order_confirmation.html', {'order': order})
+
