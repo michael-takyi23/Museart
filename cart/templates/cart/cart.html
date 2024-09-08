@@ -105,25 +105,24 @@
 
 <script type="text/javascript">
     // Quantity update
-    $('.update-link').click(function (e) {
-        var form = $(this).prev('.update-form');
-        form.submit();
-    });
+$('.update-link').click(function(e) {
+    var form = $(this).prev('.update-form');
+    form.submit();
+});
 
     // Remove Item
-$('.remove-item').click(function (e) {
+$('.remove-item').click(function(e) {
     e.preventDefault();
     var csrfToken = "{{ csrf_token }}";
     var itemId = $(this).attr('id').split('remove_')[1]; 
+    var size = $(this).data('product_size')
     var url = `/cart/remove/${itemId}`; 
+    var data = {'csrfmiddlewaretoken': csrfTokren, 'product_size': size};
 
-    $.post(url, {
-        csrfmiddlewaretoken: csrfToken 
-    })
-    .done(function() { 
+    $.post(url, {csrfmiddlewaretoken: csrfToken })
+     .done(function() { 
         location.reload(); 
-    })
-    .fail(function() { // Optional: Handle any errors
+    }).fail(function() { // Optional: Handle any errors
         alert('Error removing item. Please try again.');
     });
 });
