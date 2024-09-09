@@ -1,80 +1,59 @@
+// Initialize Stripe with your publishable key
+const stripe = Stripe('{{ stripe_public_key }}');
+
+// Set up Stripe Elements to use in checkout form, passing the client secret obtained in a previous step
 const options = {
-    clientSecret: '{{CLIENT_SECRET}}',
-    // Fully customizable with appearance API.
-    appearance: {/*...*/},
-  };
-  
-  // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in a previous step
-  const elements = stripe.elements(options);
-  
-  // Create and mount the Payment Element
-  const paymentElement = elements.create('payment');
-  paymentElement.mount('#payment-element');
+    clientSecret: '{{ CLIENT_SECRET }}',  // Replace with the actual client secret from your server
+    appearance: {/* Customize appearance if needed */}
+};
 
+// Initialize Elements
+const elements = stripe.elements(options);
 
-  const form = document.getElementById('payment-form');
+// Create and mount the Payment Element (this is where card details will be entered)
+const paymentElement = elements.create('payment');
+paymentElement.mount('#payment-element');
 
-  form.addEventListener('submit', async (event) => {
+// Handle form submission
+const form = document.getElementById('payment-form');
+form.addEventListener('submit', async (event) => {
     event.preventDefault();
-  
+
+    // Confirm the payment with Stripe
     const {error} = await stripe.confirmPayment({
-      //`Elements` instance that was used to create the Payment Element
-      elements,
-      confirmParams: {
-        return_url: '',
-      },
+        elements,
+        confirmParams: {
+            return_url: '{{ products_url }}', 
     });
-  
+
     if (error) {
-      // This point will only be reached if there is an immediate error when
-      // confirming the payment. Show error to your customer (for example, payment
-      // details incomplete)
-      const messageContainer = document.querySelector('#error-message');
-      messageContainer.textContent = error.message;
-    } else {
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
+        // Display error message to user
+        const messageContainer = document.querySelector('#error-message');
+        messageContainer.textContent = error.message;
     }
-  });  
-
-  // Initialize Stripe.js using your publishable key
-const stripe = Stripe('pk_test_51PtPrjRubKr5m7viDvbcqb8zGN6FrxJTuVwxlqbE3cgxxyj5495FpMv2KCscybX2PslQ0ZPgFfZlMalgnshau1Zw00hRD5nPKT');
-
-// Retrieve the "payment_intent_client_secret" query parameter appended to
-// your return_url by Stripe.js
-const clientSecret = new URLSearchParams(window.location.search).get(
-  'payment_intent_client_secret'
-);
-
-// Retrieve the PaymentIntent
-stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
-  const message = document.querySelector('#message')
-
-  // Inspect the PaymentIntent `status` to indicate the status of the payment
-  // to your customer.
-  //
-  // Some payment methods will [immediately succeed or fail][0] upon
-  // confirmation, while others will first enter a `processing` state.
-  //
-  // [0]: https://stripe.com/docs/payments/payment-methods#payment-notification
-  switch (paymentIntent.status) {
-    case 'succeeded':
-      message.innerText = 'Success! Payment received.';
-      break;
-
-    case 'processing':
-      message.innerText = "Payment processing. We'll update you when payment is received.";
-      break;
-
-    case 'requires_payment_method':
-      message.innerText = 'Payment failed. Please try another payment method.';
-      // Redirect your user back to your payment page to attempt collecting
-      // payment again
-      break;
-
-    default:
-      message.innerText = 'Something went wrong.';
-      break;
-  }
 });
+
+// Optional: If handling a redirection after a successful payment, use this to retrieve and show payment intent status
+const clientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
+
+if (clientSecret) {
+    stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
+        const message = document.querySelector('#message');
+        switch (paymentIntent.status) {
+            case 'succeeded':
+                message.innerText = 'Success! Payment received.';
+                break;
+            case 'processing':
+                message.innerText = "Payment processing. We'll update you when payment is received.";
+                break;
+            case 'requires_payment_method':
+                message.innerText = 'Payment failed. Please try another payment method.';
+                break;
+            default:
+                message.innerText = 'Something went wrong.';
+                break;
+        }
+    });
+}
+
+
