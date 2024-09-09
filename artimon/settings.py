@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'artimon-aabcae13027f.herokuapp.com']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net']
+CSRF_TRUSTED_ORIGINS = ['https://8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'artimon-aabcae13027f.herokuapp.com']
 
 
 
@@ -160,7 +160,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -180,8 +179,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # If using Cloudinary
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-# STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 # Default primary key field type
 
