@@ -167,15 +167,15 @@ Artimon is deployed on **Heroku** with a PostgreSQL database for production. Sta
 
 ## Acknowledgement 
 
-Django: The powerful web framework that served as the foundation of this project.
-Stripe: For providing the secure payment gateway integration.
-Bootstrap: The responsive front-end framework that helped with the layout and design of the platform.
-Crispy Forms: For making form rendering easier and more elegant within Django templates.
-Cloudinary: For handling image and static file management seamlessly in the cloud.
-FontAwesome: For providing high-quality icons used across the website.
-Code Institute: For their support and the resources provided during the development of Artimon.
-Heroku: For providing hosting and deployment support for Artimon.
-ChatGPT: This README and various technical solutions throughout the project were enhanced using ChatGPT, a large language model trained by OpenAI, for brainstorming, code suggestions, and guidance.
+1. Django: The powerful web framework that served as the foundation of this project.
+2. Stripe: For providing the secure payment gateway integration.
+3. Bootstrap: The responsive front-end framework that helped with the layout and design of the platform.
+4. Crispy Forms: For making form rendering easier and more elegant within Django templates.
+5. Cloudinary: For handling image and static file management seamlessly in the cloud.
+6. FontAwesome: For providing high-quality icons used across the website.
+7. Code Institute: For their support and the resources provided during the development of Artimon.
+8. Heroku: For providing hosting and deployment support for Artimon.
+9. ChatGPT: This README and various technical solutions throughout the project were enhanced using ChatGPT, a large language model trained by OpenAI, for brainstorming, code suggestions, and guidance.
 
 
 ## Contributing
