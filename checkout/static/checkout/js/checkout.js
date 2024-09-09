@@ -23,8 +23,7 @@ form.addEventListener('submit', async (event) => {
     const {error} = await stripe.confirmPayment({
         elements,
         confirmParams: {
-            return_url: '{{ return_url }}',  // Define where the user should be redirected after payment
-        },
+            return_url: '{{ products_url }}', 
     });
 
     if (error) {
@@ -56,3 +55,5 @@ if (clientSecret) {
         }
     });
 }
+
+

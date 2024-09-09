@@ -25,7 +25,7 @@
 
 ## Project Overview
 
-Artimon was developed to provide art lovers with a platform where they can easily browse and purchase art in a secure, user-friendly environment. It allows users to create accounts, log in, and securely pay for items in their shopping cart using integrated payment solutions. Users can also view their purchase history and read about various artists and their work.
+Artimon was developed to provide art lovers with a platform where they can easily browse and purchase art in a secure, user-friendly environment. It allows users to create accounts, log in, and securely pay for items in their shopping cart using integrated payment solutions. Users can also view their purchase history and read about various artists and their work. Note, this project is still under improvement due to time and other meassures beyond my control. after assessment I am going to greatly enhance the platform and its features. 
 
 ## Features
 
@@ -35,9 +35,9 @@ Artimon was developed to provide art lovers with a platform where they can easil
 
 2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](media/pl-artimon.png)
 
-3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information.![User-Aunth](media/pl-artimon.png)
-4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](media/pl-artimon.png)
-5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.
+3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information.
+4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](media/spc-1-artimon.png)
+5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.![checkout-payment](media/chckout-artimon1.png) ![checkout-payment](media/chckout-artimon2.png)
 6. **Order History**: Logged-in users can view their previous orders and access detailed information about past purchases.
 7. **Artist Information**: Users can learn more about the artists behind each piece of work, with dedicated sections to showcase their biographies and stories.
 
@@ -56,7 +56,7 @@ Artimon was developed to provide art lovers with a platform where they can easil
 ## Technologies Used
 
 - **Front-End**:
-  - HTML5
+  - HTML
   - CSS (custom styling and Bootstrap 4 for responsive design)
   - JavaScript (Stripe integration)
   - Font Awesome (for icons)
@@ -164,6 +164,20 @@ Artimon is deployed on **Heroku** with a PostgreSQL database for production. Sta
    git push heroku main
    ```
 
+
+## Acknowledgement 
+
+Django: The powerful web framework that served as the foundation of this project.
+Stripe: For providing the secure payment gateway integration.
+Bootstrap: The responsive front-end framework that helped with the layout and design of the platform.
+Crispy Forms: For making form rendering easier and more elegant within Django templates.
+Cloudinary: For handling image and static file management seamlessly in the cloud.
+FontAwesome: For providing high-quality icons used across the website.
+Code Institute: For their support and the resources provided during the development of Artimon.
+Heroku: For providing hosting and deployment support for Artimon.
+ChatGPT: This README and various technical solutions throughout the project were enhanced using ChatGPT, a large language model trained by OpenAI, for brainstorming, code suggestions, and guidance.
+
+
 ## Contributing
 
 If you’d like to contribute to Artimon, please fork the repository and create a pull request with your changes. All contributions are welcome!
@@ -174,4 +188,4 @@ This project is licensed under the MIT License.
 
 ---
 
-Artimon is a platform where the love for art and technology come together to provide users with a seamless and secure shopping experience. Thank you for visiting!
+Artimon is a platform where the love for art and technology come together to provide users with a seamless and secure shopping experience. Thank you for visiting more improvements in the future!
