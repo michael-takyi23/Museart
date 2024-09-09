@@ -28,7 +28,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'artimon-aabcae13027f.herokuapp.com']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'artimon-aabcae13027f.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'https://artimon-aabcae13027f.herokuapp.com']
 
 
 
