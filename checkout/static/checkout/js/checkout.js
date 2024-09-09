@@ -1,10 +1,10 @@
 // Initialize Stripe with your publishable key
 const stripe = Stripe('{{ stripe_public_key }}');
 
-// Set up Stripe Elements to use in checkout form, passing the client secret obtained in a previous step
+// Set up Stripe Elements to use in the checkout form, passing the client secret obtained in a previous step
 const options = {
     clientSecret: '{{ CLIENT_SECRET }}',  // Replace with the actual client secret from your server
-    appearance: {/* Customize appearance if needed */}
+    appearance: {} // Add appearance customization if needed, currently set to default
 };
 
 // Initialize Elements
@@ -20,10 +20,11 @@ form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     // Confirm the payment with Stripe
-    const {error} = await stripe.confirmPayment({
+    const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-            return_url: '{{ products_url }}', 
+            return_url: '{{ products_url }}',  // URL to redirect to after the payment
+        },
     });
 
     if (error) {
@@ -37,7 +38,7 @@ form.addEventListener('submit', async (event) => {
 const clientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
 
 if (clientSecret) {
-    stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
+    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
         const message = document.querySelector('#message');
         switch (paymentIntent.status) {
             case 'succeeded':
@@ -55,5 +56,3 @@ if (clientSecret) {
         }
     });
 }
-
-
