@@ -1,1 +1,1 @@
-web: gunicorn artimon.wsgi
+web: gunicorn museart.wsgi

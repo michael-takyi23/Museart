@@ -74,7 +74,7 @@
             <div class="col-12 col-lg-8">
                 <p>Please fill out the form below to complete your order</p>
 
-                <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+                <form id="payment-form" submit="submit">
                     {% csrf_token %}
 
                     <!-- Details Fieldset -->
@@ -166,14 +166,14 @@
     </div>
 {% endblock %}
 
-{% block postload_js %}
+{% block postloadjs %}
     {{ block.super }}
     {{ stripe_public_key|json_script:'id_stripe_public_key' }}
     {{ client_secret|json_script:'id_client_secret' }}
 
-    <script src="(% static 'checkout/js/checkout.js' %)"></script>
+    <script src="{% static 'js/checkout.js' %}"></script>
     
-<script>
+<!-- <script>
     var stripe = Stripe('{{ stripe_public_key }}');
     var elements = stripe.elements();
     var card = elements.create('card');
@@ -188,8 +188,8 @@
         }
     });
 
-    var form = document.getElementById('payment-form');
-    form.addEventListener('submit', function(event) {
+    function submit(event) {
+        console.error(event);
         event.preventDefault();
 
         stripe.createToken(card).then(function(result) {
@@ -203,9 +203,14 @@
                 hiddenInput.setAttribute('value', result.token.id);
                 form.appendChild(hiddenInput);
 
-                form.submit();
+                // form.submit();
             }
         });
+    }
+
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        submit(event);
     });
-</script>
+</script>-->
 {% endblock %}

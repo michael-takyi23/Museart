@@ -1,5 +1,5 @@
 """
-WSGI config for artimon project.
+WSGI config for museart project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'artimon.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'museart.settings')
 
 application = get_wsgi_application()

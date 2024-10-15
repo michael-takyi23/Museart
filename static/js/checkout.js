@@ -1,9 +1,11 @@
+console.error('checkout');
+
 // Initialize Stripe with your publishable key
 const stripe = Stripe('{{ stripe_public_key }}');
 
 // Set up Stripe Elements to use in checkout form, passing the client secret obtained in a previous step
 const options = {
-    clientSecret: '{{ CLIENT_SECRET }}',  // Replace with the actual client secret from your server
+    clientSecret: '{{ STRIPE_SECRET_KEY }}',  // Replace with the actual client secret from your server
     appearance: {/* Customize appearance if needed */}
 };
 
@@ -24,7 +26,7 @@ form.addEventListener('submit', async (event) => {
         elements,
         confirmParams: {
             return_url: '{{ products_url }}', 
-    });
+    }});
 
     if (error) {
         // Display error message to user

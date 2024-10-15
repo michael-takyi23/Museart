@@ -28,8 +28,8 @@
                         <table class="table table-borderless table-sm">
                             <thead class="text-black">
                                 <tr>
+                                    <th scope="col">Image</th>
                                     <th scope="col">Product Info</th>
-                                    <th scope="col"></th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Qty</th>
                                     <th scope="col">Subtotal</th>
@@ -65,7 +65,10 @@
                                         <p class="my-0">{{ item.product.quantity }}</p>
                                     </td>
                                     <td class="p-3">
-                                        <p class="my-0">{{ item.product.Subtotal }}</p>
+                                        <p class="my-0">
+                                            <!-- todo: quantity is empty -->
+                                            {{item.product.quantity}}*{{item.product.price}}
+                                        </p>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -101,6 +104,8 @@
 
 {% block postloaddjs %}
 {{ block.super }}
+<script src="{% static 'js/' %}"></script>
+
 {% include 'products/include/quantity_input_script.html' %}
 
 <script type="text/javascript">
