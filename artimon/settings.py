@@ -23,7 +23,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv('DEBUG', 'False') == 'True'
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['8000-michaeltakyi2-artimonv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'artimon-aabcae13027f.herokuapp.com']
 

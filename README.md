@@ -1,6 +1,6 @@
-# Artimon: E-Commerce Platform for Art Lovers
+# MUSEART: E-Commerce Platform for Art Enthusiasts 
 
-**Artimon** is an online platform designed for art enthusiasts to browse, purchase, and engage with a variety of artworks, including paintings, sculptures, and more. The platform provides a seamless experience for users to explore unique artistic creations, securely shop online, and manage their accounts. Additionally, Artimon offers a space for learning about various artists and their stories.
+**Artimon** is an online platform designed for art enthusiasts to browse, purchase, and engage with a variety of artworks, such as drawings, sculptures, paintings and more. The platform provides a seamless experience for users to explore unique artistic creations, securely shop online, and manage their accounts. Additionally, Artimon offers a space for learning about various artists and their stories.
 
 ## Table of Contents
 
@@ -31,13 +31,13 @@ Artimon was developed to provide art lovers with a platform where they can easil
 
 ### User Features
 
-1. **Homepage**: Artimon welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](media/hpg-artimon.png)
+1. **Homepage**: Artimon welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](media/hpg-museart.png)
 
-2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](media/pl-artimon.png)
+2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](media/pl-museart.png)
 
 3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information.
-4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](media/spc-1-artimon.png)
-5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.![checkout-payment](media/chckout-artimon1.png) ![checkout-payment](media/chckout-artimon2.png)
+4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](media/spc-1-museart.png)
+5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.![checkout-payment](media/chckout-museart1.png) ![checkout-payment](media/chckout-museart2.png)
 6. **Order History**: Logged-in users can view their previous orders and access detailed information about past purchases.
 7. **Artist Information**: Users can learn more about the artists behind each piece of work, with dedicated sections to showcase their biographies and stories.
 
@@ -81,8 +81,8 @@ Artimon was developed to provide art lovers with a platform where they can easil
 
 1. Clone the repository from GitHub:
    ```bash
-   git clone https://github.com/yourusername/artimon.git
-   cd artimon
+   git clone https://github.com/yourusername/museart.git
+   cd museart
    ```
 
 ### Dependencies
