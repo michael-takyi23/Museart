@@ -1,6 +1,6 @@
 # MUSEART: E-Commerce Platform for Art Enthusiasts 
 
-**Artimon** is an online platform designed for art enthusiasts to browse, purchase, and engage with a variety of artworks, such as drawings, sculptures, paintings and more. The platform provides a seamless experience for users to explore unique artistic creations, securely shop online, and manage their accounts. Additionally, Artimon offers a space for learning about various artists and their stories.
+**Museart** is an online platform designed for art enthusiasts to browse, purchase, and engage with a variety of artworks, such as drawings, sculptures, paintings and more. The platform provides a seamless experience for users to explore unique artistic creations, securely shop online, and manage their accounts. Additionally, museart offers a space for learning about various artists and their stories.
 
 ## Table of Contents
 
@@ -25,13 +25,13 @@
 
 ## Project Overview
 
-Artimon was developed to provide art lovers with a platform where they can easily browse and purchase art in a secure, user-friendly environment. It allows users to create accounts, log in, and securely pay for items in their shopping cart using integrated payment solutions. Users can also view their purchase history and read about various artists and their work. Note, this project is still under improvement due to time and other meassures beyond my control. after assessment I am going to greatly enhance the platform and its features. 
+museart was developed to provide art lovers with a platform where they can easily browse and purchase art in a secure, user-friendly environment. It allows users to create accounts, log in, and securely pay for items in their shopping cart using integrated payment solutions. Users can also view their purchase history and read about various artists and their work. Note, this project is still under improvement due to time and other meassures beyond my control. after assessment I am going to greatly enhance the platform and its features. 
 
 ## Features
 
 ### User Features
 
-1. **Homepage**: Artimon welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](media/hpg-museart.png)
+1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](media/hpg-museart.png)
 
 2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](media/pl-museart.png)
 
@@ -49,7 +49,7 @@ Artimon was developed to provide art lovers with a platform where they can easil
 
 ### Security Features
 
-1. **Authentication & Authorization**: Artimon uses Django Allauth for secure user authentication and registration, including email verification.
+1. **Authentication & Authorization**: museart uses Django Allauth for secure user authentication and registration, including email verification.
 2. **CSRF Protection**: Cross-Site Request Forgery protection is enabled to prevent unauthorized actions.
 3. **Stripe Payment Integration**: Payments are securely processed through Stripe’s payment gateway, ensuring safe transactions with industry-standard encryption.
 
@@ -127,7 +127,7 @@ Access the application at `http://127.0.0.1:8000/`.
 
 ## Stripe Payment Integration
 
-Artimon is integrated with **Stripe** to handle secure payments. During checkout, users can enter their card details, and Stripe securely processes the transaction. Ensure that the **Stripe public and secret keys** are set in your environment variables.
+museart is integrated with **Stripe** to handle secure payments. During checkout, users can enter their card details, and Stripe securely processes the transaction. Ensure that the **Stripe public and secret keys** are set in your environment variables.
 
 For testing purposes, use Stripe’s test card numbers, such as:
 
@@ -139,7 +139,7 @@ Expiry: Any future date
 
 ## Models
 
-Artimon's core models include:
+museart's core models include:
 
 1. **Product**: Contains all the information related to individual products (artworks), including name, description, price, image, and category.
 2. **Order**: Stores details of customer orders, including customer information, order total, and delivery address.
@@ -155,7 +155,7 @@ python manage.py test
 
 ## Deployment
 
-Artimon is deployed on **Heroku** with a PostgreSQL database for production. Static and media files are served via **Cloudinary**. To deploy:
+museart is deployed on **Heroku** with a PostgreSQL database for production. Static and media files are served via **Cloudinary**. To deploy:
 
 1. Set up your Heroku app and connect it to your GitHub repository.
 2. Set the necessary environment variables (as described above) in the Heroku dashboard.
@@ -173,14 +173,14 @@ Artimon is deployed on **Heroku** with a PostgreSQL database for production. Sta
 4. Crispy Forms: For making form rendering easier and more elegant within Django templates.
 5. Cloudinary: For handling image and static file management seamlessly in the cloud.
 6. FontAwesome: For providing high-quality icons used across the website.
-7. Code Institute: For their support and the resources provided during the development of Artimon.
-8. Heroku: For providing hosting and deployment support for Artimon.
+7. Code Institute: For their support and the resources provided during the development of museart.
+8. Heroku: For providing hosting and deployment support for museart.
 9. ChatGPT: This README and various technical solutions throughout the project were enhanced using ChatGPT, a large language model trained by OpenAI, for brainstorming, code suggestions, and guidance.
 
 
 ## Contributing
 
-If you’d like to contribute to Artimon, please fork the repository and create a pull request with your changes. All contributions are welcome!
+If you’d like to contribute to museart, please fork the repository and create a pull request with your changes. All contributions are welcome!
 
 ## License
 
@@ -188,4 +188,4 @@ This project is licensed under the MIT License.
 
 ---
 
-Artimon is a platform where the love for art and technology come together to provide users with a seamless and secure shopping experience. Thank you for visiting more improvements in the future!
+museart is a platform where the love for art and technology come together to provide users with a seamless and secure shopping experience. Thank you for visiting more improvements in the future!
