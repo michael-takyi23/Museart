@@ -17,6 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
+from django.urls import path
+
+# Define robots.txt
+def robots_txt(request):
+    content = (
+        "User-agent: *\n"
+        "Disallow: /admin/\n"
+        "Allow: /\n"
+        "Sitemap: https://museart-b6682941c690.herokuapp.com/sitemap.xml\n"
+    )
+    return HttpResponse(content, content_type="text/plain")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +37,5 @@ urlpatterns = [
     path('products/', include('products.urls')),
     path('cart/', include('cart.urls')),
     path('checkout/', include('checkout.urls')),
+    path("robots.txt", robots_txt, name="robots_txt"),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
