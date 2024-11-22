@@ -9,8 +9,17 @@ from pathlib import Path
 import dj_database_url
 from django.contrib.messages import constants as messages
 
-if os.path.isfile("env.py"):
-    import env
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Load environment variables from .env file
+
+os.environ["CLOUDINARY_API_KEY"] = "your-cloudinary-api-key"
+os.environ["CLOUDINARY_API_SECRET"] = "your-cloudinary-api-secret"
+os.environ["SENDGRID_API_KEY"] = "your-sendgrid-api-key"
+os.environ["SECRET_KEY"] = "your-secret-key"
+os.environ["DATABASE_URL"] = "your-database-url"
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +34,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret_key')
 # DEBUG = os.getenv('DEBUG', 'False') == 'True'
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-michaeltakyi23-museart-25q7vg8zkza.ws.codeinstitute-ide.net', '8000-michaeltakyi2-museartv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'museart-aabcae13027f.herokuapp.com']
+ALLOWED_HOSTS = [ '8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net', '127.0.0.1', 'localhost', 'museart-aabcae13027f.herokuapp.com']
 
 
 CSRF_TRUSTED_ORIGINS = ['https://8000-michaeltakyi23-museart-25q7vg8zkza.ws.codeinstitute-ide.net', 'https://8000-michaeltakyi2-museartv1-c7l4c7z06b9.ws.codeinstitute-ide.net', 'https://museart-aabcae13027f.herokuapp.com']
