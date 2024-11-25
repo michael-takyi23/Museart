@@ -3,7 +3,6 @@ html {
 }
 
 body {
-    background: url('../../media/museart.jpg') no-repeat center center fixed;
     background-size: cover;
     height: calc(100vh - 164px);
     color: black; 
@@ -73,7 +72,7 @@ strong {
 }
 
 .text-white {
-    color: #000000 !important;
+    color:white !important;
 }
 
 .border-white {
@@ -88,7 +87,7 @@ strong {
     top: 0;
     left: 0;
     position: fixed;
-    background: rgb(255, 255, 255);
+    background: rgb(29, 0, 71);
     z-index: -1;
 }
 
