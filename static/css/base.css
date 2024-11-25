@@ -1,11 +1,10 @@
-html {
-    height: 100%;
-}
 
-body {
+html, body {
+    background-image: url('/static/images/museart.jpg');
+    background-position: center;
     background-size: cover;
-    height: calc(100vh - 164px);
-    color: black; 
+    background-repeat: no-repeat;
+    height: 100vh;
     font-family: 'Roboto', sans-serif;
 }
 

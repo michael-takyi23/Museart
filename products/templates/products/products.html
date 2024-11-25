@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 order-md-first">
-                    <p class="text-muted mt-3 text-center text-md-left">
+                    <p class="text-white mt-3 text-center text-md-left">
                         {% if search_term or current_categories or current_sorting != 'None_None' %}
                             <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
                         {% endif %}
@@ -65,10 +65,10 @@
                         </a>
                         {% endif %}
                         <div class="card-body pb-1">
-                            <p class="card-title text-muted">{{ product.name }}</p>
+                            <p class="card-title text-dark">{{ product.name }}</p>
                         </div>
                         <div>
-                            <p class="card-text text-muted">{{ product.description }}</p>
+                            <p class="card-text text-dark">{{ product.description }}</p>
                         </div>
                         <div class="card-footer bg-white pt-0 border-0 text-left">
                             <div class="row">
@@ -82,9 +82,9 @@
                                     </p>
                                     {% endif %}
                                     {% if product.rating %}
-                                        <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                                        <small class="text-dark"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                                     {% else %}
-                                        <small class="text-muted"><i class="fas fa-star mr-1"></i></small>
+                                        <small class="text-dark"><i class="fas fa-star mr-1"></i></small>
                                     {% endif %}
                                 </div>
                             </div>
