@@ -137,7 +137,7 @@ a.cat-badge > span.badge:hover {
 /* Slightly smaller container on xl screens */
 @media (min-width: 1200px) {
   .container {
-    max-width: 90%;
+    max-width: 95%;
   }
 }
 
