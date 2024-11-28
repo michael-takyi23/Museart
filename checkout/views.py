@@ -9,6 +9,8 @@ from cart.contexts import cart_contents
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 def checkout(request):
     cart = request.session.get('cart', {})
     if not cart:
@@ -36,24 +38,40 @@ def checkout(request):
                             lineitem_total=item['subtotal']
                         )
 
-                    # Stripe Payment
-                    total_amount = int(order.grand_total * 100)  
+                    # Calculate total amount for Stripe Payment (convert to cents)
+                    total_amount = int(order.grand_total * 100)  # Convert to cents
 
-                    # Stripe Payment Intent
+                    # Handle Stripe payment using Payment Intent
+                    payment_method_id = request.POST.get('stripePaymentMethodId')  # The stripe payment method ID from frontend
+                    if not payment_method_id:
+                        messages.error(request, "No payment method found.")
+                        return redirect('checkout')
+
+                    # Create the PaymentIntent with the received payment method
                     intent = stripe.PaymentIntent.create(
                         amount=total_amount,
                         currency='usd',
-                        payment_method=request.POST['stripeToken'],
+                        payment_method=payment_method_id,
+                        confirmation_method='manual',
                         confirm=True,
                     )
 
-                    messages.success(request, "Order successfully placed!")
-                    return redirect(reverse('order_confirmation', args=[order.order_number]))
+                    # Check for confirmation status
+                    if intent.status == 'succeeded':
+                        messages.success(request, "Order successfully placed!")
+                        return redirect(reverse('order_confirmation', args=[order.order_number]))
+                    else:
+                        messages.error(request, "Payment could not be processed. Please try again.")
+                        return redirect(reverse('checkout'))
 
             except stripe.error.CardError as e:
                 messages.error(request, "Your card was declined. Please try again.")
+            except stripe.error.StripeError as e:
+                messages.error(request, f"Stripe error occurred: {e.error.message}")
             except Exception as e:
                 messages.error(request, f"An error occurred during checkout: {e}")
+        else:
+            messages.error(request, "Please check your form for errors.")
 
     else:
         form = OrderForm()
@@ -61,7 +79,7 @@ def checkout(request):
     context = {
         'form': form,
         'cart_items': cart_items,
-        'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
+        'stripe_public_key': settings.STRIPE_PUBLIC_KEY,  # Make sure to pass the public key
     }
 
     template = 'checkout/checkout.html'
@@ -70,4 +88,3 @@ def checkout(request):
 def order_confirmation(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
     return render(request, 'checkout/order_confirmation.html', {'order': order})
-

@@ -203,11 +203,19 @@ STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# STRIPE
-
 FREE_DELIVERY_THRESHOLD = 100
 STANDARD_DELIVERY_PERCENTAGE = 10
+
+#Stripe
+
+STRIPE_TEST_PUBLIC_KEY = 'your-public-key-here'
+STRIPE_TEST_SECRET_KEY = 'your-secret-key-here'
+
+STRIPE_LIVE_PUBLIC_KEY = 'your-live-public-key-here'
+STRIPE_LIVE_SECRET_KEY = 'your-live-secret-key-here'
+
 STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY','')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY','')
+
 
