@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col">
                 <hr>
-                <h1 class="logo-font text-dark mb-3">Checkout</h1>
+                <h1 class="logo-font text-white mb-3">Checkout</h1>
                 <hr>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="table responsive-rounded">
                         <table class="table table-borderless table-sm">
-                            <thead class="text-black">
+                            <thead class="text-white">
                                 <tr>
                                     <th scope="col">Image</th>
                                     <th scope="col">Product Info</th>
@@ -73,7 +73,7 @@
                                 </tr>
                             {% endfor %}
                             <tr>
-                                <td class="text-right pt-5" colspan="5"><h6><strong>Cart total: €{{ total|floatformat:2 }}</strong></h6>
+                                <td class="text-right pt-5 text-white" colspan="5"><h6><strong>Cart total: €{{ total|floatformat:2 }}</strong></h6>
                                     <h6>Delivery: {{ delivery|floatformat:2 }}</h6>
                                     <h4 class="mt-4"><strong>Grand Total: €{{ grand_total|floatformat:2 }}</strong></h4>
                                     {% if free_delivery_delta > 0 %}
@@ -87,8 +87,8 @@
                                     <span class="text-uppercase text-black">Continue Shopping</span>
                                 </a>
                                 <a href="{% url 'checkout' %}" class="btn btn-lg rounded-0">
-                                    <span class="icon"><i class="fas fa-lock"></i> </span>
-                                    <span class="text-uppercase">Checkout</span>
+                                    <span class="icon"><i class="fas fa-lock"></i></span>
+                                    <span class="text-uppercase text-white">Checkout</span>
                                 </a>
                                 </td>
                             </tr>
