@@ -17,7 +17,7 @@ os.environ["CLOUDINARY_API_KEY"] = "your-cloudinary-api-key"
 os.environ["CLOUDINARY_API_SECRET"] = "your-cloudinary-api-secret"
 os.environ["SENDGRID_API_KEY"] = "your-sendgrid-api-key"
 os.environ["SECRET_KEY"] = "your-secret-key"
-os.environ["DATABASE_URL"] = "postgresql://udszypliq1z:3FZRdkJQiuIv@ep-gentle-mountain-a23bxz6h-pooler.eu-central-1.aws.neon.tech/void_grope_reply_664231"
+os.environ["DATABASE_URL"] = "postgresql://neondb_owner:D8J7kVBmduQx@ep-sweet-breeze-a2jhnruw.eu-central-1.aws.neon.tech/void_grope_reply_664231"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
