@@ -36,7 +36,7 @@ DEBUG = True
 ALLOWED_HOSTS = [ 
     '8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net', 
     '127.0.0.1', 'localhost', 
-    'museart-b6682941c690.herokuapp.com'
+    'https://museart-b6682941c690.herokuapp.com/',
 ]
 
 

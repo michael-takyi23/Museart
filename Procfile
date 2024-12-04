@@ -1,1 +1,1 @@
-web: gunicorn museart.wsgi
+web: gunicorn museart.wsgi:application
