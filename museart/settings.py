@@ -10,11 +10,9 @@ import dj_database_url
 from django.contrib.messages import constants as messages
 
 from dotenv import load_dotenv
-import os
+from decouple import config
 
 
-os.environ["CLOUDINARY_API_KEY"] = "your-cloudinary-api-key"
-os.environ["CLOUDINARY_API_SECRET"] = "your-cloudinary-api-secret"
 os.environ["SENDGRID_API_KEY"] = "your-sendgrid-api-key"
 os.environ["SECRET_KEY"] = "your-secret-key"
 os.environ["DATABASE_URL"] = "postgresql://neondb_owner:D8J7kVBmduQx@ep-sweet-breeze-a2jhnruw.eu-central-1.aws.neon.tech/void_grope_reply_664231"
@@ -30,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = [ 
@@ -212,10 +210,6 @@ if 'USE_AWS' in os.environ:
     # Override static and media URLs in production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
-
-# If using Cloudinary
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 # Default primary key field type
 

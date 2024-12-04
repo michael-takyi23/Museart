@@ -1,12 +1,10 @@
-html {
-    height: 100%;
-}
 
 body {
-    background: url('../../media/museart.jpg') no-repeat center center fixed;
+    background-image: url('/static/images/museart.jpg');
+    background-position: center;
     background-size: cover;
-    height: calc(100vh - 164px);
-    color: black; 
+    background-repeat: no-repeat;
+    height: 100vh;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -73,7 +71,7 @@ strong {
 }
 
 .text-white {
-    color: #000000 !important;
+    color:white !important;
 }
 
 .border-white {
@@ -88,7 +86,7 @@ strong {
     top: 0;
     left: 0;
     position: fixed;
-    background: rgb(255, 255, 255);
+    background: rgb(29, 0, 71);
     z-index: -1;
 }
 
@@ -123,7 +121,7 @@ a.cat-badge > span.badge:hover {
 }
 
 .message-container {
-    margin-top: 100px;
+    margin-top: 156px;
 }
 
 .toast-container {
@@ -139,7 +137,7 @@ a.cat-badge > span.badge:hover {
 /* Slightly smaller container on xl screens */
 @media (min-width: 1200px) {
   .container {
-    max-width: 90%;
+    max-width: 95%;
   }
 }
 
