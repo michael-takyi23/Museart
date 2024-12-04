@@ -13,10 +13,9 @@ from dotenv import load_dotenv
 from decouple import config
 
 
-os.environ["SENDGRID_API_KEY"] = "your-sendgrid-api-key"
-os.environ["SECRET_KEY"] = "your-secret-key"
-os.environ["DATABASE_URL"] = "postgresql://neondb_owner:D8J7kVBmduQx@ep-sweet-breeze-a2jhnruw.eu-central-1.aws.neon.tech/void_grope_reply_664231"
-
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY', '')
+SECRET_KEY = os.getenv('SECRET_KEY', '')
+DATABASE_URL = os.getenv('DATABASE_URL', '')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-DEBUG = 'DEVELOPMENT' in os.environ
+DEBUG = 'DEVELOPMENT' in os.environ or os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [ 
     '8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net', 
@@ -39,10 +37,10 @@ ALLOWED_HOSTS = [
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net',  
+    'https://museart-b6682941c690.herokuapp.com',
+    'https://8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net',
     'https://8000-michaeltakyi23-museart-25q7vg8zkza.ws.codeinstitute-ide.net',
     'https://8000-michaeltakyi2-museartv1-c7l4c7z06b9.ws.codeinstitute-ide.net',
-    'https://museart-b6682941c690.herokuapp.com',
 ]
 
 
@@ -194,28 +192,28 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if 'USE_AWS' in os.environ:
-   #Cache control
+    # Cache control
+    AWS_S3_OBJECT_PARAMETERS = {
+        'Expires': 'Thu, 31 Dec 2029 20:00:00 GMT',
+        'CacheControl': 'max-age=9460800',
+    }
 
-   AWS_S3_OBJECT_PARAMETERS = {
-       'Expires' : 'Thu, 31 Dec 2029 20:00:00 GMT',
-       'CacheControl' : 'max-age=9460800',}
+    # Bucket config
+    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = 'eu-north-1'
+    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-   #Bucket config
-   AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-   AWS_S3_REGION_NAME = 'eu-north-1'
-   AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-   AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-   AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-   
-   # Static and media files
-   STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-   STATICFILES_LOCATION = 'static'
-   DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-   MEDIAFILES_LOCATION = 'media'
+    # Static and media files
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
 
-   # Override static and media URLs in production
-   STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
-   MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+    # Override static and media URLs in production
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 
    # Default primary key field type
 
@@ -227,14 +225,11 @@ STANDARD_DELIVERY_PERCENTAGE = 10
 
 #Stripe
 
-STRIPE_TEST_PUBLIC_KEY = 'your-public-key-here'
-STRIPE_TEST_SECRET_KEY = 'your-secret-key-here'
-
-STRIPE_LIVE_PUBLIC_KEY = 'your-live-public-key-here'
-STRIPE_LIVE_SECRET_KEY = 'your-live-secret-key-here'
+STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY', '')
+STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY', '')
+STRIPE_LIVE_PUBLIC_KEY = os.getenv('STRIPE_LIVE_PUBLIC_KEY', '')
+STRIPE_LIVE_SECRET_KEY = os.getenv('STRIPE_LIVE_SECRET_KEY', '')
 
 STRIPE_CURRENCY = 'usd'
-STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY','')
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY','')
 
 
