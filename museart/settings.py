@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://museart-b6682941c690.herokuapp.com/',
+    'https://museart-b6682941c690.herokuapp.com',
     'https://8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net',
 
 ]
@@ -113,7 +113,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 1
+SITE_ID = 3
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -150,6 +150,10 @@ USE_TZ = True
 
 # Static and media files
 STATIC_URL = '/static/'
+
+# For production (Heroku)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
