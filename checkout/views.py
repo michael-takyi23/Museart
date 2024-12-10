@@ -3,13 +3,27 @@ from django.conf import settings
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db import transaction
+from django.core.mail import send_mail
 from .forms import OrderForm
 from .models import Order, OrderLineItem
 from cart.contexts import cart_contents
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+stripe_public_key = settings.STRIPE_TEST_PUBLIC_KEY if settings.DEBUG else settings.STRIPE_LIVE_PUBLIC_KEY
+context = {
+    'stripe_public_key': stripe_public_key,
+}
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+
+# Send email function
+def send_order_confirmation(order):
+    subject = f"Order Confirmation - {order.order_number}"
+    message = f"Thank you for your order, {order.full_name}. Your order number is {order.order_number}. The total amount is €{order.grand_total}."
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [order.email]
+    )
 
 def checkout(request):
     cart = request.session.get('cart', {})
@@ -59,6 +73,7 @@ def checkout(request):
                     # Check for confirmation status
                     if intent.status == 'succeeded':
                         messages.success(request, "Order successfully placed!")
+                        send_order_confirmation(order)  # Send the confirmation email
                         return redirect(reverse('order_confirmation', args=[order.order_number]))
                     else:
                         messages.error(request, "Payment could not be processed. Please try again.")
@@ -75,15 +90,13 @@ def checkout(request):
 
     else:
         form = OrderForm()
-
+        
     context = {
         'form': form,
         'cart_items': cart_items,
-        'stripe_public_key': settings.STRIPE_PUBLIC_KEY,  # Make sure to pass the public key
+        'stripe_public_key': settings.STRIPE_PUBLIC_KEY,  
     }
-
-    template = 'checkout/checkout.html'
-    return render(request, template, context)
+    return render(request, 'checkout/checkout.html', context)
 
 def order_confirmation(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
