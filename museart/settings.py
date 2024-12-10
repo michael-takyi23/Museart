@@ -30,10 +30,9 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://museart-b6682941c690.herokuapp.com',
+    'https://museart-b6682941c690.herokuapp.com/',
     'https://8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net',
-    'https://8000-michaeltakyi23-museart-25q7vg8zkza.ws.codeinstitute-ide.net',
-    'https://8000-michaeltakyi2-museartv1-c7l4c7z06b9.ws.codeinstitute-ide.net',
+
 ]
 
 # Application definition
