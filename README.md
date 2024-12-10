@@ -31,9 +31,9 @@ museart was developed to provide art lovers with a platform where they can easil
 
 ### User Features
 
-1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](media/hpg-museart.png)
+1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](images/landing_page.jpg)
 
-2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](media/pl-museart.png)
+2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](images/products_page.jpg)
 
 3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information.
 4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](media/spc-1-museart.png)

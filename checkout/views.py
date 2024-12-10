@@ -3,7 +3,9 @@ from django.conf import settings
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db import transaction
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
+from django.template.loader import render_to_string
+from django.http import HttpResponse
 from .forms import OrderForm
 from .models import Order, OrderLineItem
 from cart.contexts import cart_contents
@@ -16,14 +18,20 @@ context = {
 
 # Send email function
 def send_order_confirmation(order):
+    # Email subject and message
     subject = f"Order Confirmation - {order.order_number}"
-    message = f"Thank you for your order, {order.full_name}. Your order number is {order.order_number}. The total amount is €{order.grand_total}."
-    send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        [order.email]
+    message = render_to_string('checkout/order_confirmation_email.html', {'order': order})
+    
+    # Sending the HTML email to the customer
+    email = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[order.email],
     )
+    email.content_subtype = 'html'  # Sending HTML email
+    email.send()
+
 
 def checkout(request):
     cart = request.session.get('cart', {})
@@ -66,9 +74,13 @@ def checkout(request):
                         amount=total_amount,
                         currency='usd',
                         payment_method=payment_method_id,
-                        confirmation_method='manual',
+                        confirmation_method='automatic',  # Auto confirm payment
                         confirm=True,
                     )
+
+                    # Handle case when additional actions are required (e.g., 3D Secure)
+                    if intent.status == 'requires_action' or intent.status == 'requires_source_action':
+                        return redirect(intent.next_action.redirect_to_url)
 
                     # Check for confirmation status
                     if intent.status == 'succeeded':
@@ -90,14 +102,25 @@ def checkout(request):
 
     else:
         form = OrderForm()
-        
+
     context = {
         'form': form,
         'cart_items': cart_items,
-        'stripe_public_key': settings.STRIPE_PUBLIC_KEY,  
+        'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
     }
     return render(request, 'checkout/checkout.html', context)
+
 
 def order_confirmation(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
     return render(request, 'checkout/order_confirmation.html', {'order': order})
+
+
+def send_test_email(request):
+    send_mail(
+        'Test Email',
+        'This is a test email from SendGrid.',
+        'museart2024@outlook.com',  # sender email
+        ['museart2024@outlook.com'],  # recipient email
+    )
+    return HttpResponse('Test email sent!')

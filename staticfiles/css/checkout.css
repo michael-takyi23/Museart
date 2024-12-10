@@ -129,3 +129,23 @@ a.btn-outline-secondary {
     color: #dc3545; /* Red for errors */
     font-weight: bold;
 }
+
+@media (max-width: 768px) {
+    .order-summary {
+        margin-bottom: 20px;
+    }
+    .order-summary,
+    .payment-info {
+        width: 100%;
+    }
+    .order-summary p,
+    .payment-info p {
+        font-size: 14px;
+    }
+    #submit {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+    }
+}
+
