@@ -162,6 +162,11 @@ museart is deployed on **Heroku** with a PostgreSQL database for production. Sta
 3. Push the code to Heroku:
    ```bash
    git push heroku main
+
+## Project Management
+
+We are using GitHub Projects to manage tasks and workflows. Check out our [Kanban Board](https://github.com/michael-takyi23/MuseArt/projects/Museart-project) for the latest updates.
+
    ```
 
 
