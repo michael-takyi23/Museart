@@ -155,7 +155,7 @@ python manage.py test
 
 ## Deployment
 
-museart is deployed on **Heroku** with a PostgreSQL database for production. Static and media files are served via **Cloudinary**. To deploy:
+museart is deployed on **Heroku** with a PostgreSQL database for production. Static and media files are served via **AWS S3**. To deploy:
 
 1. Set up your Heroku app and connect it to your GitHub repository.
 2. Set the necessary environment variables (as described above) in the Heroku dashboard.
