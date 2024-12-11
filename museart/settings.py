@@ -150,7 +150,7 @@ USE_TZ = True
 
 # Static and media files
 STATIC_URL = '/static/'
-
+ 
 # For production (Heroku)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
