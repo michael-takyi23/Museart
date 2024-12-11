@@ -142,9 +142,6 @@
   {% block content %}{% endblock %}
 
   {% block postloadjs %}
-    {{ block.super }}
-    <script src="{% static 'js/toasts.js' %}"></script>
-  {% endblock %}
 
   <!--Footer section-->
   <footer class="footer bg-dark text-white py-4 mt-5">
@@ -163,5 +160,9 @@
       </div>
     </div>
   </footer>
+  
+    {{ block.super }}
+    <script src="{% static 'js/toasts.js' %}"></script>
+  {% endblock %}
   </body>
 </html>

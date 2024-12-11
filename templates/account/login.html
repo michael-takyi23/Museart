@@ -1,4 +1,4 @@
-{% extends "account/base_entrance.html" %}
+{% extends 'base.html' %}
 {% load i18n %}
 {% load allauth account %}
 {% block head_title %}
@@ -6,43 +6,66 @@
 {% endblock head_title %}
 {% load static %}
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+{% block page_header %}
+<div class="container header-container"></div>
+    <div class="container-fluid py-4 bg-gradient" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
+        <h1 class="text-center text-white">Log In to Your Account</h1>
+    </div>
 {% endblock %}
 
 {% block content %}
-    <h1>{% trans "Sign In" %}</h1>
-    
-    <!-- Login Form -->
-    <form method="post" action="{% url 'account_login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">{% trans "Sign In" %}</button>
-    </form>
+<div class="overlay"></div>
+<div class="container d-flex align-items-center justify-content-center vh-75">
+    <div class="card shadow-sm p-3 col-md-5">
+        <h2 class="text-center mb-3">Welcome Back</h2>
+        <form method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group mb-2">
+                <label for="{{ field.id_for_label }}" class="form-label small">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button class="btn btn-primary btn-block py-2 mb-2">Log In</button>
+        </form>
+        <p class="text-center small mb-0">
+            Forgot your password? <a href="{% url 'account_reset_password' %}" class="text-primary">Reset it</a>.
+        </p>
+        <p class="text-center small mt-2">
+            Don't have an account? <a href="{% url 'account_signup' %}" class="text-primary">Sign up here</a>.
+        </p>
+    </div>
+</div>
+{% endblock %}
 
-    <!-- Sign up prompt -->
-    {% if not SOCIALACCOUNT_ONLY %}
-        {% setvar link %}
-            <a href="{{ signup_url }}">
-        {% endsetvar %}
-        {% setvar end_link %}
-            </a>
-        {% endsetvar %}
-        <p>{% blocktranslate %}If you don't have an account, {{ link }}sign up{{ end_link }} now.{% endblocktranslate %}</p>
-    {% endif %}
-
-    <!-- Sign-in code option (if enabled) -->
-    {% if LOGIN_BY_CODE_ENABLED %}
-        <hr>
-        <h2>
-            <a href="{{ request_login_code_url }}" class="btn btn-secondary">
-                {% trans "Mail me a sign-in code" %}
-            </a>
-        </h2>
-    {% endif %}
-    
-    <!-- Social accounts login -->
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
-{% endblock content %}
+{% block extra_css %}
+<style>
+    body {
+        background: #f8f9fa;
+    }
+    .bg-gradient {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+    }
+    .card {
+        border-radius: 0.8rem;
+    }
+    .btn-primary {
+        background-color: #6a11cb;
+        border: none;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-primary:hover {
+        background-color: #2575fc;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+    .small {
+        font-size: 0.85rem;
+    }
+</style>
+{% endblock %}
