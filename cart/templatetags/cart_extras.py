@@ -4,8 +4,8 @@ register = template.Library()
 
 @register.filter
 def multiply(value, arg):
-    """Multiply the value by the arg."""
+    """Multiply two numbers."""
     try:
         return value * arg
-    except (TypeError, ValueError):
+    except (ValueError, TypeError):
         return 0
