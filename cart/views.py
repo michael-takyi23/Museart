@@ -1,76 +1,124 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib import messages
 from products.models import Product
+import logging
+import json  # Required for parsing JSON data in `update_cart`
 
-# Create your views here.
+logger = logging.getLogger(__name__)
+
+# View Cart
 def view_cart(request):
-    """ A view that renders the shopping cart content page """
+    """ A view to render the shopping cart page """
+    cart = request.session.get('cart', {})
+    context = {
+        'cart': cart,
+    }
+    return render(request, 'cart/cart.html', context)
 
-    return render(request, 'cart/cart.html')
 
+# Add to Cart
 def add_to_cart(request, item_id):
     """ A view to add a quantity of a product to the shopping cart """
-    
-    product = get_object_or_404(Product, pk=item_id) 
-    quantity = int(request.POST.get('quantity'))
-    redirect_url = request.POST.get('redirect_url')
-    cart = request.session.get('cart', {})
+    try:
+        product = get_object_or_404(Product, pk=item_id)
+        quantity = int(request.POST.get('quantity', 1))
+        redirect_url = request.POST.get('redirect_url', '/cart/')
+        size = request.POST.get('product_size') if 'product_size' in request.POST else None
+        cart = request.session.get('cart', {})
 
-    size = request.POST.get('product_size') if 'product_size' in request.POST else None
+        if quantity <= 0:
+            messages.error(request, "Quantity must be at least 1.")
+            return redirect(redirect_url)
 
-    if size:
-        # Handle products with sizes
-        if item_id in cart:
-            if 'items_by_size' in cart[item_id] and size in cart[item_id]['items_by_size']:
-                cart[item_id]['items_by_size'][size] += quantity
+        # Handle size variations
+        if size:
+            if item_id in cart:
+                cart[item_id]['items_by_size'] = cart[item_id].get('items_by_size', {})
+                cart[item_id]['items_by_size'][size] = cart[item_id]['items_by_size'].get(size, 0) + quantity
             else:
-                if 'items_by_size' not in cart[item_id]:
-                    cart[item_id]['items_by_size'] = {}
-                cart[item_id]['items_by_size'][size] = quantity
+                cart[item_id] = {'items_by_size': {size: quantity}}
         else:
-            cart[item_id] = {'items_by_size': {size: quantity}}
-    else:
-        # Handle products without sizes
-        if item_id in cart:
-            cart[item_id] += quantity
-        else:
-            cart[item_id] = quantity
+            cart[item_id] = cart.get(item_id, 0) + quantity
 
-    # Save the updated cart to the session
-    request.session['cart'] = cart
-    messages.success(request, f'Added {product.name} to your cart!')
-    return redirect(redirect_url)
-    
+        request.session['cart'] = cart  # Save session
+        messages.success(request, f'Added {product.name} to your cart.')
+        return redirect(redirect_url)
+
+    except Exception as e:
+        logger.error(f"Error adding item {item_id} to cart: {e}")
+        messages.error(request, "Failed to add the item to your cart. Please try again.")
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+# Remove from Cart
 def remove_from_cart(request, item_id):
     """ A view to remove an item from the shopping cart """
-    
-    try:  
-        size = None 
-        if 'product_size' in request.POST:
-            size = request.POST['product_size'] 
-        cart = request.session.get('cart', {}) 
+    try:
+        size = request.POST.get('product_size', None)
+        cart = request.session.get('cart', {})
 
-        
-        if size:
-            del cart[item_id]['items_by_size'][size]
-            if not cart[item_id]['items_by_size']:  # Remove the item completely if no sizes are left
-               cart.pop(item_id)
+        if item_id in cart:
+            if size:
+                if 'items_by_size' in cart[item_id] and size in cart[item_id]['items_by_size']:
+                    del cart[item_id]['items_by_size'][size]
+                    if not cart[item_id]['items_by_size']:
+                        cart.pop(item_id)
+            else:
+                cart.pop(item_id)
+
+            request.session['cart'] = cart  # Save session
+            messages.success(request, 'Item removed from your cart.')
         else:
-            cart.pop(item_id)
+            messages.warning(request, 'Item not found in your cart.')
 
-            request.session['cart'] = cart
-            messages.success(request, 'Item removed from your cart!')
         return HttpResponse(status=200)
 
     except Exception as e:
-        messages.error(request, f'Error removing item: {e}')
+        logger.error(f"Error removing item {item_id} from cart: {e}")
+        messages.error(request, "Failed to remove the item. Please try again.")
         return HttpResponse(status=500)
 
+
+# Update Cart
+def update_cart(request, item_id):
+    """ A view to update the quantity of an item in the shopping cart """
+    try:
+        cart = request.session.get('cart', {})
+        product = get_object_or_404(Product, pk=item_id)
+        data = json.loads(request.body.decode('utf-8'))  # Parse JSON data
+        size = data.get('size', None)
+        quantity = int(data.get('quantity', 1))
+
+        if quantity <= 0:
+            messages.error(request, "Quantity must be greater than zero.")
+            return HttpResponse(status=400)
+
+        if size:
+            if item_id in cart and 'items_by_size' in cart[item_id]:
+                cart[item_id]['items_by_size'][size] = quantity
+        else:
+            cart[item_id] = quantity
+
+        request.session['cart'] = cart  # Save session
+        messages.success(request, f'Updated {product.name} quantity to {quantity}.')
+        return HttpResponse(status=200)
+
+    except Exception as e:
+        logger.error(f"Error updating item {item_id} in cart: {e}")
+        messages.error(request, f"Error updating cart: {e}")
+        return HttpResponse(status=500)
+
+
+# Confirm Order
 def confirm_order(request):
     """ A view to confirm the order """
-    # Order confirmation logic goes here
+    try:
+        # Placeholder for order confirmation logic
+        request.session['cart'] = {}  # Clear cart after order confirmation
+        messages.success(request, 'Your order has been confirmed!')
+        return redirect('order_confirmation_page')
 
-    # Clear the cart after order confirmation
-    request.session['cart'] = {}
-    messages.success(request, 'Order confirmed successfully!')
-    return redirect('order_confirmation_page')
+    except Exception as e:
+        logger.error(f"Error confirming order: {e}")
+        messages.error(request, "Failed to confirm your order. Please try again.")
+        return redirect('cart')
