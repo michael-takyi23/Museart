@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load cart_extras %}
 {% load static %}
 
 {% block content %}
@@ -7,7 +8,7 @@
 
     {% if cart_items %}
     <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered cart-table">
             <thead>
                 <tr>
                     <th>Image</th>
@@ -22,7 +23,8 @@
                 {% for item in cart_items %}
                 <tr>
                     <td>
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" width="100">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" 
+                             class="img-thumbnail" width="100">
                     </td>
                     <td>{{ item.product.name }}</td>
                     <td>${{ item.product.price|floatformat:2 }}</td>
@@ -32,10 +34,12 @@
                                data-item-id="{{ item.product.id }}" 
                                min="1" max="99">
                     </td>
-                    <td>${{ item.product.price|floatformat:2|multiply:item.quantity }}</td>
+                    <td>${{ item.product.price|multiply:item.quantity|floatformat:2 }}</td>
                     <td>
-                        <button class="btn btn-sm btn-primary update-cart" data-item-id="{{ item.product.id }}">Update</button>
-                        <button class="btn btn-sm btn-danger remove-item" data-item-id="{{ item.product.id }}">Remove</button>
+                        <button class="btn btn-sm btn-primary update-cart" 
+                                data-item-id="{{ item.product.id }}">Update</button>
+                        <button class="btn btn-sm btn-danger remove-item" 
+                                data-item-id="{{ item.product.id }}">Remove</button>
                     </td>
                 </tr>
                 {% endfor %}
@@ -44,7 +48,8 @@
     </div>
     <div class="text-right">
         <h4>Total: ${{ total|floatformat:2 }}</h4>
-        <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+        <a href="{% url 'checkout' %}" class="btn btn-success" 
+           {% if not cart_items %}disabled{% endif %}>Proceed to Checkout</a>
         <a href="{% url 'products' %}" class="btn btn-secondary">Continue Shopping</a>
     </div>
     {% else %}
