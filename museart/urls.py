@@ -21,7 +21,6 @@ from django.http import HttpResponse
 from django.urls import path
 from home import views
 
-handler403 = 'home.views.custom_403_view'
 handler404 = 'home.views.custom_404_view'
 handler500 = 'home.views.custom_500_view'
 

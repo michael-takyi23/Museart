@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block page_header %}
-    <div class="container mt-5">
+<div class="overlay"></div>
+    <div class="container header-container">
         <div class="row">
             <div class="col text-center">
                 <h1 class="display-1 text-danger">404</h1>
-                <h3 class="text-muted">Oops! Page Not Found</h3>
+                <img src="{% static 'images/error-404.png' %}" alt="404 Error Image" class="img-fluid" style="max-width: 70%; margin: auto;">
+                <h3 class="text-white">Oops! Page Not Found</h3>
             </div>
         </div>
     </div>
 {% endblock %}
-
 {% block content %}
-    <div class="container text-center my-5">
+    <div class="text-warning text-center my-5">
         <p class="lead">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
         <a href="{% url 'home' %}" class="btn btn-primary mt-3">Go Back Home</a>
     </div>
