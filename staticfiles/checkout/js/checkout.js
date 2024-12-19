@@ -1,58 +1,71 @@
-// Initialize Stripe with your publishable key
-const stripe = Stripe('{{ stripe_public_key }}');
+// Get Stripe public key from the DOM
+const stripePublicKey = document.getElementById('id_stripe_public_key').textContent;
 
-// Set up Stripe Elements to use in the checkout form, passing the client secret obtained in a previous step
+// Initialize Stripe
+const stripe = Stripe(stripePublicKey);
+
+// Get the client secret
+const clientSecret = document.getElementById('id_client_secret').textContent;
+
+// Set up Stripe Elements
 const options = {
-    clientSecret: '{{ CLIENT_SECRET }}',  // Replace with the actual client secret from your server
-    appearance: {} // Add appearance customization if needed, currently set to default
+    clientSecret: clientSecret,
+    appearance: {
+        theme: 'flat',
+        variables: {
+            colorPrimary: '#007bff',
+            colorText: '#32325d',
+            fontFamily: 'Arial, sans-serif',
+            fontSizeBase: '16px',
+            borderRadius: '5px',
+        },
+    },
 };
 
-// Initialize Elements
 const elements = stripe.elements(options);
-
-// Create and mount the Payment Element (this is where card details will be entered)
 const paymentElement = elements.create('payment');
 paymentElement.mount('#payment-element');
 
-// Handle form submission
+
+// Form Submission Handler
 const form = document.getElementById('payment-form');
+const loadingSpinner = document.getElementById('loading-spinner');
+const errorContainer = document.getElementById('card-errors');
+
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    // Confirm the payment with Stripe
+    // Show spinner
+    loadingSpinner.style.display = 'block';
+
     const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-            return_url: '{{ products_url }}',  // URL to redirect to after the payment
+            return_url: "{{ success_url }}", // Replace with the success URL passed dynamically
         },
     });
 
     if (error) {
-        // Display error message to user
-        const messageContainer = document.querySelector('#error-message');
-        messageContainer.textContent = error.message;
+        // Display error message
+        errorContainer.textContent = error.message;
+        loadingSpinner.style.display = 'none';
     }
 });
 
-// Optional: If handling a redirection after a successful payment, use this to retrieve and show payment intent status
-const clientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
-
-if (clientSecret) {
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-        const message = document.querySelector('#message');
+// Optional: Handle redirection on page load
+const queryClientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
+if (queryClientSecret) {
+    stripe.retrievePaymentIntent(queryClientSecret).then(({ paymentIntent }) => {
+        const messageContainer = document.getElementById('message');
         switch (paymentIntent.status) {
             case 'succeeded':
-                message.innerText = 'Success! Payment received.';
+                messageContainer.innerText = 'Success! Payment received.';
                 break;
             case 'processing':
-                message.innerText = "Payment processing. We'll update you when payment is received.";
-                break;
-            case 'requires_payment_method':
-                message.innerText = 'Payment failed. Please try another payment method.';
+                messageContainer.innerText = "Payment processing. We'll update you soon.";
                 break;
             default:
-                message.innerText = 'Something went wrong.';
-                break;
+                messageContainer.innerText = 'Something went wrong. Please try again.';
         }
     });
 }

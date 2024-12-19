@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
 SECRET_KEY = os.getenv('SECRET_KEY', '')
+
 DEBUG = False
 
 ALLOWED_HOSTS = [
@@ -148,11 +149,13 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static and media files
-STATIC_URL = '/static/'
- 
-# For production (Heroku)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+#Production Cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -180,30 +183,50 @@ if os.getenv('USE_AWS', 'False') == 'True':
     # URLs for static and media files
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+else:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+    
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# Stripe settings
+# Stripe configuration
+FREE_DELIVERY_THRESHOLD = 100
+STANDARD_DELIVERY_PERCENTAGE = 50 
+STRIPE_CURRENCY = 'usd'
 STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY', '')
 STRIPE_LIVE_PUBLIC_KEY = os.getenv('STRIPE_LIVE_PUBLIC_KEY', '')
-
-STRIPE_PUBLIC_KEY = STRIPE_TEST_PUBLIC_KEY if DEBUG else STRIPE_LIVE_PUBLIC_KEY
-
-# Stripe configuration
 
 STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY', '')  
 STRIPE_LIVE_SECRET_KEY = os.getenv('STRIPE_LIVE_SECRET_KEY', '')
 STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
 
+STRIPE_PUBLIC_KEY = STRIPE_TEST_PUBLIC_KEY if DEBUG else STRIPE_LIVE_PUBLIC_KEY
 STRIPE_SECRET_KEY = STRIPE_TEST_SECRET_KEY if DEBUG else STRIPE_LIVE_SECRET_KEY
-
-STRIPE_CURRENCY = 'usd'
-FREE_DELIVERY_THRESHOLD = 100
-STANDARD_DELIVERY_PERCENTAGE = 50 
 
 # SendGrid Email Configuration
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # Disable sandbox mode for production or real email testing
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"  # Specify the SendGrid backend
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")  # Fetch the API key securely
 DEFAULT_FROM_EMAIL = "museart2024@outlook.com"  
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'error.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

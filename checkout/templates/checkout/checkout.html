@@ -6,197 +6,122 @@
 <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
+
 {% block page_header %}
-    <div class="container header-container">
-        <div class="row">
-            <div class="col"></div>
-        </div>
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
     </div>
+</div>
 {% endblock %}
 
 {% block content %}
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <!-- Order Summary Column -->
-            <div class="col-12 col-lg-4 order-summary mb-5">
-                <p class="text-white">Order Summary ({{ product_count }})</p>
-                <div class="row">
-                    <div class="col-7 offset-2">
-                        <p class="mb-2 mt-0 small text-white">Item</p>
-                    </div>
-                    <div class="col-3 text-right">
-                        <p class="mb-2 mt-0 small text-white">Subtotal</p>
-                    </div>
+<div class="overlay"></div>
+<!-- Spinner -->
+<div id="loading-spinner" style="display: none; text-align: center;">
+    <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing..." class="img-fluid"
+        style="max-width: 100px;">
+    <p class="text-white mt-2">Please wait while we process your payment...</p>
+</div>
+<div class="container mt-5">
+    <div class="row text-white">
+        <!-- Order Summary -->
+        <div class="col-12 col-lg-4 order-summary mb-5">
+            <h4 class="text-white">Order Summary</h4>
+            {% for item in cart_items %}
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <img src="{{ item.product.image.url }}" class="rounded" style="width: 60px;">
+                <div class="ml-3">
+                    <p class="mb-0 text-white">{{ item.product.name }}</p>
+                    <small class="text-white">Qty: {{ item.quantity }}</small>
                 </div>
-                {% for item in cart_items %}
-                    <div class="row">
-                        <div class="col-2 mb-1">
-                            <a href="{% url 'product_detail' item.product.id %}">
-                                {% if item.product.image %}
-                                    <img class="w-100" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                                {% else %}
-                                    <img class="w-100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="col-7">
-                            <p class="my-0"><strong>{{ item.product.name }}</strong></p>
-                            <p class="my-0 small text-white">Qty: {{ item.quantity }}</p>
-                        </div>
-                        <div class="col-3 text-right">
-                            <p class="my-0 small text-white">€{{ item.subtotal|floatformat:2 }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-                <hr class="my-0">
-                <div class="row text-white text-right">
-                    <div class="col-7 offset-2">
-                        <p class="my-0">Order Total</p>
-                        <p class="my-0">Delivery</p>
-                        <p class="my-0">Grand Total</p>
-                    </div>
-                    <div class="col-3">
-                        <p class="my-0">€{{ total | floatformat:2 }}</p>
-                        <p class="my-0">€{{ delivery | floatformat:2 }}</p>
-                        <p class="my-0"><strong>€{{ grand_total | floatformat:2 }}</strong></p>
-                    </div>
-                </div>
+                <span class="text-white font-weight-bold">€{{ item.subtotal|floatformat:2 }}</span>
             </div>
-            
-            <!---Added spinner for responsiveness-->
-            <div id="loading-spinner" style="display: none; text-align: center;">
-                <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing..." />
-                <p>Please wait while we process your payment...</p>
-            </div>
-
-            <!-- Payment Information Column -->
-            <div class="col-12 col-lg-8 text-white">
-                <p>Please fill out the form below to complete your order</p>
-                <form id="payment-form" method="POST">
-                    {% csrf_token %}
-                    <!-- Details Fieldset -->
-                    <fieldset class="border p-4 mb-4">
-                        <legend class="w-auto">Details</legend>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                {{ form.full_name|as_crispy_field }}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {{ form.email|as_crispy_field }}
-                            </div>
-                        </div>
-                    </fieldset>
-                
-                    <!-- Delivery Fieldset -->
-                    <fieldset class="border p-4 mb-4">
-                        <legend class="w-auto">Delivery</legend>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                {{ form.phone_number|as_crispy_field }}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {{ form.country|as_crispy_field }}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                {{ form.postcode|as_crispy_field }}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {{ form.town_or_city|as_crispy_field }}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                {{ form.street_address1|as_crispy_field }}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                {{ form.street_address2|as_crispy_field }}
-                            </div>
-                        </div>
-                    </fieldset>
-                
-                    <!-- Payment Information Fieldset -->
-                    <fieldset class="border p-4 mb-4">
-                        <legend class="w-auto">Payment Information</legend>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <div id="card-element" class="form-control">
-                                    <!-- Stripe Card Element will be inserted here -->
-                                </div>
-                                <div id="card-errors" role="alert" class="text-danger mt-2"></div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12 d-flex justify-content-between align-items-center">
-                                <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary text-white">Back to Cart</a>
-                                <button type="submit" class="btn btn-primary w-50 ml-2" id="submit">Pay</button>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12 text-center">
-                                <small class="text-white">By clicking "Pay", your card will be charged.</small>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+            {% endfor %}
+            <hr>
+            <div class="text-right text-white">
+                <p>Order Total: €{{ total|floatformat:2 }}</p>
+                <p>Delivery: €{{ delivery|floatformat:2 }}</p>
+                <p class="h5 font-weight-bold">Grand Total: €{{ grand_total|floatformat:2 }}</p>
             </div>
         </div>
+
+        <!-- Checkout Form -->
+        <div class="col-12 col-lg-8">
+            <form method="POST" id="payment-form">
+                {% csrf_token %}
+                <h4 class="text-white mb-4">Please fill out the form below to complete Your Order</h4>
+                <!-- Details and Delivery -->
+                <div class="row text-white">
+                    <div class="col-md-6 mb-3">
+                        {{ form.full_name|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.email|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.phone_number|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.country|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.postcode|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.town_or_city|as_crispy_field }}
+                    </div>
+                    <div class="col-12 mb-3">
+                        {{ form.street_address1|as_crispy_field }}
+                    </div>
+                    <div class="col-12 mb-3">
+                        {{ form.street_address2|as_crispy_field }}
+                    </div>
+                </div>
+
+                <!-- Payment Information Fieldset -->
+                <fieldset class="border p-4 mb-4">
+                    <legend class="w-auto">Payment Information</legend>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div id="payment-element" class="mb-3">
+                                <!-- Stripe Card Element will be inserted here -->
+                            </div>
+                            <div id="card-errors" role="alert" class="text-danger mt-2"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 d-flex justify-content-between align-items-center">
+                            <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary text-white">Back to
+                                Cart</a>
+                            <button type="submit" class="btn btn-primary w-50 ml-2" id="submit">Pay</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 text-center">
+                            <small class="text-white">By clicking "Pay", your card will be charged.</small>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Submit Button -->
+                <div class="text-right">
+                    <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary text-white">Back to Cart</a>
+                    <button type="submit" class="btn btn-primary ml-2">Pay Now</button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
+
+
 {% endblock %}
 
 {% block postloadjs %}
-    {{ block.super }}
-    {{ stripe_public_key|json_script:'id_stripe_public_key' }}
-    {{ client_secret|json_script:'id_client_secret' }}
-
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        var stripe = Stripe('{{ stripe_public_key }}');
-        var elements = stripe.elements();
-        var card = elements.create('card');
-        card.mount('#card-element');
-        
-        card.on('change', function(event) {
-            var displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
-
-        var form = document.getElementById('payment-form');
-        var loadingSpinner = document.getElementById('loading-spinner');
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // Show loading spinner
-        loadingSpinner.style.display = 'block';
-
-            // Process the payment with Stripe
-            stripe.createToken(card).then(function(result) {
-                if (result.error) {
-                   // Hide spinner and show error message
-                   loadingSpinner.style.display = 'none';
-                   var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-                } else {
-                    // Add hidden input with token
-                    var hiddenInput = document.createElement('input');
-                    hiddenInput.setAttribute('type', 'hidden');
-                    hiddenInput.setAttribute('name', 'stripeToken');
-                    hiddenInput.setAttribute('value', result.token.id);
-                    form.appendChild(hiddenInput);
-
-                    // Submit the form   
-                    form.submit();
-                }
-            });
-        });
-    </script>
+{{ block.super }}
+{{ stripe_public_key|json_script:'id_stripe_public_key' }}
+{{ client_secret|json_script:'id_client_secret' }}
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'checkout/js/checkout.js' %}"></script>
 {% endblock %}

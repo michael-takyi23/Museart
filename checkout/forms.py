@@ -53,7 +53,3 @@ class OrderForm(forms.ModelForm):
                 'placeholder': 'Street Address 2 (Optional)',
             }),
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['country'].widget.attrs['class'] = 'form-control'

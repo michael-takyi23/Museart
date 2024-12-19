@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+
+
 {% block page_header %}
     <div class="container mt-5 text-center">
         <h1 class="display-1 text-danger">500</h1>
@@ -11,7 +13,7 @@
     <div class="overlay"></div>
     <div class="container text-warning text-center my-5">
         <p class="lead">Something went wrong on our end. Please try again later.</p>
-        <img src="{% static 'images/error-500.png' %}" alt="404 Error Image" class="img-fluid" style="max-width: 50%; margin: auto;">
+        <img src="{% static 'images/error-500.png' %}" alt="500 Error Image" class="img-fluid" style="max-width: 50%; margin: auto;">
         <a href="{% url 'home' %}" class="btn btn-primary mt-3">Go Back Home</a>
     </div>
 {% endblock %}

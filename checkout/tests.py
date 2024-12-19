@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
 from checkout.models import Order, Product
-from products.models import Product  # Import the correct model
 from django.template.loader import render_to_string
 from bs4 import BeautifulSoup
 
