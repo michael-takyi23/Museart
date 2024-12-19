@@ -27,19 +27,19 @@ def send_order_confirmation(order):
 
 
 def checkout(request):
-    stripe_public_key = settings.STRIPE_TEST_PUBLIC_KEY if settings.DEBUG else settings.STRIPE_LIVE_PUBLIC_KEY
-    stripe.api_key = settings.STRIPE_TEST_SECRET_KEY if settings.DEBUG else settings.STRIPE_LIVE_SECRET_KEY
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY if settings.DEBUG else settings.STRIPE_LIVE_PUBLIC_KEY
+    stripe.api_key = settings.STRIPE_SECRET_KEY if settings.DEBUG else settings.STRIPE_LIVE_SECRET_KEY
     
     client_secret = ''
-    success_url = ''
+    success_url = request.build_absolute_uri(reverse('order_confirmation', args=['<order_number>']))
 
     if request.method == "POST":
         form = OrderForm(request.POST)
         if form.is_valid():
             # Save order instance
             order = form.save(commit=False)
-            order.delivery_cost = 50.00  # Example default delivery cost
-            order.grand_total = order.delivery_cost + order.order_total  # Ensure grand total calculation
+            order.delivery_cost = 50.00  
+            order.grand_total = order.delivery_cost + order.order_total 
             order.save()
 
             # Create OrderLineItems
@@ -54,12 +54,15 @@ def checkout(request):
                 )
 
             # Create Stripe PaymentIntent
-            total_amount = int(order.grand_total * 100)  # Convert to cents
+            stripe_total = int(order.grand_total * 100)  # Convert to cents
+            stripe_api_key = stripe_secret_key
             intent = stripe.PaymentIntent.create(
-                amount=total_amount,
-                currency='usd',
+                amount=stripe_total,
+                currency=settings.STRIPE_CURRENCY,
                 metadata={'order_id': order.order_number}
             )
+            
+            client_secret = intent.client_secret 
 
             # Clear the cart
             request.session['cart'] = {}
@@ -70,13 +73,18 @@ def checkout(request):
             messages.error(request, "There was an error with your form submission. Please try again.")
     else:
         form = OrderForm()
+        
+        
+        if not stripe_public_key:
+            message.warning(request, 'Stripe public key is missing. Did you forget to set it in your environment?')
 
     context = {
-    'form': OrderForm,
-    'stripe_public_key': settings.STRIPE_TEST_PUBLIC_KEY,
-    'client_secret': '',  # No client_secret on GET requests  # From PaymentIntent
-    'success_url': success_url,
-   }
+    
+        'form': form,
+        'stripe_public_key': stripe_public_key,
+        'client_secret': client_secret,
+        'success_url': success_url,
+    }  
     return render(request, 'checkout/checkout.html', context)
 
 

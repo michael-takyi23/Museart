@@ -357,3 +357,172 @@ Traceback (most recent call last):
                      ^^^^^^^^^^
 AttributeError: 'str' object has no attribute 'form'
 "GET /checkout/ HTTP/1.1" 500 12488
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12488
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12488
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12488
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12556
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12495
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12492
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12495
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12495
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12498
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12491
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': intent.client_secret,
+                     ^^^^^^
+UnboundLocalError: cannot access local variable 'intent' where it is not associated with a value
+"GET /checkout/ HTTP/1.1" 500 12491
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': client_secret,
+                     ^^^^
+NameError: name 'clie' is not defined
+"GET /checkout/ HTTP/1.1" 500 12491
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 83, in checkout
+    'client_secret': '',
+                     ^
+NameError: name 'c' is not defined
+"GET /checkout/ HTTP/1.1" 500 12491

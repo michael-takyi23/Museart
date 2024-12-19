@@ -1,13 +1,9 @@
-// Get Stripe public key from the DOM
-const stripePublicKey = document.getElementById('id_stripe_public_key').textContent;
-
 // Initialize Stripe
+const stripePublicKey = document.getElementById('id_stripe_public_key').textContent;
 const stripe = Stripe(stripePublicKey);
 
-// Get the client secret
 const clientSecret = document.getElementById('id_client_secret').textContent;
 
-// Set up Stripe Elements
 const options = {
     clientSecret: clientSecret,
     appearance: {
@@ -23,6 +19,7 @@ const options = {
 };
 
 const elements = stripe.elements(options);
+// Create and mount Payment Element
 const paymentElement = elements.create('payment');
 paymentElement.mount('#payment-element');
 
