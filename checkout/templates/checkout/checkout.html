@@ -51,6 +51,10 @@
             <form method="POST" id="payment-form">
                 {% csrf_token %}
                 <h4 class="text-white mb-4">Please fill out the form below to complete Your Order</h4>
+
+                <!-- Hidden input for success URL -->
+                <input type="hidden" id="id_success_url" value="{{ success_url }}">
+                
                 <!-- Details and Delivery -->
                 <div class="row text-white">
                     <div class="col-md-6 mb-3">
