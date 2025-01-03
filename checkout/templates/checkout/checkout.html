@@ -28,17 +28,19 @@
         <!-- Order Summary -->
         <div class="col-12 col-lg-4 order-summary mb-5">
             <h4 class="text-white">Order Summary</h4>
+            <hr style="border-top: 1px solid #fff; opacity: 0.4;" />
             {% for item in cart_items %}
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <img src="{{ item.product.image.url }}" class="rounded" style="width: 60px;">
                 <div class="ml-3">
                     <p class="mb-0 text-white">{{ item.product.name }}</p>
                     <small class="text-white">Qty: {{ item.quantity }}</small>
+                    <small class="text-white">Price: {{ item.product.price }}</small>
                 </div>
                 <span class="text-white font-weight-bold">€{{ item.subtotal|floatformat:2 }}</span>
             </div>
             {% endfor %}
-            <hr>
+            <hr style="border-top: 1px solid #fff; opacity: 0.4;" />
             <div class="text-right text-white">
                 <p>Order Total: €{{ total|floatformat:2 }}</p>
                 <p>Delivery: €{{ delivery|floatformat:2 }}</p>
@@ -111,11 +113,7 @@
         </div>
     </div>
 </div>
-
-
-
 {% endblock %}
-
 {% block postloadjs %}
 {{ block.super }}
 {{ stripe_public_key|json_script:'id_stripe_public_key' }}

@@ -32,13 +32,13 @@ museart was developed to provide art lovers with a platform where they can easil
 
 ### User Features
 
-1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](images/landing_page.jpg)
+1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](static/images/landing_page.jpg)
 
-2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](images/products_page.jpg)
+2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](static/images/products_page.jpg)
 
 3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information.
-4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](media/spc-1-museart.png)
-5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.![checkout-payment](media/chckout-museart1.png) ![checkout-payment](media/chckout-museart2.png)
+4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart]()
+5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.![checkout-payment]()
 6. **Order History**: Logged-in users can view their previous orders and access detailed information about past purchases.
 7. **Artist Information**: Users can learn more about the artists behind each piece of work, with dedicated sections to showcase their biographies and stories.
 

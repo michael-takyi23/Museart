@@ -63,20 +63,28 @@ def remove_from_cart(request, item_id):
                     del cart[item_id]['items_by_size'][size]
                     if not cart[item_id]['items_by_size']:
                         cart.pop(item_id)
+                else:
+                    messages.warning(request, 'Item size not found in your cart.')
             else:
                 cart.pop(item_id)
 
             request.session['cart'] = cart  # Save session
             messages.success(request, 'Item removed from your cart.')
-        else:
-            messages.warning(request, 'Item not found in your cart.')
 
-        return HttpResponse(status=200)
+            # Return updated cart total
+            cart_total = sum(
+                item['quantity'] for item_id, item in cart.items() if isinstance(item, dict)
+            )
+            return JsonResponse({'cart_total': cart_total}, status=200)
+
+        messages.warning(request, 'Item not found in your cart.')
+        return HttpResponse(status=404)
 
     except Exception as e:
         logger.error(f"Error removing item {item_id} from cart: {e}")
         messages.error(request, "Failed to remove the item. Please try again.")
         return HttpResponse(status=500)
+
 
 
 # Update Cart
@@ -90,8 +98,7 @@ def update_cart(request, item_id):
         quantity = int(data.get('quantity', 1))
 
         if quantity <= 0:
-            messages.error(request, "Quantity must be greater than zero.")
-            return HttpResponse(status=400)
+            return JsonResponse({'error': "Quantity must be greater than zero."}, status=400)
 
         if size:
             if item_id in cart and 'items_by_size' in cart[item_id]:
@@ -101,12 +108,18 @@ def update_cart(request, item_id):
 
         request.session['cart'] = cart  # Save session
         messages.success(request, f'Updated {product.name} quantity to {quantity}.')
-        return HttpResponse(status=200)
+
+        # Calculate updated totals
+        item_subtotal = product.price * quantity
+        cart_total = sum(
+            item['quantity'] * product.price for item_id, item in cart.items() if isinstance(item, dict)
+        )
+        return JsonResponse({'item_subtotal': item_subtotal, 'cart_total': cart_total}, status=200)
 
     except Exception as e:
         logger.error(f"Error updating item {item_id} in cart: {e}")
-        messages.error(request, f"Error updating cart: {e}")
-        return HttpResponse(status=500)
+        return JsonResponse({'error': "Failed to update cart. Please try again."}, status=500)
+
 
 
 # Confirm Order
