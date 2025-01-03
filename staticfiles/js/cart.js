@@ -16,17 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     body: JSON.stringify({ quantity }),
                 })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json(); // Parse the updated cart data
-                    } else {
-                        throw new Error('Failed to update cart.');
-                    }
-                })
+                .then(response => response.json())
                 .then(data => {
-                    // Update subtotal and total dynamically
-                    document.querySelector(`.subtotal[data-item-id="${itemId}"]`).innerText = `€${data.item_subtotal.toFixed(2)}`;
-                    document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // Update subtotal and total dynamically
+                        document.querySelector(`.subtotal[data-item-id="${itemId}"]`).innerText = `€${data.item_subtotal.toFixed(2)}`;
+                        document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -52,17 +50,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
             })
             .then(response => {
-                if (response.ok) {
-                    // Remove the item's row dynamically
-                    document.querySelector(`.cart-item[data-item-id="${itemId}"]`).remove();
-                    return response.json(); // Parse the updated cart data
-                } else {
+                if (!response.ok) {
                     throw new Error('Failed to remove item.');
                 }
+                return response.json(); // Parse JSON response
             })
             .then(data => {
-                // Update the cart total dynamically
-                document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Remove the item's row dynamically
+                    const itemRow = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
+                    if (itemRow) {
+                        itemRow.remove();
+                    }
+                    // Update the cart total dynamically
+                    document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
+                }
             })
             .catch(error => {
                 console.error('Error:', error);

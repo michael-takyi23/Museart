@@ -55,6 +55,8 @@ form.addEventListener('submit', async (event) => {
     }
 });
 
+console.log("Form submitted");
+
 // Handle redirection on page load
 const queryClientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
 if (queryClientSecret) {

@@ -72,6 +72,12 @@ legend {
     color: #fff;
 }
 
+.btn:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
+}
+
+
 /* Loading Spinner */
 #loading-spinner {
     display: none;

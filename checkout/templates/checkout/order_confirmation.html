@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <div class="container">
         <h1>Order Confirmation</h1>
@@ -14,13 +15,13 @@
         <h3>Order Items:</h3>
         <ul>
             {% for item in order.lineitems.all %}
-                <li>{{ item.product.name }} - Qty: {{ item.quantity }} - Price: €{{ item.lineitem_total|floatformat:2 }}</li>
+                <li>{{ item.product.name }} - Qty: {{ item.quantity }} - Price: ${{ item.lineitem_total|floatformat:2 }}</li>
             {% endfor %}
         </ul>
 
-        <p><strong>Order Total:</strong> €{{ order.order_total|floatformat:2 }}</p>
-        <p><strong>Delivery:</strong> €{{ order.delivery_cost|floatformat:2 }}</p>
-        <p><strong>Grand Total:</strong> €{{ order.grand_total|floatformat:2 }}</p>
+        <p><strong>Order Total:</strong> ${{ order.order_total|floatformat:2 }}</p>
+        <p><strong>Delivery:</strong> ${{ order.delivery_cost|floatformat:2 }}</p>
+        <p><strong>Grand Total:</strong> ${{ order.grand_total|floatformat:2 }}</p>
 
         <a href="{% url 'products' %}" class="btn btn-primary">Continue Shopping</a>
     </div>

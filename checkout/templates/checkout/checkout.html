@@ -37,17 +37,20 @@
                     <small class="text-white">Qty: {{ item.quantity }}</small>
                     <small class="text-white">Price: {{ item.product.price }}</small>
                 </div>
-                <span class="text-white font-weight-bold">€{{ item.subtotal|floatformat:2 }}</span>
+                <span class="text-white font-weight-bold">${{ item.subtotal|floatformat:2 }}</span>
             </div>
             {% endfor %}
             <hr style="border-top: 1px solid #fff; opacity: 0.4;" />
             <div class="text-right text-white">
-                <p>Order Total: €{{ total|floatformat:2 }}</p>
-                <p>Delivery: €{{ delivery|floatformat:2 }}</p>
-                <p class="h5 font-weight-bold">Grand Total: €{{ grand_total|floatformat:2 }}</p>
+                <p>Order Total: ${{ total|floatformat:2 }}</p>
+                <p>Delivery: ${{ delivery|floatformat:2 }}</p>
+                <p class="h5 font-weight-bold">Grand Total: ${{ grand_total|floatformat:2 }}</p>
             </div>
         </div>
 
+        <div style="display:none;">
+            Client Secret: {{ client_secret }}
+        </div>
         <!-- Checkout Form -->
         <div class="col-12 col-lg-8">
             <form method="POST" id="payment-form">
@@ -118,6 +121,5 @@
 {{ block.super }}
 {{ stripe_public_key|json_script:'id_stripe_public_key' }}
 {{ client_secret|json_script:'id_client_secret' }}
-<script src="https://js.stripe.com/v3/"></script>
 <script src="{% static 'checkout/js/checkout.js' %}"></script>
 {% endblock %}

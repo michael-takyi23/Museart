@@ -12,10 +12,11 @@ django-crispy-forms==2.3
 django-money==3.5.2
 django-sendgrid-v5==1.2.4
 django-storages==1.14.4
+docutils==0.15.2
 git-filter-repo==2.47.0
 gunicorn==22.0.0
 iniconfig==2.0.0
-jmespath==1.0.1
+jmespath==0.9.5
 pillow==10.4.0
 pluggy==1.5.0
 psycopg2-binary==2.9.9

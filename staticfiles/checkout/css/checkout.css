@@ -37,18 +37,6 @@ legend {
     padding: 0 10px;
 }
 
-/* Payment Element Styling */
-#payment-element {
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    padding: 10px;
-    background: #fff;
-    min-height: 45px;
-    transition: border-color 0.2s ease-in-out;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    width: 100%;
-}
-
 #card-errors {
     margin-top: 10px;
     color: #dc3545;
@@ -83,6 +71,12 @@ legend {
     background-color: #6c757d;
     color: #fff;
 }
+
+.btn:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
+}
+
 
 /* Loading Spinner */
 #loading-spinner {
