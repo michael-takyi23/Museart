@@ -141,8 +141,6 @@
 
   {% block content %}{% endblock %}
 
-  {% block postloadjs %}
-
   <!--Footer section-->
   <footer class="footer bg-white text-black py-6 mt-5">
     <div class="container text-lg-right">
@@ -163,8 +161,8 @@
       <!-- Mailchimp signup form here -->
     </div>
   </footer>
-  
-    {{ block.super }}
+  {% block postloadjs %}
+  {{ block.super }}
     <script src="{% static 'js/toasts.js' %}"></script>
   {% endblock %}
   </body>
