@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security settings
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
-DEBUG = False
+DEBUG = "DEVELOPMENT" in os.environ
 
 ALLOWED_HOSTS = [
     '8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net', 
@@ -50,16 +50,17 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'djmoney',
     'home',
     'products',
     'cart',
     'checkout',
     
     # others
+    'djmoney',
     'crispy_forms',
     'crispy_bootstrap5',
     'storages',
+    
 ]
 
 MIDDLEWARE = [
