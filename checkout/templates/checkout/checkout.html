@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cart_extras %}
 {% load crispy_forms_tags %}
 
 {% block extra_css %}
@@ -17,12 +18,6 @@
 
 {% block content %}
 <div class="overlay"></div>
-<!-- Spinner -->
-<div id="loading-spinner" style="display: none; text-align: center;">
-    <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing..." class="img-fluid"
-        style="max-width: 100px;">
-    <p class="text-white mt-2">Please wait while we process your payment...</p>
-</div>
 <div class="container mt-5">
     <div class="row text-white">
         <!-- Order Summary -->
@@ -63,28 +58,39 @@
                 <!-- Details and Delivery -->
                 <div class="row text-white">
                     <div class="col-md-6 mb-3">
-                        {{ form.full_name|as_crispy_field }}
+                        {{ form.full_name | as_crispy_field }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        {{ form.email|as_crispy_field }}
+                        {{ form.email | as_crispy_field }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        {{ form.phone_number|as_crispy_field }}
+                        {{ form.phone_number | as_crispy_field }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        {{ form.country|as_crispy_field }}
+                        {{ form.country | as_crispy_field }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        {{ form.postcode|as_crispy_field }}
+                        {{ form.postcode | as_crispy_field }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        {{ form.town_or_city|as_crispy_field }}
+                        {{ form.town_or_city | as_crispy_field }}
                     </div>
                     <div class="col-12 mb-3">
-                        {{ form.street_address1|as_crispy_field }}
+                        {{ form.street_address1 | as_crispy_field }}
                     </div>
                     <div class="col-12 mb-3">
-                        {{ form.street_address2|as_crispy_field }}
+                        {{ form.street_address2 | as_crispy_field }}
+                    </div>
+                    <div class="form-check form-check-inline float-right mr-0">
+                        {% if user.is_authenticated %}
+                            <label class="form-check-label" for="id-save-info">Save this delivery information to my profile</label>
+                            <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info" checked>
+                        {% else %}
+                            <label class="form-check-label" for="id-save-info">
+                                <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or 
+                                <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                            </label>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -115,6 +121,14 @@
             </form>
         </div>
     </div>
+</div>
+<div class="overlay">
+    <!-- Spinner -->
+<div id="loading-spinner" style="display: none; text-align: center;">
+    <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing..." class="img-fluid"
+        style="max-width: 100px;">
+    <p class="text-white mt-2">Please wait while we process your payment...</p>
+</div>
 </div>
 {% endblock %}
 {% block postloadjs %}

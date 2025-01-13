@@ -1,7 +1,6 @@
 asgiref==3.8.1
 boto3==1.35.74
 botocore==1.35.74
-cloudinary==1.40.0
 crispy-bootstrap4==2024.1
 crispy-bootstrap5==2024.2
 dj-database-url==2.2.0

@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security settings
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
-DEBUG = "DEVELOPMENT" in os.environ
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net', 
@@ -31,8 +31,8 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://museart-b6682941c690.herokuapp.com',
     'https://8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net',
+    'https://museart-b6682941c690.herokuapp.com',
 
 ]
 
@@ -44,9 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary_storage',
     'django.contrib.sites',
-    'cloudinary',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -64,7 +62,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -188,9 +185,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -207,12 +202,19 @@ if os.getenv('USE_AWS', 'False') == 'True':
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    
+    
+    STORAGES = {
+    "default": {
+        "BACKEND": "custom_storages.MediaStorage",
+    },
+    "staticfiles": {"BACKEND": "custom_storages.StaticStorage"},
+}
+    
 
     # Static and media files
-    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     STATICFILES_LOCATION = 'static'
-    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-    MEDIAFILES_LOCATION = 'media'
+    MEDIAFILES_LOCATION = 'static'
 
     # Override static and media URLs in production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'

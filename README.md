@@ -1,6 +1,6 @@
 # MUSEART: E-Commerce Platform for Art Enthusiasts 
 
-**Museart** is an online platform designed for art enthusiasts to browse, purchase, and engage with a variety of artworks, such as drawings, sculptures, paintings and more. The platform provides a seamless experience for users to explore unique artistic creations, securely shop online, and manage their accounts. Additionally, museart offers a space for learning about various artists and their stories.
+**Museart** is an online B2C platform designed for art enthusiasts to browse, purchase, and engage with a variety of artworks, such as drawings, sculptures, paintings and more. The platform provides a seamless experience for users to explore unique artistic creations, securely shop online, and manage their accounts. Additionally, museart offers a space for learning about various artists and their stories.
 
 ## Table of Contents
 
@@ -17,6 +17,7 @@
   - [Database Setup](#database-setup)
   - [Running the Application](#running-the-application)
 - [Stripe Payment Integration](#stripe-payment-integration)
+- [Web Marketing](#web-marketing)
 - [Models](#models)
 - [Testing](#testing)
 - [Deployment](#deployment)
@@ -31,19 +32,26 @@ museart was developed to provide art lovers with a platform where they can easil
 ## Features
 
 ### User Features
+The following pages are visible to all users, logged in or not.
 
 1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](static/images/landing_page.jpg)
 
-2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. ![Artworks](static/images/products_page.jpg)
+2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart.![Artworks](static/images/products_page.jpg)
 
-3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information.
-4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart]()
-5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.![checkout-payment]()
-6. **Order History**: Logged-in users can view their previous orders and access detailed information about past purchases.
-7. **Artist Information**: Users can learn more about the artists behind each piece of work, with dedicated sections to showcase their biographies and stories.
+3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information. ![login-register]()...
+
+.This is the standard allauth login page, styled with the site styling, and including social login links for Google and Facebook.
+
+.This is the standard allauth signup page, with fields for email, username, and password + password confirmation. All fields are required.
+
+4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart]().....
+5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.![checkout-payment]()....
+6. **Checkout Success Page**:The Checkout Success page shows a Payment Successful message to the user at the top, and then summarizes both the order and the delivery details.![checkout-success]().....
+
+The following pages are visible to only logged in users.
+7. **Order History**: Logged-in users can view their previous orders and access detailed information about past purchases.
 
 ### Admin Features
-
 1. **Product Management**: Admins can add, edit, and remove products, as well as manage product categories.
 2. **Order Management**: Admins have access to view and manage user orders, including marking them as fulfilled.
 3. **User Management**: The platform allows admin control over user accounts, including viewing user information and handling support queries.
@@ -54,8 +62,20 @@ museart was developed to provide art lovers with a platform where they can easil
 2. **CSRF Protection**: Cross-Site Request Forgery protection is enabled to prevent unauthorized actions.
 3. **Stripe Payment Integration**: Payments are securely processed through Stripe’s payment gateway, ensuring safe transactions with industry-standard encryption.
 
-## Technologies Used
 
+
+## User Experience 
+- **Design**: 
+The Roboto font is used throughout the project. It's a simple, very legible sans-serif font, considered an amazing font because of its versatility and modern appearance, particularly on headings and larger font sizes and has a clean, geometric look that is legible at small sizes. Favicon.io was used to generate a favicon for the project. A favicon is a small, 16x16 pixel icon used on web browsers to represent a website or a web page. Short for “favorite icon", they're also found on your browser's bookmark bar, history and in search results, alongside the page url.
+
+- **Color Palette**: 
+The following colour palette was used in the project. [Coolors](https://coolors.co/) is an online tool that was used in generating the color palette via MuseArt's project logo or hero image, which is visible on the landing page. 
+ 
+ ![colors](static/images/MuseArt_Color_Palette.png)
+
+
+
+## Technologies Used
 - **Front-End**:
   - HTML
   - CSS (custom styling and Bootstrap 4 for responsive design)
@@ -127,12 +147,18 @@ Access the application at `http://127.0.0.1:8000/`.
 museart is integrated with **Stripe** to handle secure payments. During checkout, users can enter their card details, and Stripe securely processes the transaction. Ensure that the **Stripe public and secret keys** are set in your environment variables.
 
 For testing purposes, use Stripe’s test card numbers, such as:
-
 ```
 4242 4242 4242 4242 (Visa)
 CVC: Any 3 digits
 Expiry: Any future date
 ```
+
+## Web Marketing
+A facebook page was set up as the initial stage of a social media marketing strategy. The page mimics the styling of the site, with a Shop Now button in the page description. An introductory post was added to the page, containing another link to the site and inviting visitors to view the products and services on offer. In case the page is taken down, screenshots are included below...
+
+
+
+
 
 ## Models
 museart's core models include:
@@ -146,16 +172,13 @@ museart's core models include:
 You can run tests for the application using Django’s built-in test framework:
 ```bash
 python manage.py test
+
+. Manual testing
+. Validator testing
+. User story testing
+. Automated testing
+
 ```
-
-## Deployment
-museart is deployed on **Heroku** with a PostgreSQL database for production. Static and media files are served via **AWS S3**. To deploy:
-
-1. Set up your Heroku app and connect it to your GitHub repository.
-2. Set the necessary environment variables (as described above) in the Heroku dashboard.
-3. Push the code to Heroku:
-   ```bash
-   git push heroku main
 
 ## Project Management
 We are using GitHub Projects to manage tasks and workflows. Check out our [Kanban Board](https://github.com/michael-takyi23/MuseArt/projects/Museart-project) for the latest updates.
@@ -212,6 +235,16 @@ Museart’s marketing focuses on visually-driven social media platforms, educati
 
 ---
 
+## Deployment
+museart is deployed on **Heroku** with a PostgreSQL database for production. Static and media files are served via **AWS S3**. To deploy:
+
+1. Set up your Heroku app and connect it to your GitHub repository.
+2. Set the necessary environment variables (as described above) in the Heroku dashboard.
+3. Push the code to Heroku:
+   ```bash
+   git push heroku main
+
+   
 ## Acknowledgement 
 
 1. Django: The powerful web framework that served as the foundation of this project.

@@ -1,6 +1,6 @@
 
 body {
-    background-image: url('/static/images/museart.jpg');
+    background: url('/static/images/museart.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
