@@ -1,6 +1,6 @@
 
 body {
-    background: url('/static/images/museart.jpg');
+    background: url("/media/homepage_background_cropped.jpg") no-repeat center center fixed;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -77,8 +77,6 @@ strong {
 .border-white {
     border: 1px solid rgb(248, 45, 0) !important; 
 }
-
-
 
 .overlay {
     height: 100%;

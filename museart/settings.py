@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security settings
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net', 
@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'products',
     'cart',
     'checkout',
-    
     # others
     'djmoney',
     'crispy_forms',
@@ -185,6 +184,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
@@ -203,18 +203,11 @@ if os.getenv('USE_AWS', 'False') == 'True':
     AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     
-    
-    STORAGES = {
-    "default": {
-        "BACKEND": "custom_storages.MediaStorage",
-    },
-    "staticfiles": {"BACKEND": "custom_storages.StaticStorage"},
-}
-    
-
     # Static and media files
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     STATICFILES_LOCATION = 'static'
-    MEDIAFILES_LOCATION = 'static'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
 
     # Override static and media URLs in production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'

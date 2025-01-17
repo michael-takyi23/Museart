@@ -122,14 +122,15 @@
         </div>
     </div>
 </div>
-<div class="overlay">
     <!-- Spinner -->
-<div id="loading-spinner" style="display: none; text-align: center;">
-    <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing..." class="img-fluid"
-        style="max-width: 100px;">
-    <p class="text-white mt-2">Please wait while we process your payment...</p>
-</div>
-</div>
+    <div id='payment-overlay' class="payment-spinner d-none justify-content-center align-items-center postion-absolute">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Please wait while your payment is processed ...</h5>
+                <span class="text-center spinner-icon"><i class="fa-solid fa-spinner fa-spin"></i></span>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block postloadjs %}
 {{ block.super }}

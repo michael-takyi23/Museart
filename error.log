@@ -1744,3 +1744,27 @@ Traceback (most recent call last):
     raise self.model.DoesNotExist(
 django.contrib.sites.models.Site.DoesNotExist: Site matching query does not exist.
 "GET /admin/login/?next=/admin/sites HTTP/1.1" 500 12921
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/views.py", line 48, in checkout
+    order.save()
+  File "/workspace/Museart/checkout/models.py", line 41, in save
+    super().save(*args, **kwargs)
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/db/models/base.py", line 891, in save
+    self.save_base(
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/db/models/base.py", line 1012, in save_base
+    post_save.send(
+  File "/workspace/Museart/venv/lib/python3.12/site-packages/django/dispatch/dispatcher.py", line 189, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Museart/checkout/signals.py", line 9, in create_order_line_items
+    cart_items = cart_contents(instance.request)['cart_items']
+                               ^^^^^^^^^^^^^^^^
+AttributeError: 'Order' object has no attribute 'request'
+"POST /checkout/ HTTP/1.1" 500 12634
