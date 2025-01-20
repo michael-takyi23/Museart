@@ -1768,3 +1768,22 @@ Traceback (most recent call last):
                                ^^^^^^^^^^^^^^^^
 AttributeError: 'Order' object has no attribute 'request'
 "POST /checkout/ HTTP/1.1" 500 12634
+"GET /static/images/museart.jpg HTTP/1.1" 500 59
+"GET /static/js/toasts.js HTTP/1.1" 500 59
+"GET /static/css/base.css HTTP/1.1" 500 59
+"GET /static/css/auth.css HTTP/1.1" 500 59
+"GET /static/site.webmanifest HTTP/1.1" 500 59
+"GET /static/css/base.css HTTP/1.1" 500 59
+"GET /static/js/toasts.js HTTP/1.1" 500 59
+"GET /static/images/museart.jpg HTTP/1.1" 500 59
+"GET /static/css/auth.css HTTP/1.1" 500 59
+"GET /static/images/favicon-32x32.png HTTP/1.1" 500 59
+"GET /static/images/favicon-16x16.png HTTP/1.1" 500 59
+"GET /static/site.webmanifest HTTP/1.1" 500 59
+"GET /static/images/museart.jpg HTTP/1.1" 500 59
+"GET /static/js/toasts.js HTTP/1.1" 500 59
+"GET /static/css/base.css HTTP/1.1" 500 59
+"GET /static/css/auth.css HTTP/1.1" 500 59
+"GET /static/images/favicon-32x32.png HTTP/1.1" 500 59
+"GET /static/images/favicon-16x16.png HTTP/1.1" 500 59
+"GET /static/site.webmanifest HTTP/1.1" 500 59
