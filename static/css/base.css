@@ -25,7 +25,7 @@ body {
 }
 
 .my-0 {
-    color: rgb(0, 242, 255);
+    color: whitesmoke;
 }
 
 .main-logo-link {
@@ -56,8 +56,8 @@ strong {
 .btn-outline-black:hover,
 .btn-outline-black:active,
 .btn-outline-black:focus {
-    background: black;
-    color: white !important;
+    background: orange;
+    color: pink !important;
 }
 
 .shop-now-button:hover,
@@ -79,12 +79,12 @@ strong {
 }
 
 .overlay {
+    background: rgb(19, 252, 174);
     height: 100%;
     width: 100%;
     top: 0;
     left: 0;
     position: fixed;
-    background: rgb(29, 0, 71);
     z-index: -1;
 }
 
