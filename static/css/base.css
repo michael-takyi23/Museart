@@ -88,9 +88,25 @@ strong {
     z-index: -1;
 }
 
-a.cat-badge > span.badge:hover {
+/* a.cat-badge > span.badge:hover {
     background: #040000 !important;
     color: #fff !important;
+} */
+
+.cat-badge {
+    color: black;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.cat-badge:hover {
+    background-color: #007bff;
+    color: white;
 }
 
 .btt-btn {
