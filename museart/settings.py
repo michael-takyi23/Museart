@@ -10,9 +10,9 @@ from pathlib import Path
 import dj_database_url
 from django.contrib.messages import constants as messages
 from decouple import config
-
-# Load environment variables from env.py
 import env 
+
+
 
 
 
