@@ -1830,3 +1830,97 @@ Traceback (most recent call last):
   File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/http/request.py", line 151, in get_host
     raise DisallowedHost(msg)
 django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+"GET / HTTP/1.1" 500 59
+"GET / HTTP/1.1" 500 59
+"GET / HTTP/1.1" 500 59
+"GET /favicon.ico HTTP/1.1" 500 59
+"GET / HTTP/1.1" 500 59
+"GET /favicon.ico HTTP/1.1" 500 59
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/home/views.py", line 8, in index
+    return render(request, 'home/index.html')
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/base.py", line 169, in render
+    with context.bind_template(self):
+         ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/context.py", line 253, in bind_template
+    processors = template.engine.template_context_processors + self._processors
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/engine.py", line 118, in template_context_processors
+    return tuple(import_string(path) for path in context_processors)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/engine.py", line 118, in <genexpr>
+    return tuple(import_string(path) for path in context_processors)
+                 ~~~~~~~~~~~~~^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/utils/module_loading.py", line 30, in import_string
+    return cached_import(module_path, class_name)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/utils/module_loading.py", line 15, in cached_import
+    module = import_module(module_path)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'cart.context_processors'
+"GET / HTTP/1.1" 500 132175
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/home/views.py", line 8, in index
+    return render(request, 'home/index.html')
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/base.py", line 169, in render
+    with context.bind_template(self):
+         ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/context.py", line 253, in bind_template
+    processors = template.engine.template_context_processors + self._processors
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/engine.py", line 118, in template_context_processors
+    return tuple(import_string(path) for path in context_processors)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/template/engine.py", line 118, in <genexpr>
+    return tuple(import_string(path) for path in context_processors)
+                 ~~~~~~~~~~~~~^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/utils/module_loading.py", line 30, in import_string
+    return cached_import(module_path, class_name)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/utils/module_loading.py", line 15, in cached_import
+    module = import_module(module_path)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'cart.context_processors'
+"GET / HTTP/1.1" 500 132121

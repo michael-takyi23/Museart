@@ -10,22 +10,24 @@ from pathlib import Path
 import dj_database_url
 from django.contrib.messages import constants as messages
 from decouple import config
-from dotenv import load_dotenv
 
-# Load environment variables from .env
-load_dotenv()
+# Load environment variables from env.py
+import env 
+
+
+
 
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
-SECRET_KEY = os.getenv('SECRET_KEY', '')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-michaeltakyi23-museart-20h4ktke7yx.ws.codeinstitute-ide.net', 
-    '127.0.0.1:800', 
+    '127.0.0.1', 
     'localhost', 
     'museart-b6682941c690.herokuapp.com',
 ]
@@ -90,7 +92,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-                'cart.context_processors.cart_total_processor',
+                'cart.contexts.cart_total_processor',
+                'cart.contexts.cart_contents',
             ],
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',
