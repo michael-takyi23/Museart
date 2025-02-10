@@ -1,15 +1,18 @@
 /* Payment Element Styling */
 #payment-element {
-    box-sizing: border-box;
-    height: 45px;
-    padding: 10px 12px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    background-color: white;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    -webkit-transition: box-shadow 150ms ease;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     width: 100%;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+
+.StripeElement {
+    display: block;
+    width: 100%; /* Ensure full width inside container */
+    margin: 0 auto;
 }
 
 #payment-element:focus {
@@ -29,11 +32,44 @@
 
 /* Fieldset and Legend Styling */
 fieldset {
-    border: 2px solid #007bff;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    display: block;
     padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #007bff;
+    border-radius: 8px;
+    background-color: #1a1a40; /* Matches your dark theme */
+    color: #fff;
+    width: 100%; /* Ensures it spans full width */
+    max-width: none; /* Removes the width restriction */
 }
+
+
+/* Payment Button Alignment */
+#submit {
+    display: block;
+    width: 100%; /* Matches full width of the form */
+    max-width: 500px; /* Adds a maximum width for better visual consistency */
+    margin: 20px auto 0;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+#submit:hover {
+    background-color: #0056b3;
+}
+
+
+.form-group .btn {
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 450px;
+}
+
 
 legend {
     font-size: 1.2rem;
@@ -56,7 +92,6 @@ legend {
 }
 
 .btn-primary {
-    background-color: #007bff;
     border-color: #007bff;
     transition: all 0.3s ease;
 }
@@ -67,14 +102,24 @@ legend {
 }
 
 .btn-outline-secondary {
-    border-color: #6c757d;
-    color: #6c757d;
+    border-color: orange;
+    color: white;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+/* Align the buttons and adjust their width */
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px; /* Add spacing between the buttons */
+}
+
+/* Hover effect for the "Back to Cart" button */
 .btn-outline-secondary:hover {
-    background-color: #6c757d;
-    color: #fff;
+    background-color: orange;
+    color: white;
+    border-color: orange;
 }
 
 .btn:focus {
@@ -82,6 +127,11 @@ legend {
     outline-offset: 2px;
 }
 
+#card-errors {
+    margin-top: 10px;
+    color: #dc3545;
+    font-weight: bold;
+}
 
 /* Loading Spinner */
 #loading-spinner {
@@ -110,6 +160,12 @@ legend {
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     fieldset {
-        padding: 10px;
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    #payment-element,
+    #submit {
+        max-width: 100%;
     }
 }

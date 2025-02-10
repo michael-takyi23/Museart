@@ -1,6 +1,6 @@
 
 body {
-    background: url("/media/museart.jpg") no-repeat center center fixed;
+    background: url("/static/images/museart.jpg") no-repeat center center fixed;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -42,6 +42,10 @@ strong {
     min-width: 260px;
 }
 
+.hr {
+    color:#f8f9fa;
+}
+
 .btn-white {
     background: #000000; 
     color: rgb(255, 255, 255);
@@ -79,7 +83,7 @@ strong {
 }
 
 .overlay {
-    background: rgb(19, 252, 174);
+    background: rgb(20, 2, 60);
     height: 100%;
     width: 100%;
     top: 0;

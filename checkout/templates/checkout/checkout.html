@@ -99,19 +99,18 @@
                     <legend class="w-auto">Payment Information</legend>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <div id="payment-element" class="mb-3">
+                            <div id="payment-element" class="mb-4">
                                 <!-- Stripe Card Element will be inserted here -->
                             </div>
                             <div id="card-errors" role="alert" class="text-danger mt-2"></div>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12 d-flex justify-content-between align-items-center">
-                            <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary text-white">Back to
-                                Cart</a>
-                            <button type="submit" class="btn btn-primary w-50 ml-2" id="submit">Pay</button>
+                        <div class="form-group col-md-12 btn-group">
+                            <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary text-white">Back to Cart</a>
+                            <button type="submit" class="btn btn-primary" id="submit">Pay</button>
                         </div>
-                    </div>
+                    </div>                    
                     <div class="form-row">
                         <div class="form-group col-md-12 text-center">
                             <small class="text-white">By clicking "Pay", your card will be charged.</small>
@@ -134,7 +133,9 @@
 {% endblock %}
 {% block postloadjs %}
 {{ block.super }}
-{{ stripe_public_key|json_script:'id_stripe_public_key' }}
-{{ client_secret|json_script:'id_client_secret' }}
+<script type="application/json" id="id_stripe_public_key">{{ stripe_public_key|escapejs }}</script>
+<script type="application/json" id="id_client_secret">{{ client_secret|escapejs }}</script>
+<script type="application/json" id="id_success_url">{{ success_url|escapejs }}</script>
+
 <script src="{% static 'checkout/js/checkout.js' %}"></script>
 {% endblock %}

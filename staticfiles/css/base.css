@@ -1,6 +1,6 @@
 
 body {
-    background-image: url('/static/images/museart.jpg');
+    background: url("/static/images/museart.jpg") no-repeat center center fixed;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -25,7 +25,7 @@ body {
 }
 
 .my-0 {
-    color: rgb(0, 242, 255);
+    color: whitesmoke;
 }
 
 .main-logo-link {
@@ -42,6 +42,10 @@ strong {
     min-width: 260px;
 }
 
+.hr {
+    color:#f8f9fa;
+}
+
 .btn-white {
     background: #000000; 
     color: rgb(255, 255, 255);
@@ -56,8 +60,8 @@ strong {
 .btn-outline-black:hover,
 .btn-outline-black:active,
 .btn-outline-black:focus {
-    background: black;
-    color: white !important;
+    background: orange;
+    color: pink !important;
 }
 
 .shop-now-button:hover,
@@ -78,21 +82,35 @@ strong {
     border: 1px solid rgb(248, 45, 0) !important; 
 }
 
-
-
 .overlay {
+    background: rgb(20, 2, 60);
     height: 100%;
     width: 100%;
     top: 0;
     left: 0;
     position: fixed;
-    background: rgb(29, 0, 71);
     z-index: -1;
 }
 
-a.cat-badge > span.badge:hover {
+/* a.cat-badge > span.badge:hover {
     background: #040000 !important;
     color: #fff !important;
+} */
+
+.cat-badge {
+    color: black;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.cat-badge:hover {
+    background-color: #007bff;
+    color: white;
 }
 
 .btt-btn {
