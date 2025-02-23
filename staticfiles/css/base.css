@@ -146,8 +146,18 @@ strong {
     bottom: 20px;
     right: 20px;
     position: fixed;
+    z-index: 2000 !important;
 }
 
+.navbar {
+    z-index: 1050 !important; /* Keep it below toast */
+    position: sticky; /* Prevent layout shifts */
+    top: 0;
+}
+
+.bg-white {
+    color: #f10f0f;
+}
 
 
 /* -------------------------------- Media Queries */

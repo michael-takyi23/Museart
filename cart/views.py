@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib import messages
 from products.models import Product
+from django.views.decorators.http import require_POST
 import logging
 import json  # Required for parsing JSON data in `update_cart`
 
@@ -98,68 +99,37 @@ def remove_from_cart(request, item_id):
         return HttpResponse(status=500)
 
 
-
+# Update Cart Item Quantity
+@require_POST
 def update_cart(request, item_id):
-    """A view to update the quantity of an item in the shopping cart."""
     try:
-        # Parse JSON data from the request body
-        try:
-            data = json.loads(request.body.decode('utf-8'))
-        except (ValueError, TypeError) as e:
-            logger.error(f"Invalid JSON in request body: {e}")
-            return JsonResponse({'error': "Invalid request data."}, status=400)
+        # Parse JSON data from request body
+        data = json.loads(request.body)
+        quantity = data.get('quantity', 0)
+        
+        # Validate quantity
+        if quantity < 1:
+            return JsonResponse({'error': 'Quantity must be at least 1.'}, status=400)
+        
+        # Get the cart item and update quantity
+        cart_item = get_object_or_404(CartItem, product__id=item_id, user=request.user)
+        cart_item.quantity = quantity
+        cart_item.save()
 
-        # Validate input data
-        quantity = data.get('quantity')
-        if quantity is None:
-            return JsonResponse({'error': "Quantity is required."}, status=400)
-        try:
-            quantity = int(quantity)
-        except ValueError:
-            return JsonResponse({'error': "Quantity must be a number."}, status=400)
-        if quantity <= 0:
-            return JsonResponse({'error': "Quantity must be greater than zero."}, status=400)
-
-        size = data.get('size', None)
-
-        # Retrieve the cart from the session and the product from the database
-        cart = request.session.get('cart', {})
-        product = get_object_or_404(Product, pk=item_id)
-
-        # Update the cart
-        if size:
-            if item_id in cart:
-                if 'items_by_size' not in cart[item_id]:
-                    cart[item_id]['items_by_size'] = {}
-                cart[item_id]['items_by_size'][size] = quantity
-            else:
-                cart[item_id] = {'items_by_size': {size: quantity}}
-        else:
-            cart[item_id] = quantity
-
-        # Save the updated cart back to the session
-        request.session['cart'] = cart
-
-        # Calculate updated totals
-        item_subtotal = product.price * quantity
-        cart_total = sum(
-            item['quantity'] * product.price
-            if isinstance(item, dict) and 'quantity' in item
-            else item * product.price
-            for item_id, item in cart.items()
-        )
-
+        # Calculate subtotal and total
+        item_subtotal = cart_item.product.price * cart_item.quantity
+        cart_total = sum(item.product.price * item.quantity for item in CartItem.objects.filter(user=request.user))
+        
         return JsonResponse({
-            'item_subtotal': f"{item_subtotal:.2f}",
-            'cart_total': f"{cart_total:.2f}"
+            'item_subtotal': item_subtotal,
+            'cart_total': cart_total
         }, status=200)
 
-    except Exception as e:
-        logger.error(f"Error updating cart item (id: {item_id}, size: {size}): {e}")
-        return JsonResponse({'error': "Failed to update cart. Please try again."}, status=500)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid data format.'}, status=400)
+    except CartItem.DoesNotExist:
+        return JsonResponse({'error': 'Item not found.'}, status=404)
     
-    
-
 # Confirm Order
 def confirm_order(request):
     """ A view to confirm the order """

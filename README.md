@@ -73,6 +73,16 @@ The following colour palette was used in the project. [Coolors](https://coolors.
  
  ![colors](static/images/MuseArt_Color_Palette.png)
 
+ ## Wireframes 
+ 
+ - **Landing Page**: 
+  ![landing Page](static/images/landingpageframe.png)
+
+- **Products Display**: 
+  ![products Diplay](static/images/productsdisplayframe.png)
+
+- **Products Display**: 
+  ![products Details](static/images/productsdetailsframe.png)
 
 
 ## Technologies Used

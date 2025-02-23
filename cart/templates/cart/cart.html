@@ -16,58 +16,64 @@
     <h1 class="text-center logo-font text-white">Your Shopping Cart</h1>
 
     {% if cart_items %}
-    <div class="table-responsive">
-        <table class="table align-middle">
-            <!-- Table to display each item in the basket-->
-            <thead class="table-dark">
-                <tr class="text-center">
-                    <th>Image</th>
-                    <th>Product Info</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart_items %}
-                <tr>
-                    <td class="text-center">
-                        <img src="{{ item.product.image.url }}" 
-                             alt="{{ item.product.name }}" 
-                             class="img-thumbnail shadow-sm" width="80">
-                    </td>
-                    <td class="text-center text-white">{{ item.product.name }}</td>
-                    <td class="text-center text-white">${{ item.product.price|floatformat:2 }}</td>
-                    <td class="text-center">
-                        <input type="number" 
-                               class="form-control text-center quantity-input w-50 mx-auto" 
-                               value="{{ item.quantity }}" 
-                               data-item-id="{{ item.product.id }}" 
-                               min="1" max="99" 
-                               aria-label="Quantity for {{ item.product.name }}">
-                    </td>
-                    <td class="text-center text-white">
-                        ${{ item.product.price|multiply:item.quantity|floatformat:2 }}
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-sm btn-primary update-cart" 
-                                data-item-id="{{ item.product.id }}">Update</button>
-                        <button class="btn btn-sm btn-danger remove-item" 
-                                data-item-id="{{ item.product.id }}">Remove</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div class="text-right mt-4">
-        <div class="alert alert-info text-center p-3" role="alert">
-            <h4>Total:<strong>${{ total|floatformat:2 }}</strong></h4>
+    <form method="post" id="cart-form">
+        {% csrf_token %}
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th>Image</th>
+                        <th>Product Info</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr class="cart-item" data-item-id="{{ item.product.id }}">
+                        <td class="text-center">
+                            <img src="{{ item.product.image.url }}" 
+                                 alt="{{ item.product.name }}" 
+                                 class="img-thumbnail shadow-sm" width="80">
+                        </td>
+                        <td class="text-center text-white">{{ item.product.name }}</td>
+                        <td class="text-center text-white">
+                            ${{ item.product.price|floatformat:2 }}
+                        </td>
+                        <td class="text-center">
+                            <input type="number" 
+                                   class="form-control text-center quantity-input w-50 mx-auto" 
+                                   value="{{ item.quantity }}" 
+                                   data-item-id="{{ item.product.id }}" 
+                                   min="1" max="99" 
+                                   aria-label="Quantity for {{ item.product.name }}">
+                        </td>
+                        <td class="text-center text-white subtotal" data-item-id="{{ item.product.id }}">
+                            ${{ item.product.price|multiply:item.quantity|floatformat:2 }}
+                        </td>
+                        <td class="text-center">
+                            <button type="button" 
+                                    class="btn btn-sm btn-primary update-cart" 
+                                    data-item-id="{{ item.product.id }}">Update</button>
+                            <button type="button" 
+                                    class="btn btn-sm btn-danger remove-item" 
+                                    data-item-id="{{ item.product.id }}">Remove</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <a href="{% url 'checkout' %}" class="btn btn-success btn-lg mt-2">Proceed to Checkout</a>
-        <a href="{% url 'products' %}" class="btn btn-secondary btn-lg mt-2">Continue Shopping</a>
-    </div>
+        <div class="text-right mt-4">
+            <div class="alert alert-info text-center p-3" role="alert">
+                <h4>Total:<strong class="cart-total">${{ total|floatformat:2 }}</strong></h4>
+            </div>
+            <a href="{% url 'checkout' %}" class="btn btn-success btn-lg mt-2">Proceed to Checkout</a>
+            <a href="{% url 'products' %}" class="btn btn-secondary btn-lg mt-2">Continue Shopping</a>
+        </div>
+    </form>
     {% else %}
     <div class="alert alert-warning text-center my-5">
         Your cart is empty. <a href="{% url 'products' %}" class="alert-link">Shop now!</a>

@@ -2,27 +2,26 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to trigger a specific toast by its ID
     function showToast(toastId) {
         var toastEl = document.getElementById(toastId);
-        var toast = new bootstrap.Toast(toastEl);
-        toast.show();
+        if (toastEl) {
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        } else {
+            console.error(`Toast with ID "${toastId}" not found.`);
+        }
     }
-    
+
     // Add to Cart Toast
     const addToCartBtn = document.getElementById('addToCartBtn');
     if (addToCartBtn) {
         addToCartBtn.addEventListener('click', function () {
-            var toastEl = document.getElementById('addToCartToast');
-            var toast = new bootstrap.Toast(toastEl);
-            toast.show();
+            showToast('addToCartToast');
         });
     }
 
-    // Remove from Cart Toast
-    const removeItemBtns = document.querySelectorAll('.remove-item');
-    removeItemBtns.forEach(function (btn) {
+    // Remove from Cart Toasts
+    document.querySelectorAll('.remove-item').forEach(btn => {
         btn.addEventListener('click', function () {
-            var toastEl = document.getElementById('removeFromCartToast');
-            var toast = new bootstrap.Toast(toastEl);
-            toast.show();
+            showToast('removeFromCartToast');
         });
     });
 
@@ -30,18 +29,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmOrderBtn = document.getElementById('confirmOrderBtn');
     if (confirmOrderBtn) {
         confirmOrderBtn.addEventListener('click', function () {
-            var toastEl = document.getElementById('orderConfirmationToast');
-            var toast = new bootstrap.Toast(toastEl);
-            toast.show();
+            showToast('orderConfirmationToast');
         });
     }
 
-    // Error Toast (for example during a network issue or failed action)
+    // Error Toast Function
     function showErrorToast() {
-        var toastEl = document.getElementById('errorToast');
-        var toast = new bootstrap.Toast(toastEl);
-        toast.show();
+        showToast('errorToast');
     }
 
     // Example: Call showErrorToast() on an error scenario
+    // Example: Uncomment the next line to simulate an error toast trigger
+    // showErrorToast();
 });

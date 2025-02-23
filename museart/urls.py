@@ -39,7 +39,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')), 
     path('', include('home.urls')),
     path('products/', include('products.urls')),
-    path('cart/', include('cart.urls')),
+    path("cart/", include("cart.urls")),
     path('checkout/', include('checkout.urls')),
     path("robots.txt", robots_txt, name="robots_txt"),
     ] 
