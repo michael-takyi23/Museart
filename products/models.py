@@ -1,6 +1,10 @@
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
 from django.contrib.auth.models import User
 from djmoney.models.fields import MoneyField
+from django.core.exceptions import ValidationError
+
 
 # Category
 # Product
@@ -75,3 +79,35 @@ class Shipment(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     tracking_number = models.CharField(max_length=100)
     shipment_date = models.DateTimeField(auto_now_add=True)
+
+
+def get_default_end_date():
+    return timezone.now().date() + timedelta(days=14)
+
+
+class SpecialOffer(models.Model):
+    product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    discount_percentage = models.FloatField()
+    active = models.BooleanField(default=True)
+
+    def discount(self):
+        """Returns the discount percentage as a formatted string."""
+        return f"{self.discount_percentage}%"
+
+    discount.short_description = "Discount"  # Admin column name
+
+    start_date = models.DateField(default=timezone.now)  # ✅ Works fine
+    end_date = models.DateField(default=get_default_end_date)  # ✅ Uses a function Django can serialize
+
+    def is_live(self):
+        """Returns True if the current date falls within the special offer period."""
+        right_now = timezone.now().date()
+        return self.start_date <= right_now <= self.end_date
+
+    def clean(self):
+        """Validates that the start date is before the end date."""
+        if self.start_date > self.end_date:
+            raise ValidationError("Start date can't be after end date!")
+
+    def __str__(self):
+        return f'Offer: {self.product} - {self.discount_percentage}% off until {self.end_date}'

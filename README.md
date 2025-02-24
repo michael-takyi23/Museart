@@ -36,16 +36,19 @@ The following pages are visible to all users, logged in or not.
 
 1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](static/images/landing_page.jpg)
 
-2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart.![Artworks](static/images/products_page.jpg)
+2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart.![Artworks](static/images/products_page.png)
 
-3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information. ![login-register]()...
+3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information.  
+.This is the standard allauth login page, custom styled.
+![login-register](static/images/login-register.png),
 
-.This is the standard allauth login page, styled with the site styling, and including social login links for Google and Facebook.
+.This is the standard allauth signup page, with fields for email, username, and password + password confirmation. All fields are required. ![create-account](static/images/create-account.png)
 
-.This is the standard allauth signup page, with fields for email, username, and password + password confirmation. All fields are required.
+4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](static/images/cart.png)
 
-4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart]().....
-5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards.![checkout-payment]()....
+5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards. ![checkout-order-summary-delivery-info](static/images/checkout.png), 
+![checkout-payment](static/images/checkoutpayment.png),
+
 6. **Checkout Success Page**:The Checkout Success page shows a Payment Successful message to the user at the top, and then summarizes both the order and the delivery details.![checkout-success]().....
 
 The following pages are visible to only logged in users.
@@ -81,7 +84,7 @@ The following colour palette was used in the project. [Coolors](https://coolors.
 - **Products Display**: 
   ![products Diplay](static/images/productsdisplayframe.png)
 
-- **Products Display**: 
+- **Products Details**: 
   ![products Details](static/images/productsdetailsframe.png)
 
 

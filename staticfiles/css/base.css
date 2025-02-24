@@ -29,7 +29,12 @@ body {
 }
 
 .main-logo-link {
-    width: 100%;
+    display: inline-block;
+}
+
+.main-logo-link img {
+    display: block;
+    height: 80px; 
 }
 
 strong {
