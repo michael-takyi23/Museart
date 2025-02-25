@@ -2309,3 +2309,83 @@ Traceback (most recent call last):
     )
 django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 64: 'urls'. Did you forget to register or load this tag?
 "GET / HTTP/1.1" 500 203281
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 47, in checkout
+    data = json.loads(request.body)
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 74, in checkout
+    except json.JSONDecodeError:
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+"POST /checkout/ HTTP/1.1" 500 78428
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 47, in checkout
+    data = json.loads(request.body)
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 74, in checkout
+    except json.JSONDecodeError:
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+"POST /checkout/ HTTP/1.1" 500 78163
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 49, in checkout
+    data = json.loads(request.body)
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 87, in checkout
+    except json.JSONDecodeError:
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+"POST /checkout/ HTTP/1.1" 500 81755
+Internal Server Error: /checkout/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 49, in checkout
+    data = json.loads(request.body)
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 87, in checkout
+    except json.JSONDecodeError:
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+"POST /checkout/ HTTP/1.1" 500 81755

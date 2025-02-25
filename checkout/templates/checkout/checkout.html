@@ -32,6 +32,7 @@
                     <small class="text-white">Qty: {{ item.quantity }}</small>
                     <small class="text-white">Price: {{ item.product.price }}</small>
                 </div>
+                <hr style="border-top: 1px solid #fff; opacity: 0.4;" />
                 <span class="text-white font-weight-bold">${{ item.subtotal|floatformat:2 }}</span>
             </div>
             {% endfor %}
@@ -48,7 +49,7 @@
         </div>
         <!-- Checkout Form -->
         <div class="col-12 col-lg-8">
-            <form method="POST" id="payment-form">
+            <form method="POST" id="payment-form" action="">
                 {% csrf_token %}
                 <h4 class="text-white mb-4">Please fill out the form below to complete Your Order</h4>
 
@@ -107,8 +108,12 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12 btn-group">
-                            <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary text-white">Back to Cart</a>
                             <button type="submit" class="btn btn-primary" id="submit">Pay</button>
+                        </div>
+                    </div>   
+                    <div class="form-row">
+                        <div>
+                            <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary text-white">Back to Cart</a>
                         </div>
                     </div>                    
                     <div class="form-row">
