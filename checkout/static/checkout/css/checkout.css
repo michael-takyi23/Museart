@@ -134,18 +134,25 @@ legend {
 }
 
 /* Loading Spinner */
-#loading-spinner {
-    display: none;
+#payment-overlay {
+    display: none; /* Hidden by default */
     text-align: center;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
+    background: rgba(0, 0, 0, 0.5); /* Ensures overlay covers screen */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#loading-spinner img {
-    animation: spin 2s linear infinite;
+/* Loading Spinner Animation */
+#payment-overlay img {
+    animation: spin 1.5s linear infinite;
 }
 
 @keyframes spin {
@@ -156,6 +163,7 @@ legend {
         transform: rotate(360deg);
     }
 }
+
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {

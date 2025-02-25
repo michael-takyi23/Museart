@@ -1,12 +1,7 @@
-// Wait for DOM to load before executing script
 document.addEventListener("DOMContentLoaded", async function () {
-
-    // Get Stripe keys and clientSecret from the template
     const stripePublicKey = document.getElementById('id_stripe_public_key')?.textContent.trim();
     const clientSecret = document.getElementById('id_client_secret')?.textContent.trim();
-    const successUrl = document.getElementById('id_success_url')?.value;
 
-    // Ensure Stripe public key is available
     if (!stripePublicKey) {
         console.error("Stripe public key is missing!");
         return;
@@ -14,15 +9,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (!clientSecret) {
         console.error("Client secret is missing! Payment Intent may not have been created.");
-        document.getElementById('card-errors').textContent = "Error: Payment cannot be processed.";
+        const errorContainer = document.getElementById('card-errors');
+        if (errorContainer) {
+            errorContainer.textContent = "Error: Payment cannot be processed.";
+        }
         return;
     }
 
-    // Initialize Stripe
     const stripe = Stripe(stripePublicKey);
-
-    // Stripe Elements options
-    const options = {
+    const elements = stripe.elements({
         clientSecret: clientSecret,
         appearance: {
             theme: 'flat',
@@ -34,62 +29,70 @@ document.addEventListener("DOMContentLoaded", async function () {
                 borderRadius: '5px',
             },
         },
-    };
+    });
 
-    // Create Stripe elements
-    const elements = stripe.elements(options);
     const paymentElement = elements.create('payment');
     paymentElement.mount('#payment-element');
 
-    // Form Submission Handler
     const form = document.getElementById('payment-form');
-    const loadingSpinner = document.getElementById('loading-spinner');
+    const loadingSpinner = document.getElementById('payment-overlay');
     const errorContainer = document.getElementById('card-errors');
     const submitButton = form.querySelector('button[type="submit"]');
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        // Show spinner and disable button
-        loadingSpinner.style.display = 'block';
+        if (loadingSpinner) loadingSpinner.classList.remove("d-none");
         submitButton.disabled = true;
+        if (errorContainer) errorContainer.textContent = "";
 
         try {
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: successUrl,  // Redirect after successful payment
+                    return_url: window.location.href,
                 },
             });
 
             if (error) {
                 console.error("Payment error:", error.message);
-                errorContainer.textContent = error.message;
+                if (errorContainer) errorContainer.textContent = error.message;
             } else if (paymentIntent && paymentIntent.status === 'succeeded') {
                 console.log("Payment successful!");
-                window.location.href = successUrl; // Redirect on success
+                fetch("/checkout/", { method: "POST" })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            if (errorContainer) errorContainer.textContent = "Error processing payment. Please contact support.";
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Unexpected error:", err);
+                        if (errorContainer) errorContainer.textContent = 'An unexpected error occurred.';
+                    });
             } else {
-                errorContainer.textContent = "Payment processing error. Please try again.";
+                if (errorContainer) errorContainer.textContent = "Payment processing error. Please try again.";
             }
         } catch (err) {
             console.error("Unexpected error:", err);
-            errorContainer.textContent = 'An unexpected error occurred.';
+            if (errorContainer) errorContainer.textContent = 'An unexpected error occurred.';
         } finally {
             submitButton.disabled = false;
-            loadingSpinner.style.display = 'none';
+            if (loadingSpinner) loadingSpinner.classList.add("d-none");
         }
     });
 
-    // Handle redirection on page load (for Stripe's PaymentIntent flow)
     const queryClientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
     if (queryClientSecret) {
         stripe.retrievePaymentIntent(queryClientSecret).then(({ paymentIntent }) => {
             const messageContainer = document.getElementById('message');
-            if (paymentIntent) {
+            if (paymentIntent && messageContainer) {
                 switch (paymentIntent.status) {
                     case 'succeeded':
                         messageContainer.innerText = 'Success! Payment received.';
-                        window.location.href = successUrl;
+                        setTimeout(() => window.location.href = window.location.href, 2000);
                         break;
                     case 'processing':
                         messageContainer.innerText = "Payment processing. We'll update you soon.";
@@ -101,6 +104,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                         messageContainer.innerText = 'Something went wrong. Please try again.';
                 }
             }
+        }).catch((err) => {
+            console.error("Error retrieving payment intent:", err);
         });
     }
 });
