@@ -2389,3 +2389,108 @@ Traceback (most recent call last):
            ^^^^
 NameError: name 'json' is not defined. Did you forget to import 'json'?
 "POST /checkout/ HTTP/1.1" 500 81755
+Internal Server Error: /cart/remove/3/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 96, in remove_from_cart
+    return JsonResponse({'success': True, 'cart_total': cart_total}, status=200)
+           ^^^^^^^^^^^^
+NameError: name 'JsonResponse' is not defined. Did you mean: 'HttpResponse'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/views/decorators/http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 102, in remove_from_cart
+    return JsonResponse({'error': 'Failed to remove item.'}, status=500)
+           ^^^^^^^^^^^^
+NameError: name 'JsonResponse' is not defined. Did you mean: 'HttpResponse'?
+"POST /cart/remove/3/ HTTP/1.1" 500 82950
+Internal Server Error: /cart/update/3/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 128, in update_cart
+    return JsonResponse({
+           ^^^^^^^^^^^^
+NameError: name 'JsonResponse' is not defined. Did you mean: 'HttpResponse'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/views/decorators/http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 139, in update_cart
+    return JsonResponse({'error': 'Failed to update cart.'}, status=500)
+           ^^^^^^^^^^^^
+NameError: name 'JsonResponse' is not defined. Did you mean: 'HttpResponse'?
+"POST /cart/update/3/ HTTP/1.1" 500 84221
+Internal Server Error: /cart/remove/3/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 96, in remove_from_cart
+    return JsonResponse({'success': True, 'cart_total': cart_total}, status=200)
+           ^^^^^^^^^^^^
+NameError: name 'JsonResponse' is not defined. Did you mean: 'HttpResponse'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/views/decorators/http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 102, in remove_from_cart
+    return JsonResponse({'error': 'Failed to remove item.'}, status=500)
+           ^^^^^^^^^^^^
+NameError: name 'JsonResponse' is not defined. Did you mean: 'HttpResponse'?
+"POST /cart/remove/3/ HTTP/1.1" 500 82950
+Internal Server Error: /cart/update/3/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 110, in update_cart
+    data = json.loads(request.body)
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/views/decorators/http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 135, in update_cart
+    except json.JSONDecodeError:
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+"POST /cart/update/3/ HTTP/1.1" 500 81737
+Internal Server Error: /cart/update/2/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 110, in update_cart
+    data = json.loads(request.body)
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/views/decorators/http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/cart/views.py", line 135, in update_cart
+    except json.JSONDecodeError:
+           ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+"POST /cart/update/2/ HTTP/1.1" 500 81737

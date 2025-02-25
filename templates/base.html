@@ -53,10 +53,9 @@
   <title>{% block extra_tittle %} MUSEART {% endblock %}</title>
 
   {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
   {% endblock %}
 </head>
-
+<script src="{% static 'js/cart.js' %}?v={{ time }}"></script>
 <body>
   <header class="container-fluid fixed-top">
     <div id="topnav" class="row bg-dark pt-lg-3 d-none d-lg-flex align-items-center">

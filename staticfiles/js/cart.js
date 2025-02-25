@@ -1,9 +1,16 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Event Delegation for Update and Remove Buttons
-    document.addEventListener('click', function (event) {
-        // Update Cart Quantity
-        if (event.target.classList.contains('update-cart')) {
-            const itemId = event.target.dataset.itemId;
+console.log("✅ cart.js is running from file...");
+alert("✅ cart.js is executing!");
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ DOMContentLoaded event fired! JavaScript is running.");
+    alert("✅ JavaScript is executing after page load!");
+});
+
+    // Ensure buttons exist before adding event listeners
+    document.querySelectorAll(".update-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            console.log("✅ Update button clicked!");
+            const itemId = this.dataset.itemId;
             const quantityInput = document.querySelector(`.quantity-input[data-item-id="${itemId}"]`);
             const quantity = parseInt(quantityInput.value);
 
@@ -12,17 +19,21 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 alert('Quantity must be greater than zero.');
             }
-        }
+        });
+    });
 
-        // Remove Item from Cart
-        if (event.target.classList.contains('remove-item')) {
-            const itemId = event.target.dataset.itemId;
+    document.querySelectorAll(".remove-item").forEach(button => {
+        button.addEventListener("click", function () {
+            console.log("✅ Remove button clicked!");
+            const itemId = this.dataset.itemId;
             removeFromCart(itemId);
-        }
+        });
     });
 
     // Update Cart Function
     function updateCart(itemId, quantity) {
+        console.log(`📡 Sending update request for item ${itemId}, quantity: ${quantity}`);
+
         fetch(`/cart/update/${itemId}/`, {
             method: 'POST',
             headers: {
@@ -31,29 +42,27 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({ quantity }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to update cart.');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
+            console.log("✅ Server Response:", data);
             if (data.error) {
                 alert(data.error);
             } else {
-                // Update Subtotal and Total dynamically
                 document.querySelector(`.subtotal[data-item-id="${itemId}"]`).innerText = `€${data.item_subtotal.toFixed(2)}`;
                 document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
+                setTimeout(() => location.reload(), 500);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error("❌ Error updating cart:", error);
             alert('Failed to update cart. Please try again.');
         });
     }
 
     // Remove Item Function
     function removeFromCart(itemId) {
+        console.log(`📡 Sending remove request for item ${itemId}`);
+
         fetch(`/cart/remove/${itemId}/`, {
             method: 'POST',
             headers: {
@@ -61,34 +70,46 @@ document.addEventListener('DOMContentLoaded', function () {
                 'X-CSRFToken': getCSRFToken(),
             },
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to remove item.');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
+            console.log("✅ Server Response:", data);
             if (data.error) {
                 alert(data.error);
             } else {
-                // Remove the item's row dynamically
-                const itemRow = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
-                if (itemRow) {
-                    itemRow.remove();
-                }
-                // Update the cart total dynamically
+                document.querySelector(`.cart-item[data-item-id="${itemId}"]`).remove();
                 document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
+                setTimeout(() => location.reload(), 500);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error("❌ Error removing item:", error);
             alert('Failed to remove item. Please try again.');
         });
     }
 
-    // Helper function to get CSRF token
     function getCSRFToken() {
         return document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
                document.querySelector('meta[name="csrf-token"]')?.content || '';
     }
 });
+
+console.log("✅ cart.js is running...");
+
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("✅ DOM is fully loaded");
+
+    document.querySelectorAll(".update-cart").forEach(button => {
+        console.log("🔄 Found update button:", button); // ✅ Log all buttons found
+        button.addEventListener("click", function () {
+            console.log("✅ Update button clicked for item:", this.dataset.itemId);
+        });
+    });
+
+    document.querySelectorAll(".remove-item").forEach(button => {
+        console.log("🗑 Found remove button:", button); // ✅ Log all buttons found
+        button.addEventListener("click", function () {
+            console.log("✅ Remove button clicked for item:", this.dataset.itemId);
+        });
+    });
+});
+

@@ -1,9 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Event Delegation for Update and Remove Buttons
-    document.addEventListener('click', function (event) {
-        // Update Cart Quantity
-        if (event.target.classList.contains('update-cart')) {
-            const itemId = event.target.dataset.itemId;
+console.log("✅ cart.js is running...");
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ DOMContentLoaded event fired! JavaScript is running.");
+
+    // Attach event listeners to update and remove buttons
+    document.querySelectorAll(".update-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            console.log("✅ Update button clicked!");
+            const itemId = this.dataset.itemId;
             const quantityInput = document.querySelector(`.quantity-input[data-item-id="${itemId}"]`);
             const quantity = parseInt(quantityInput.value);
 
@@ -12,17 +16,22 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 alert('Quantity must be greater than zero.');
             }
-        }
+        });
+    });
 
-        // Remove Item from Cart
-        if (event.target.classList.contains('remove-item')) {
-            const itemId = event.target.dataset.itemId;
+    document.querySelectorAll(".remove-item").forEach(button => {
+        console.log("🗑 Found remove button:", button);
+        button.addEventListener("click", function () {
+            console.log("✅ Remove button clicked!");
+            const itemId = this.dataset.itemId;
             removeFromCart(itemId);
-        }
+        });
     });
 
     // Update Cart Function
     function updateCart(itemId, quantity) {
+        console.log(`📡 Sending update request for item ${itemId}, quantity: ${quantity}`);
+
         fetch(`/cart/update/${itemId}/`, {
             method: 'POST',
             headers: {
@@ -31,29 +40,27 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({ quantity }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to update cart.');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
+            console.log("✅ Server Response:", data);
             if (data.error) {
                 alert(data.error);
             } else {
-                // Update Subtotal and Total dynamically
+                // Update UI dynamically without page reload
                 document.querySelector(`.subtotal[data-item-id="${itemId}"]`).innerText = `€${data.item_subtotal.toFixed(2)}`;
                 document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error("❌ Error updating cart:", error);
             alert('Failed to update cart. Please try again.');
         });
     }
 
     // Remove Item Function
     function removeFromCart(itemId) {
+        console.log(`📡 Sending remove request for item ${itemId}`);
+
         fetch(`/cart/remove/${itemId}/`, {
             method: 'POST',
             headers: {
@@ -61,13 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 'X-CSRFToken': getCSRFToken(),
             },
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to remove item.');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
+            console.log("✅ Server Response:", data);
             if (data.error) {
                 alert(data.error);
             } else {
@@ -76,12 +79,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (itemRow) {
                     itemRow.remove();
                 }
-                // Update the cart total dynamically
+                // Update cart total dynamically
                 document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error("❌ Error removing item:", error);
             alert('Failed to remove item. Please try again.');
         });
     }
