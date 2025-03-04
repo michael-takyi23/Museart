@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 document.querySelector(`.cart-item[data-item-id="${itemId}"]`).remove();
                 document.querySelector('.cart-total').innerText = `€${data.cart_total.toFixed(2)}`;
-                setTimeout(() => location.reload(), 500);
+                setTimeout(() => location.reload(), 5000);
             }
         })
         .catch(error => {
