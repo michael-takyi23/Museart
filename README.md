@@ -60,12 +60,9 @@ The following pages are visible to only logged in users.
 3. **User Management**: The platform allows admin control over user accounts, including viewing user information and handling support queries.
 
 ### Security Features
-
 1. **Authentication & Authorization**: museart uses Django Allauth for secure user authentication and registration, including email verification.
 2. **CSRF Protection**: Cross-Site Request Forgery protection is enabled to prevent unauthorized actions.
 3. **Stripe Payment Integration**: Payments are securely processed through Stripe’s payment gateway, ensuring safe transactions with industry-standard encryption.
-
-
 
 ## User Experience 
 - **Design**: 
@@ -86,6 +83,12 @@ The following colour palette was used in the project. [Coolors](https://coolors.
 
 - **Products Details**: 
   ![products Details](static/images/productsdetailsframe.png)
+
+
+  ## Entity Relationship Diagram (ERD)
+Below is the database structure:
+![ERD Diagram](database-erd.png)
+
 
 
 ## Technologies Used

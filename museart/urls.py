@@ -18,14 +18,16 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
-from django.urls import path
-from home import views
 
-handler404 = 'home.views.custom_404_view'
-handler500 = 'home.views.custom_500_view'
+# Error Handlers
+handler404 = "home.views.custom_404_view"
+handler500 = "home.views.custom_500_view"
 
-# Define robots.txt
+# Robots.txt View
 def robots_txt(request):
+    """
+    Serve a simple robots.txt file to guide search engine crawlers.
+    """
     content = (
         "User-agent: *\n"
         "Disallow: /admin/\n"
@@ -34,16 +36,23 @@ def robots_txt(request):
     )
     return HttpResponse(content, content_type="text/plain")
 
+# URL Patterns
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')), 
-    path('', include('home.urls')),
-    path('products/', include('products.urls')),
-    path("cart/", include("cart.urls")),
-    path('checkout/', include('checkout.urls')),
-    path("robots.txt", robots_txt, name="robots_txt"),
-    ] 
+    path("admin/", admin.site.urls),  # ✅ Admin Panel
+    path("accounts/", include("allauth.urls")),  # ✅ Authentication (Login/Signup)
+    
+    # Core App URLs
+    path("", include("home.urls")),  # ✅ Home Page
+    path("products/", include("products.urls")),  # ✅ Products App
+    path("cart/", include("cart.urls")),  # ✅ Shopping Cart
+    path("checkout/", include("checkout.urls")),  # ✅ Checkout Process
+    path("profile/", include("profiles.urls")),  # ✅ User Profile
 
+    # Miscellaneous
+    path("robots.txt", robots_txt, name="robots_txt"),  # ✅ Robots.txt for SEO
+]
+
+# Serve static & media files in development mode
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

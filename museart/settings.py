@@ -39,6 +39,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Application definition
 INSTALLED_APPS = [
+    # ✅ Built-in Django apps (should always come first)
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,19 +47,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
+    # ✅ Third-party authentication apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'home',
-    'products',
-    'cart',
-    'checkout',
-    # others
+
+    # ✅ custom apps 
+    'home',        # Homepage app 
+    'profiles',    # User profiles 
+    'products',    # Product management 
+    'cart',        # Shopping cart 
+    'checkout',    
+
+    # ✅ Third-party packages 
     'crispy_forms',
     'crispy_bootstrap5',
-    'storages',
-    
+    'storages',  # Used for media file handling (like AWS S3)
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,11 +150,16 @@ if 'DATABASE_URL' in os.environ:
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
+}
+
     
 
 # Password validation
