@@ -1,9 +1,12 @@
 asgiref==3.8.1
+autopep8==2.3.2
 babel==2.17.0
+black==25.1.0
 boto3==1.35.74
 botocore==1.35.74
 certifi==2025.1.31
 charset-normalizer==3.4.1
+click==8.1.8
 cloudinary==1.42.1
 crispy-bootstrap4==2024.1
 crispy-bootstrap5==2024.2
@@ -11,6 +14,7 @@ dj-database-url==2.2.0
 dj3-cloudinary-storage==0.0.6
 Django==5.1
 django-allauth==0.63.3
+django-countries==7.6.1
 django-crispy-forms==2.3
 django-money==3.5.2
 django-sendgrid-v5==1.2.4
@@ -21,11 +25,15 @@ gunicorn==22.0.0
 idna==3.10
 iniconfig==2.0.0
 jmespath==0.9.5
+mypy-extensions==1.0.0
 packaging==24.2
+pathspec==0.12.1
 pillow==10.4.0
+platformdirs==4.3.6
 pluggy==1.5.0
 psycopg2-binary==2.9.10
 py-moneyed==3.0
+pycodestyle==2.12.1
 pytest==8.3.4
 pytest-django==4.9.0
 python-dateutil==2.9.0.post0
