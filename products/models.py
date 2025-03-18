@@ -25,6 +25,7 @@ class Category(models.Model):
     def _str_(self):
         return self.name
 
+# products/models.py
 class Product(models.Model):
     category = models.ForeignKey('category', null=True, blank=True, on_delete=models.CASCADE)
     Sku = models.CharField(max_length=254, null=True, blank=True)

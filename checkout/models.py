@@ -1,15 +1,13 @@
 import uuid
+from decimal import Decimal
 from django.db import models
 from django.db.models import Sum
 from django.conf import settings
 from django_countries.fields import CountryField
-
 from products.models import Product
 from profiles.models import UserProfile
-from cart.contexts import cart_contents
 
 
-# ✅ Function to generate unique order numbers (move it outside the model)
 def generate_order_number():
     """
     Generate a random, unique order number using UUID.
@@ -23,9 +21,8 @@ class Order(models.Model):
         null=False, 
         editable=False, 
         unique=True, 
-        default=generate_order_number 
+        default=generate_order_number
     )
-
     user_profile = models.ForeignKey(
         UserProfile,
         on_delete=models.SET_NULL,
@@ -33,7 +30,6 @@ class Order(models.Model):
         blank=True,
         related_name='orders'
     )
-    
     full_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=254, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=False, blank=False)
@@ -48,44 +44,34 @@ class Order(models.Model):
     delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, null=False, default=0)
     order_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
-    
-    original_cart = models.TextField(null=False, blank=False, default="{}")  # ✅ Ensures cart data is stored  
-    stripe_payment_intent = models.CharField(
+
+    original_cart = models.TextField(null=False, blank=False, default="{}")
+    payment_intent_id = models.CharField(
         max_length=255, 
         unique=True, 
         null=True,  
-        blank=True
+        blank=True, 
+        db_index=True
     )
 
     def update_total(self):
         """
-        Update grand total each time a line item is added,
-        accounting for delivery costs.
+        Update grand total each time a line item is added, including delivery.
         """
         self.order_total = self.lineitems.aggregate(
-            Sum('lineitem_total')
-        )['lineitem_total__sum'] or 0
+            total=Sum('lineitem_total')
+        )['total'] or Decimal(0)
 
-        if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
-            self.delivery_cost = self.order_total * settings.STANDARD_DELIVERY_PERCENTAGE / 100
+        if self.order_total < Decimal(settings.FREE_DELIVERY_THRESHOLD):
+            self.delivery_cost = self.order_total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE) / Decimal(100)
         else:
-            self.delivery_cost = 0
+            self.delivery_cost = Decimal(0)
 
         self.grand_total = self.order_total + self.delivery_cost
         self.save()
 
-    def save(self, *args, **kwargs):
-        """
-        Override the original save method to set the order number
-        if it hasn't been set already.
-        """
-        if not self.order_number:
-            self.order_number = generate_order_number()  # ✅ Correct reference
-        super().save(*args, **kwargs)
-
     def __str__(self):
-        return self.order_number
-
+        return f"Order {self.order_number} by {self.full_name}"
 
 class OrderLineItem(models.Model):
     order = models.ForeignKey(
@@ -93,16 +79,19 @@ class OrderLineItem(models.Model):
     )
     product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE)
     product_size = models.CharField(max_length=10, null=True, blank=True)
-    quantity = models.IntegerField(null=False, blank=False, default=0)
-    lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
+    product_price = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)  # ✅ Stores price at order time
+    quantity = models.PositiveIntegerField(null=False, blank=False, default=1)
+    lineitem_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, editable=False)
 
     def save(self, *args, **kwargs):
         """
-        Override the save method to set the lineitem total and update the order total.
+        Save the product price at the time of order to prevent price changes from affecting past orders.
         """
-        self.lineitem_total = self.product.price * self.quantity
+        if not self.pk:  # Only set product_price for new items
+            self.product_price = self.product.price
+        self.lineitem_total = self.product_price * Decimal(self.quantity)
         super().save(*args, **kwargs)
-        self.order.update_total()  # ✅ Ensure order total is updated when a line item is added
+        self.order.update_total()
 
     def __str__(self):
-        return f'Product {self.product.name} on order {self.order.order_number}'
+        return f'{self.product.name} (x{self.quantity}) in Order {self.order.order_number}'

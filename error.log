@@ -1,0 +1,20 @@
+Internal Server Error: /checkout/webhook/
+"POST /checkout/webhook/ HTTP/1.1" 500 0
+Internal Server Error: /checkout/webhook/
+"POST /checkout/webhook/ HTTP/1.1" 500 0
+Internal Server Error: /checkout/checkout-success/33538244D20A4172B843787F0040EE49/
+Traceback (most recent call last):
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/checkout/views.py", line 160, in checkout_success
+    return redirect(reverse("order_confirmation", args=[order_number]))
+                    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wealthlovesuccesshealth/Documents/vscode-projects/Museart/MuseartProject/.venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order_confirmation' not found. 'order_confirmation' is not a valid view function or pattern name.
+"GET /checkout/checkout-success/33538244D20A4172B843787F0040EE49/ HTTP/1.1" 500 85600

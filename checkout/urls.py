@@ -2,19 +2,18 @@ from django.urls import path
 from . import views  
 
 urlpatterns = [
-    # ✅ Main checkout page
+    # ✅ Checkout Page
     path('', views.checkout, name='checkout'),
 
-    # ✅ Handle order number retrieval after payment
-    path("get-order-number/", views.get_order_number, name="get_order_number"),
+    # ✅ Order Number Retrieval (used to fetch the order after payment)
+    path('get-order-number/', views.get_order_number, name='get_order_number'),
 
-    # ✅ Handle successful checkout and redirect
-    path('checkout-success/<str:order_number>/', views.checkout_success, name='checkout_success'),
+    # ✅ Checkout Success Page
+    path('checkout-success/<slug:order_number>/', views.checkout_success, name='checkout_success'),
 
-    # ✅ Order confirmation page
-    path('order-confirmation/<str:order_number>/', views.order_confirmation, name='order_confirmation'),
+    # ✅ Caching Checkout Data Before Payment
+    path('cache-checkout-data/', views.cache_checkout_data, name='cache_checkout_data'),
 
-    # ✅ Stripe Webhook Handler
-    path("webhook/", views.stripe_webhook, name="stripe_webhook"),
+    # ✅ Stripe Webhook (Handles payment processing updates)
+    path('webhook/', views.stripe_webhook, name='stripe_webhook'),
 ]
-

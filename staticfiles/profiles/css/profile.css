@@ -1,0 +1,69 @@
+/* Order History - Scrollable */
+.order-history {
+    max-height: 416px; /* Matches profile form height */
+    overflow-y: auto;
+    border: 1px solid #ddd; /* Subtle border for clarity */
+    border-radius: 6px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+/* Profile Update Form - Input Fields */
+#profile-update-form .form-control {
+    color: #000;
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px;
+    padding: 8px 12px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Placeholder Styling */
+#profile-update-form input::placeholder {
+    color: #aab7c4;
+    font-style: italic;
+}
+
+/* Add focus effect for better UX */
+#profile-update-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/* Default Country Dropdown */
+#id_default_country {
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px;
+    width: 100%;
+}
+
+/* Options in Default Country Dropdown */
+#id_default_country option {
+    color: #000;
+}
+
+/* First Option Placeholder */
+#id_default_country option:first-child {
+    color: #aab7c4;
+}
+
+/* Hover & Focus States for Select */
+#id_default_country:hover,
+#id_default_country:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .order-history {
+        max-height: 300px; /* Reduce height for smaller screens */
+    }
+
+    #profile-update-form .form-control {
+        font-size: 14px; /* Reduce font size for better fit */
+    }
+}

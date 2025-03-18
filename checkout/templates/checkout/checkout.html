@@ -42,9 +42,8 @@
             </div>
         </div>
         
-        <div style="display:none;">
-            Client Secret: {{ client_secret }}
-        </div>
+        <!-- Hidden div to store client_secret -->
+        <div id="stripe-data" data-client-secret="{{ client_secret }}"></div>
         
         <!-- Checkout Form -->
         <div class="col-12 col-lg-8">
@@ -52,10 +51,11 @@
                 {% csrf_token %}
                 <h4 class="text-white mb-4">Complete Your Order</h4>
                 <input type="hidden" id="id_success_url" value="{{ success_url }}">
+                <input type="hidden" name="order-number" id="order-data" data-order-number="{{ order_number }}" value="{{ order_number }}">
                 
                 <!-- User Information -->
                 <div class="row text-white">
-                    {% for field in form %}
+                    {% for field in order_form %}
                     <div class="col-md-6 mb-3">{{ field | as_crispy_field }}</div>
                     {% endfor %}
                 </div>

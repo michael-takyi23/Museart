@@ -1,41 +1,78 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const stripePublicKey = document.getElementById('id_stripe_public_key')?.textContent.trim();
-    const clientSecret = document.getElementById('id_client_secret')?.textContent.trim();
+    console.log("🔄 Initializing Stripe Checkout...");
 
-    console.log("Stripe Public Key:", stripePublicKey);
-    console.log("Client Secret:", clientSecret);
+    // ✅ Fetch order number from hidden div
+    const orderDataDiv = document.getElementById("order-data");
+    const orderNumber = orderDataDiv ? orderDataDiv.getAttribute("data-order-number") : null;
+
+    if (!orderNumber) {
+        console.error("🚨 ERROR: Order number is missing! Checkout cannot proceed.");
+        alert("An error occurred. Please refresh and try again.");
+        return;
+    }
+
+    console.log("🛒 Order Number Retrieved:", orderNumber);
+
+    // ✅ Fetch Stripe public key & client secret from Django template
+    const stripePublicKey = document.getElementById('id_stripe_public_key')?.textContent.trim();
+    const stripeDataDiv = document.querySelector("#stripe-data");
+
+    // ✅ Ensure `client_secret` is correctly retrieved
+    const clientSecret = stripeDataDiv ? stripeDataDiv.getAttribute("data-client-secret") : null;
 
     if (!stripePublicKey) {
-        console.error("🚨 Stripe public key is missing!");
+        console.error("🚨 ERROR: Stripe public key is missing! Check Django template.");
+        alert("Payment setup failed. Please try again or contact support.");
         return;
     }
 
     if (!clientSecret) {
-        console.error("🚨 Client secret is missing! Payment Intent may not have been created.");
-        const errorContainer = document.getElementById('card-errors');
-        if (errorContainer) errorContainer.textContent = "Error: Payment cannot be processed.";
+        console.error("🚨 ERROR: Client Secret is missing! Check Django template.");
+        alert("Payment setup failed. Please try again or contact support.");
         return;
     }
 
-    const stripe = Stripe(stripePublicKey);
-    const elements = stripe.elements({ clientSecret: clientSecret });
+    try {
+        // ✅ Initialize Stripe
+        const stripe = Stripe(stripePublicKey);
+        const elements = stripe.elements({ clientSecret: clientSecret });
 
-    console.log("🎯 Mounting Stripe Elements...");
-    const paymentElement = elements.create('payment');
-    paymentElement.mount('#payment-element');
+        console.log("🎯 Stripe initialized successfully");
 
+        // ✅ Create and mount the payment element
+        const paymentElement = elements.create('payment');
+        paymentElement.mount('#payment-element');
+        console.log("✅ Stripe Elements Mounted");
+
+        // ✅ Handle form submission
+        handlePaymentForm(stripe, elements, clientSecret, orderNumber);
+
+    } catch (error) {
+        console.error("🚨 Stripe Initialization Error:", error);
+        alert("Error initializing payment. Please refresh and try again.");
+    }
+});
+
+/**
+ * ✅ Handles form submission and Stripe payment confirmation
+ */
+function handlePaymentForm(stripe, elements, clientSecret, orderNumber) {
     const form = document.getElementById('payment-form');
+    if (!form) {
+        console.error("🚨 ERROR: Payment form not found!");
+        return;
+    }
+
     const loadingSpinner = document.getElementById('payment-overlay');
     const errorContainer = document.getElementById('card-errors');
     const submitButton = form.querySelector('button[type="submit"]');
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
-
         console.log("🛒 Processing payment...");
 
-        if (loadingSpinner) loadingSpinner.classList.remove("d-none");
         submitButton.disabled = true;
+        if (loadingSpinner) loadingSpinner.classList.remove("d-none");
         if (errorContainer) errorContainer.textContent = "";
 
         try {
@@ -43,45 +80,23 @@ document.addEventListener("DOMContentLoaded", async function () {
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: window.location.origin + "/checkout/get-order-number/",
+                    return_url: window.location.origin + `/checkout/checkout-success/${orderNumber}/`,  // ✅ Direct Redirect
                 },
             });
 
             if (error) {
                 console.error("🚨 Stripe Payment Error:", error.message);
                 errorContainer.textContent = "Payment failed: " + error.message;
-            } else if (paymentIntent) {
-                console.log("✅ Payment Intent Received:", paymentIntent);
-                if (paymentIntent.status === 'succeeded') {
-                    console.log("✅ Payment successful! Redirecting...");
-                    window.location.href = "/checkout/get-order-number/?payment_intent=" + paymentIntent.id;
-                } else {
-                    errorContainer.textContent = "Payment processing error. Please try again.";
-                }
+            } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                console.log("✅ Payment successful! Redirecting...");
+                window.location.href = `/checkout/checkout-success/${orderNumber}/`;  // ✅ Instant Redirect
             }
         } catch (err) {
-            console.error("🚨 Unexpected Error:", err);
+            console.error("🚨 Unexpected Payment Error:", err);
             errorContainer.textContent = 'An unexpected error occurred. Please try again.';
         } finally {
             submitButton.disabled = false;
             if (loadingSpinner) loadingSpinner.classList.add("d-none");
         }
     });
-
-    // ✅ Check if payment was already completed (in case of redirect)
-    const queryClientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
-    if (queryClientSecret) {
-        console.log("🔄 Checking previous payment intent...");
-        stripe.retrievePaymentIntent(queryClientSecret).then(({ paymentIntent }) => {
-            if (paymentIntent) {
-                console.log("💳 Payment Intent Retrieved:", paymentIntent);
-                if (paymentIntent.status === 'succeeded') {
-                    console.log("✅ Payment was successful! Redirecting...");
-                    window.location.href = "/checkout/get-order-number/?payment_intent=" + paymentIntent.id;
-                }
-            }
-        }).catch((err) => {
-            console.error("🚨 Error retrieving payment intent:", err);
-        });
-    }
-});
+}

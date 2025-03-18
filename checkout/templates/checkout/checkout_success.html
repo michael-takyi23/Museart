@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container mt-5">
+    <div class="row text-white">
+        <div class="col">
+            <hr>
+            <h2 class="logo-font mb-4 text-center">🎉 Thank You for Your Order!</h2>
+            <hr>
+            <p class="text-black text-center">
+                Your order confirmation details are below. A confirmation email has been sent to
+                <strong>{{ order.email }}</strong>.
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card p-4 shadow-lg">
+            <h3 class="text-center text-success">✅ Order Placed Successfully!</h3>
+            <p class="text-center">Your order will be dispatched shortly.</p>
+            
+            <h4 class="text-center mt-3">Order Number: <strong>{{ order.order_number }}</strong></h4>
+            
+            <h5 class="mt-4">📍 Shipping Details:</h5>
+            <p><strong>Full Name:</strong> {{ order.full_name }}</p>
+            <p><strong>Email:</strong> {{ order.email }}</p>
+            <p><strong>Phone Number:</strong> {{ order.phone_number }}</p>
+            <p><strong>Address:</strong> {{ order.street_address1 }}{% if order.street_address2 %}, {{ order.street_address2 }}{% endif %},
+                <br>{{ order.town_or_city }}, {{ order.postcode }}<br>{{ order.country }}</p>
+
+            <h5 class="mt-4">📦 Order Items:</h5>
+            <ul>
+                {% for item in order.lineitems.all %}
+                    <li>{{ item.product.name }} - Qty: {{ item.quantity }} - Price: ${{ item.lineitem_total|floatformat:2 }}</li>
+                {% endfor %}
+            </ul>
+
+            <h5 class="mt-4">💰 Order Summary:</h5>
+            <p><strong>Order Total:</strong> ${{ order.order_total|floatformat:2 }}</p>
+            <p><strong>Delivery Fee:</strong> ${{ order.delivery_cost|floatformat:2 }}</p>
+            <p><strong>Grand Total:</strong> ${{ order.grand_total|floatformat:2 }}</p>
+
+            <p class="text-muted mt-3">
+                📅 <strong>Estimated Delivery Date:</strong> 
+                <span class="text-primary">{{ order.date|date:"F d, Y" }}</span>
+            </p>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'products' %}" class="btn btn-primary">🛍️ Continue Shopping</a>
+                <button onclick="window.print()" class="btn btn-outline-secondary ml-2">🖨️ Print Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

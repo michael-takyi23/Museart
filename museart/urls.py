@@ -13,18 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+
+try:
+    from django.contrib import admin
+except ImportError as e:
+    print("🚨 Admin module not found! Check your Django installation:", e)
+
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 
 # Error Handlers
 handler404 = "home.views.custom_404_view"
 handler500 = "home.views.custom_500_view"
 
 # Robots.txt View
-def robots_txt(request):
+def robots_txt(request: HttpRequest):
     """
     Serve a simple robots.txt file to guide search engine crawlers.
     """
@@ -38,6 +43,7 @@ def robots_txt(request):
 
 # URL Patterns
 urlpatterns = [
+
     path("admin/", admin.site.urls),  # ✅ Admin Panel
     path("accounts/", include("allauth.urls")),  # ✅ Authentication (Login/Signup)
     

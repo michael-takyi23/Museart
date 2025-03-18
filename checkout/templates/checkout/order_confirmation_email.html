@@ -36,37 +36,24 @@
         }
 
         .order-details {
-            margin-top: 30px;
-        }
-
-        .order-details h3 {
-            color: #2a9d8f;
-        }
-
-        .order-details p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        .order-items {
             margin-top: 20px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-
-        .order-items p {
-            font-size: 14px;
-            margin: 5px 0;
+            font-size: 16px;
         }
 
         .order-summary {
             margin-top: 20px;
-            text-align: right;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
         }
 
         .order-summary p {
-            font-weight: bold;
+            margin: 5px 0;
             font-size: 16px;
+        }
+
+        .order-summary strong {
+            color: #2a9d8f;
         }
 
         .footer {
@@ -89,25 +76,31 @@
         </div>
 
         <div class="order-details">
-            <p>Dear {{ order.full_name }},</p>
-            <p>Thank you for your order! We are currently processing your order number <strong>{{ order.order_number }}</strong>.</p>
-            <p>The total amount is: <strong>€{{ order.grand_total }}</strong>.</p>
+            <p>Dear <strong>{{ order.full_name }}</strong>,</p>
+            <p>Thank you for your purchase! Your order number is <strong>{{ order.order_number }}</strong>.</p>
+            <p>We are currently processing your order and will notify you once it is shipped.</p>
         </div>
 
-        <div class="order-items">
-            <h3>Order Summary:</h3>
-            {% for item in order.line_items.all %}
-                <p>{{ item.product.name }} - Quantity: {{ item.quantity }} - €{{ item.lineitem_total }}</p>
+        <div class="order-summary">
+            <h3>📦 Order Summary:</h3>
+            {% for item in order.lineitems.all %}
+                <p>{{ item.product.name }} - <strong>Qty:</strong> {{ item.quantity }} - <strong>Price:</strong> €{{ item.lineitem_total|floatformat:2 }}</p>
             {% endfor %}
         </div>
 
         <div class="order-summary">
-            <p><strong>Total: €{{ order.grand_total }}</strong></p>
+            <p><strong>Order Total:</strong> €{{ order.order_total|floatformat:2 }}</p>
+            <p><strong>Delivery Fee:</strong> €{{ order.delivery_cost|floatformat:2 }}</p>
+            <p><strong>Grand Total:</strong> €{{ order.grand_total|floatformat:2 }}</p>
+        </div>
+
+        <div class="order-summary">
+            <p>📅 <strong>Estimated Delivery Date:</strong> {{ order.date|date:"F d, Y" }}</p>
         </div>
 
         <div class="footer">
             <p>If you have any questions, feel free to <a href="mailto:{{ settings.DEFAULT_FROM_EMAIL }}">contact us</a>.</p>
-            <p>Thank you for shopping with us!</p>
+            <p>Thank you for shopping with us! 😊</p>
         </div>
     </div>
 </body>

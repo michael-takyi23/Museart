@@ -1,19 +1,19 @@
-import json
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from .models import Order, OrderLineItem
 
-@receiver(post_save, sender=Order)
-def create_order_line_items(sender, instance, created, **kwargs):
+from .models import OrderLineItem
+
+@receiver(post_save, sender=OrderLineItem)
+def update_on_save(sender, instance, created, **kwargs):
     """
-    Create order line items after an order is saved.
+    Update order total on lineitem update/create
     """
-    if created:
-        cart_items = json.loads(instance.original_cart)  # Get cart_items passed from the view
-        for item in cart_items:
-            OrderLineItem.objects.create(
-                order=instance,
-                product=item['product'],
-                quantity=item['quantity'],
-                lineitem_total=item['total'],
-            )
+    instance.order.update_total()
+
+
+@receiver(post_delete, sender=OrderLineItem)
+def update_on_delete(sender, instance, **kwargs):
+    """
+    Update order total on lineitem delete
+    """
+    instance.order.update_total()

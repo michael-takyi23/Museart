@@ -9,10 +9,11 @@ from django.core.wsgi import get_wsgi_application
 from pathlib import Path
 import dj_database_url
 from django.contrib.messages import constants as messages
-from decouple import config
 
 if os.path.exists("env.py"):
     import env
+ 
+
 
 
 
@@ -38,8 +39,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # Application definition
-INSTALLED_APPS = [
-    # ✅ Built-in Django apps (should always come first)
+
+INSTALLED_APPS = [                        # ✅ Built-in Django apps (should always come first)
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,11 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    # ✅ Third-party authentication apps
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
     # ✅ custom apps 
     'home',        # Homepage app 
     'profiles',    # User profiles 
@@ -60,7 +56,10 @@ INSTALLED_APPS = [
     'cart',        # Shopping cart 
     'checkout',    
 
-    # ✅ Third-party packages 
+    # ✅ Third-party authentication apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'crispy_forms',
     'crispy_bootstrap5',
     'storages',  # Used for media file handling (like AWS S3)
