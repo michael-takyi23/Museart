@@ -149,6 +149,28 @@ def checkout_success(request, order_number):
     """
     Handle successful checkouts and redirect to order confirmation.
     """
+    print(f"🔍 Searching for Order Number: {order_number}")
+
+    # Try to fetch the order
+    order = get_object_or_404(Order, order_number=order_number)
+    
+    if not order:
+        print(f"🚨 ERROR: Order {order_number} NOT FOUND in `checkout_success`!")
+        return HttpResponse(f"Order {order_number} not found!", status=404)
+
+    print(f"✅ Order found: {order}")
+
+    # ✅ Clear cart session
+    request.session.pop("cart", None)
+    request.session.modified = True
+
+    messages.success(request, f"🎉 Order processed! Order No: {order_number}")
+
+    return redirect(reverse("order_confirmation", args=[order_number]))
+
+    """
+    Handle successful checkouts and redirect to order confirmation.
+    """
     order = get_object_or_404(
         Order.objects.prefetch_related("lineitems", "user_profile"),
         order_number=order_number,

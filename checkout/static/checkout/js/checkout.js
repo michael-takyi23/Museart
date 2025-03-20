@@ -80,7 +80,7 @@ function handlePaymentForm(stripe, elements, clientSecret, orderNumber) {
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: window.location.origin + `/checkout/checkout-success/${orderNumber}/`,  // ✅ Direct Redirect
+                    return_url: window.location.origin + `/checkout-success/${orderNumber}/`,  // ✅ Direct Redirect
                 },
             });
 
@@ -89,7 +89,7 @@ function handlePaymentForm(stripe, elements, clientSecret, orderNumber) {
                 errorContainer.textContent = "Payment failed: " + error.message;
             } else if (paymentIntent && paymentIntent.status === 'succeeded') {
                 console.log("✅ Payment successful! Redirecting...");
-                window.location.href = `/checkout/checkout-success/${orderNumber}/`;  // ✅ Instant Redirect
+                window.location.href = `/checkout-success/${orderNumber}/`;  // ✅ Instant Redirect
             }
         } catch (err) {
             console.error("🚨 Unexpected Payment Error:", err);
