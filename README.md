@@ -47,9 +47,11 @@ The following pages are visible to all users, logged in or not.
 4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](static/images/cart.png)
 
 5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards. ![checkout-order-summary-delivery-info](static/images/checkout.png), 
-![checkout-payment](static/images/checkoutpayment.png),
+![checkout-payment](static/images/paymentinfofield.png),
 
-6. **Checkout Success Page**:The Checkout Success page shows a Payment Successful message to the user at the top, and then summarizes both the order and the delivery details.![checkout-success]().....
+6. **Checkout Success Page**:The Checkout Success page shows a Payment Successful message to the user at the top, and then summarizes both the order and the delivery details.![checkout-success](static/images/paymentinfofield.png).....
+![payment-success-Stripe](static/images/paymentsuccessStripe.png).....
+
 
 The following pages are visible to only logged in users.
 7. **Order History**: Logged-in users can view their previous orders and access detailed information about past purchases.
@@ -65,6 +67,7 @@ The following pages are visible to only logged in users.
 3. **Stripe Payment Integration**: Payments are securely processed through Stripe’s payment gateway, ensuring safe transactions with industry-standard encryption.
 
 ## User Experience 
+
 - **Design**: 
 The Roboto font is used throughout the project. It's a simple, very legible sans-serif font, considered an amazing font because of its versatility and modern appearance, particularly on headings and larger font sizes and has a clean, geometric look that is legible at small sizes. Favicon.io was used to generate a favicon for the project. A favicon is a small, 16x16 pixel icon used on web browsers to represent a website or a web page. Short for “favorite icon", they're also found on your browser's bookmark bar, history and in search results, alongside the page url.
 
@@ -84,12 +87,9 @@ The following colour palette was used in the project. [Coolors](https://coolors.
 - **Products Details**: 
   ![products Details](static/images/productsdetailsframe.png)
 
-
   ## Entity Relationship Diagram (ERD)
 Below is the database structure:
-![ERD Diagram](database-erd.png)
-
-
+ ![Museart ERD](static/images/museart_erd.png)
 
 ## Technologies Used
 - **Front-End**:

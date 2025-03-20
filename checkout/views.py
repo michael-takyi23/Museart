@@ -25,6 +25,27 @@ logger = logging.getLogger(__name__)
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
+@require_POST
+def cache_checkout_data(request):
+    """
+    Store checkout data in the PaymentIntent metadata.
+    """
+    try:
+        pid = request.POST.get("client_secret").split("_secret")[0]
+        stripe.PaymentIntent.modify(
+            pid,
+            metadata={
+                "cart": json.dumps(request.session.get("cart", {})),
+                "save_info": request.POST.get("save_info"),
+                "username": str(request.user),
+            },
+        )
+        return HttpResponse(status=200)
+    except Exception as e:
+        logger.error(f"Cache Checkout Data Error: {e}")
+        return HttpResponse(content=str(e), status=400)
+
+
 def checkout(request):
     """
     Checkout view to process Stripe payments and create orders.
@@ -56,7 +77,7 @@ def checkout(request):
             },
         )
         client_secret = intent.client_secret
-        logger.info(f"🟢 Stripe PaymentIntent Created: {intent.id} with order number {order_number}")
+        logger.info(f"Stripe PaymentIntent Created: {intent.id} with order number {order_number}")
 
     except stripe.error.StripeError as e:
         logger.error(f"🔴 Stripe Payment Error: {e}")
