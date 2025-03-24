@@ -14,52 +14,49 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-try:
-    from django.contrib import admin
-except ImportError as e:
-    print("🚨 Admin module not found! Check your Django installation:", e)
+"""Museart URL Configuration"""
 
+from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse, HttpRequest
 
-# Error Handlers
+# Custom Error Handlers
 handler404 = "home.views.custom_404_view"
 handler500 = "home.views.custom_500_view"
 
-# Robots.txt View
+# robots.txt response for SEO
 def robots_txt(request: HttpRequest):
-    """
-    Serve a simple robots.txt file to guide search engine crawlers.
-    """
-    content = (
+    return HttpResponse(
         "User-agent: *\n"
         "Disallow: /admin/\n"
         "Allow: /\n"
-        "Sitemap: https://museart-b6682941c690.herokuapp.com/sitemap.xml\n"
+        "Sitemap: https://museart-b6682941c690.herokuapp.com/sitemap.xml\n",
+        content_type="text/plain"
     )
-    return HttpResponse(content, content_type="text/plain")
 
-# URL Patterns
 urlpatterns = [
+    # 🔐 Admin Panel
+    path("admin/", admin.site.urls),
 
-    path("admin/", admin.site.urls),  # ✅ Admin Panel
-    path("accounts/", include("allauth.urls")),  # ✅ Authentication (Login/Signup)
-    
-    # Core App URLs
-    path("", include("home.urls")),  # ✅ Home Page
-    path("products/", include("products.urls")),  # ✅ Products App
-    path("cart/", include("cart.urls")),  # ✅ Shopping Cart
-    path("checkout/", include("checkout.urls")),  # ✅ Checkout Process
-    path("profile/", include("profiles.urls")),  # ✅ User Profile
+    # 🔐 User Authentication (django-allauth)
+    path("accounts/", include("allauth.urls")),
 
-    # Miscellaneous
-    path("robots.txt", robots_txt, name="robots_txt"),  # ✅ Robots.txt for SEO
+    # 🌐 Core App Routes
+    path("", include("home.urls")),             # Homepage & error views
+    path("products/", include("products.urls")),  # Product listing, detail
+    path("cart/", include("cart.urls")),          # Cart add/remove/view
+    path("profile/", include("profiles.urls")),   # User account settings
+
+    # 💳 Checkout & Payments
+    path("checkout/", include(("checkout.urls", "checkout"), namespace="checkout")),
+
+    # 🗺️ SEO & Meta
+    path("robots.txt", robots_txt, name="robots_txt"),
 ]
 
-# Serve static & media files in development mode
+# 📁 Static & Media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

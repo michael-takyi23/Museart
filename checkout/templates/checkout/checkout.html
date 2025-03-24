@@ -19,78 +19,81 @@
 <div class="overlay"></div>
 <div class="container mt-5">
     <div class="row text-white">
-        <!-- Order Summary -->
+
+        <!-- ✅ Order Summary -->
         <div class="col-12 col-lg-4 order-summary mb-5">
-            <h4 class="text-white">Order Summary</h4>
+            <h4>Order Summary</h4>
             <hr class="border-white opacity-50" />
             {% for item in cart_items %}
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <img src="{{ item.product.image.url }}" class="rounded" style="width: 60px;">
-                <div class="ml-3">
-                    <p class="mb-0 text-white">{{ item.product.name }}</p>
-                    <small class="text-white">Qty: {{ item.quantity }}</small>
-                    <small class="text-white">Price: ${{ item.product.price }}</small>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <img src="{{ item.product.image.url }}" class="rounded" style="width: 60px;" alt="{{ item.product.name }}">
+                    <div class="ml-3">
+                        <p class="mb-0">{{ item.product.name }}</p>
+                        <small>Qty: {{ item.quantity }}</small><br>
+                        <small>Price: ${{ item.product.price }}</small>
+                    </div>
+                    <span class="font-weight-bold">${{ item.subtotal|floatformat:2 }}</span>
                 </div>
-                <span class="text-white font-weight-bold">${{ item.subtotal|floatformat:2 }}</span>
-            </div>
-            <hr class="border-white opacity-50" />
+                <hr class="border-white opacity-50" />
             {% endfor %}
-            <div class="text-right text-white">
+            <div class="text-right">
                 <p>Order Total: ${{ total|floatformat:2 }}</p>
                 <p>Delivery: ${{ delivery|floatformat:2 }}</p>
                 <p class="h5 font-weight-bold">Grand Total: ${{ grand_total|floatformat:2 }}</p>
             </div>
         </div>
-        
-        <!-- Hidden div to store client_secret -->
-        <div id="stripe-data" data-client-secret="{{ client_secret }}"></div>
-        
-        <!-- Checkout Form -->
+
+        <!-- ✅ Payment Form -->
         <div class="col-12 col-lg-8">
             <form method="POST" id="payment-form">
                 {% csrf_token %}
-                <h4 class="text-white mb-4">Complete Your Order</h4>
-                <input type="hidden" id="id_success_url" value="{{ success_url }}">
-                <input type="hidden" name="order-number" id="order-data" data-order-number="{{ order_number }}" value="{{ order_number }}">
-                
-                <!-- User Information -->
-                <div class="row text-white">
+                <h4 class="mb-4">Complete Your Order</h4>
+
+                <!-- 🔒 Data for JavaScript (Stripe Setup) -->
+                <div id="order-data" data-order-number="{{ order_number }}"></div>
+                <input type="hidden" name="client_secret" value="{{ client_secret }}">
+
+
+                <!-- User Info -->
+                <div class="row">
                     {% for field in order_form %}
-                    <div class="col-md-6 mb-3">{{ field | as_crispy_field }}</div>
+                        <div class="col-md-6 mb-3">
+                            {{ field | as_crispy_field }}
+                        </div>
                     {% endfor %}
                 </div>
-                
+
                 <!-- Save Info Option -->
-                <div class="form-check form-check-inline float-right">
+                <div class="form-check mb-4">
                     {% if user.is_authenticated %}
-                        <input class="form-check-input ml-2" type="checkbox" id="id-save-info" name="save-info" checked>
+                        <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
                         <label class="form-check-label" for="id-save-info">Save this delivery information</label>
                     {% else %}
-                        <label class="form-check-label" for="id-save-info">
-                            <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or 
-                            <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                        <label class="form-check-label">
+                            <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
+                            <a class="text-info" href="{% url 'account_login' %}">login</a> to save this info
                         </label>
                     {% endif %}
                 </div>
-                
-                <!-- Payment Information -->
+
+                <!-- 💳 Payment Section -->
                 <fieldset class="border p-4 mb-4">
                     <legend class="w-auto">Payment Information</legend>
-                    <div id="payment-element" class="mb-4"></div>
+                    <div id="payment-element" class="mb-3"></div>
                     <div id="card-errors" role="alert" class="text-danger mt-2"></div>
-                    <button type="submit" class="btn btn-primary w-100" id="submit">Pay</button>
-                    <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary text-white w-100 mt-2">Back to Cart</a>
-                    <small class="text-white d-block text-center mt-2">By clicking "Pay", your card will be charged.</small>
+                    <button type="submit" class="btn btn-success w-100" id="submit">Pay</button>
+                    <a href="{% url 'view_cart' %}" class="btn btn-outline-light w-100 mt-2">Back to Cart</a>
+                    <small class="d-block text-center mt-2">By clicking "Pay", your card will be charged securely via Stripe.</small>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Spinner -->
-<div id='payment-overlay' class="payment-spinner d-none justify-content-center align-items-center position-absolute w-100 h-100" style="background: rgba(0, 0, 0, 0.5); z-index: 9999;">
+<!-- 🌀 Payment Spinner -->
+<div id="payment-overlay" class="payment-spinner d-none justify-content-center align-items-center position-absolute w-100 h-100" style="background: rgba(0, 0, 0, 0.6); z-index: 9999;">
     <div class="text-center">
-        <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing Payment..." width="100" height="100">
+        <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing..." width="100" height="100">
         <p class="text-white mt-2">Processing your payment, please wait...</p>
     </div>
 </div>
@@ -98,8 +101,10 @@
 
 {% block postloadjs %}
 {{ block.super }}
+<!-- ✅ Inject data as JSON-readable content -->
 <script type="application/json" id="id_stripe_public_key">{{ stripe_public_key|escapejs }}</script>
 <script type="application/json" id="id_client_secret">{{ client_secret|escapejs }}</script>
-<script type="application/json" id="id_success_url">{{ success_url|escapejs }}</script>
+<!-- ✅ Load Stripe JS & Your Checkout Logic -->
+<script src="https://js.stripe.com/v3/"></script>
 <script src="{% static 'checkout/js/checkout.js' %}"></script>
 {% endblock %}

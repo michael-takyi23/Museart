@@ -1,16 +1,18 @@
+{% load static %}
+{% load humanize %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmation - {{ order.order_number }}</title>
+    <title>Order Confirmation - {{ order.order_number|default:"N/A" }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
-            color: #333;
             margin: 0;
             padding: 20px;
+            color: #333;
         }
 
         .email-container {
@@ -26,13 +28,18 @@
             text-align: center;
             background-color: #2a9d8f;
             color: #fff;
-            padding: 15px;
+            padding: 20px 15px 10px;
             border-radius: 10px 10px 0 0;
         }
 
+        .logo {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+
         .email-header h1 {
+            font-size: 22px;
             margin: 0;
-            font-size: 24px;
         }
 
         .order-details {
@@ -48,8 +55,8 @@
         }
 
         .order-summary p {
-            margin: 5px 0;
-            font-size: 16px;
+            margin: 6px 0;
+            font-size: 15px;
         }
 
         .order-summary strong {
@@ -71,36 +78,66 @@
 </head>
 <body>
     <div class="email-container">
+        <!-- ✅ Branded Header with Logo -->
         <div class="email-header">
-            <h1>Order Confirmation - {{ order.order_number }}</h1>
+            <img src="{% static 'images/museart.jpg' %}" alt="Museart Logo" class="logo">
+            <h1 style="font-size: 22px;">Order Confirmation - {{ order.order_number|default:"N/A" }}</h1>
         </div>
 
+        <!-- ✅ Greeting & Summary -->
         <div class="order-details">
-            <p>Dear <strong>{{ order.full_name }}</strong>,</p>
+            <p>Dear <strong>{{ order.full_name|default:"Customer" }}</strong>,</p>
             <p>Thank you for your purchase! Your order number is <strong>{{ order.order_number }}</strong>.</p>
-            <p>We are currently processing your order and will notify you once it is shipped.</p>
+            <p>We’re processing your order and will notify you once it’s shipped.</p>
         </div>
 
+        <!-- ✅ Line Items -->
         <div class="order-summary">
-            <h3>📦 Order Summary:</h3>
-            {% for item in order.lineitems.all %}
-                <p>{{ item.product.name }} - <strong>Qty:</strong> {{ item.quantity }} - <strong>Price:</strong> €{{ item.lineitem_total|floatformat:2 }}</p>
-            {% endfor %}
+            <h3>📦 Order Items:</h3>
+            {% if order.lineitems.all %}
+                {% for item in order.lineitems.all %}
+                    <p>
+                        {{ item.product.name }} —
+                        <strong>Qty:</strong> {{ item.quantity }} —
+                        <strong>Price:</strong>
+                        {{ item.lineitem_total|floatformat:2 }}
+                        {{ order.currency|default:"€" }}
+                    </p>
+                {% endfor %}
+            {% else %}
+                <p><em>No line items were found for this order.</em></p>
+            {% endif %}
         </div>
 
+        <!-- ✅ Totals -->
         <div class="order-summary">
-            <p><strong>Order Total:</strong> €{{ order.order_total|floatformat:2 }}</p>
-            <p><strong>Delivery Fee:</strong> €{{ order.delivery_cost|floatformat:2 }}</p>
-            <p><strong>Grand Total:</strong> €{{ order.grand_total|floatformat:2 }}</p>
+            <p><strong>Order Total:</strong> {{ order.order_total|floatformat:2 }} {{ order.currency|default:"€" }}</p>
+            <p><strong>Delivery Fee:</strong> {{ order.delivery_cost|floatformat:2 }} {{ order.currency|default:"€" }}</p>
+            <p><strong>Grand Total:</strong> {{ order.grand_total|floatformat:2 }} {{ order.currency|default:"€" }}</p>
         </div>
 
+        <!-- ✅ Billing Address -->
         <div class="order-summary">
-            <p>📅 <strong>Estimated Delivery Date:</strong> {{ order.date|date:"F d, Y" }}</p>
+            <h3>📍 Billing Information:</h3>
+            <p>{{ order.full_name|default:"" }}</p>
+            <p>{{ order.street_address1 }}</p>
+            {% if order.street_address2 %}
+                <p>{{ order.street_address2 }}</p>
+            {% endif %}
+            <p>{{ order.town_or_city }}, {{ order.county }}</p>
+            <p>{{ order.postcode }}, {{ order.country }}</p>
+            <p><strong>Email:</strong> {{ order.email }}</p>
         </div>
 
+        <!-- ✅ Delivery Info -->
+        <div class="order-summary">
+            <p>📅 <strong>Estimated Delivery:</strong> {{ order.date|date:"F d, Y" }}</p>
+        </div>
+
+        <!-- ✅ Footer -->
         <div class="footer">
-            <p>If you have any questions, feel free to <a href="mailto:{{ settings.DEFAULT_FROM_EMAIL }}">contact us</a>.</p>
-            <p>Thank you for shopping with us! 😊</p>
+            <p>Have questions? <a href="mailto:{{ settings.DEFAULT_FROM_EMAIL }}">Contact us</a></p>
+            <p>Thank you for shopping with <strong>Museart</strong> 🎨</p>
         </div>
     </div>
 </body>

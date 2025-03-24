@@ -10,4 +10,4 @@ node_modules/
 cloudinary_python.txt
 *.sqlite3
 .env
-.error.log
+error.log

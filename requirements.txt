@@ -4,12 +4,15 @@ babel==2.17.0
 black==25.1.0
 boto3==1.35.74
 botocore==1.35.74
+Brotli==1.1.0
 certifi==2025.1.31
+cffi==1.17.1
 charset-normalizer==3.4.1
 click==8.1.8
 cloudinary==1.42.1
 crispy-bootstrap4==2024.1
 crispy-bootstrap5==2024.2
+cssselect2==0.8.0
 dj-database-url==2.2.0
 dj3-cloudinary-storage==0.0.6
 Django==5.1.7
@@ -21,6 +24,7 @@ django-money==3.5.2
 django-sendgrid-v5==1.2.4
 django-storages==1.14.4
 docutils==0.15.2
+fonttools==4.56.0
 git-filter-repo==2.47.0
 gunicorn==22.0.0
 idna==3.10
@@ -35,6 +39,10 @@ pluggy==1.5.0
 psycopg2-binary==2.9.10
 py-moneyed==3.0
 pycodestyle==2.12.1
+pycparser==2.22
+pydyf==0.11.0
+pygraphviz==1.14
+pyphen==0.17.2
 pytest==8.3.4
 pytest-django==4.9.0
 python-dateutil==2.9.0.post0
@@ -49,6 +57,11 @@ six==1.17.0
 sqlparse==0.5.3
 starkbank-ecdsa==2.2.0
 stripe==10.9.0
+tinycss2==1.4.0
+tinyhtml5==2.0.0
 typing_extensions==4.12.2
 urllib3==1.26.15
+weasyprint==65.0
+webencodings==0.5.1
 whitenoise==6.8.2
+zopfli==0.2.3.post1
