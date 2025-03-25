@@ -60,7 +60,8 @@ INSTALLED_APPS = [                        # ✅ Built-in Django apps (should alw
     'allauth.socialaccount',
     'crispy_forms',
     'crispy_bootstrap5',
-    'storages',  # Used for media file handling (like AWS S3)
+    'storages', 
+    'django.contrib.humanize', # Used for media file handling (like AWS S3)
 ]
 
 

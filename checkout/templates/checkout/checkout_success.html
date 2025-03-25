@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% load crispy_forms_tags %}
 
 {% block extra_css %}
@@ -11,7 +12,7 @@
     <div class="row">
         <div class="col text-center">
             <!-- ✅ Museart Logo -->
-            <img src="{% static 'images/museart.jpg' %}" alt="Museart Logo" class="img-fluid my-4" style="max-height: 80px;">
+            <img src="{% static 'images/museart.jpg' %}" alt="Museart Logo" class="img-fluid my-0" style="max-height: 60%;">
         </div>
     </div>
 </div>
@@ -19,12 +20,12 @@
 
 {% block content %}
 <div class="overlay"></div>
-<div class="container my-5">
+<div class="container mt-5">
     <div class="row justify-content-center text-white">
         <div class="col-lg-10">
 
             <!-- 🎉 Thank You Section -->
-            <div class="text-center mb-5">
+            <div class="text-center mb-10">
                 <h2 class="logo-font">🎉 Thank You for Your Order!</h2>
                 <p class="lead text-light">
                     A confirmation email has been sent to <strong>{{ order.email }}</strong>.

@@ -45,6 +45,10 @@ def cache_checkout_data(request):
 # -----------------------------
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    if not stripe_public_key:
+        messages.error(request, "⚠️ Stripe public key is missing. Please contact support.")
+        return redirect('view_cart')
+    
     cart = request.session.get('cart', {})
 
     if not cart:
@@ -60,21 +64,23 @@ def checkout(request):
 
         order_form = OrderForm(form_data)
         if order_form.is_valid():
+            # ✅ Create Order Object
             order = order_form.save(commit=False)
             cart_data = cart_contents(request)
 
-            # Build cart snapshot
-            cart_snapshot = []
-            for item in cart_data['cart_items']:
-                cart_snapshot.append({
+            
+            # ✅ Build cart snapshot for order history
+            cart_snapshot = [
+                {
                     'product_id': item['product'].id,
                     'product_name': item['product'].name,
                     'quantity': item['quantity'],
                     'price': float(item['product'].price),
                     'subtotal': float(item['subtotal']),
-                })
+                } for item in cart_data['cart_items']
+            ]
 
-            # Save order data
+            # Attach Payment Intent ID Save order data
             pid = request.POST.get('client_secret')
             order.payment_intent_id = pid.split('_secret')[0] if pid else ''
             order.original_cart = json.dumps(cart_snapshot)
@@ -84,7 +90,7 @@ def checkout(request):
             order.order_number = order_number
             order.save()
 
-            # Save line items
+            # Save Order line items
             for item_id, item_data in cart.items():
                 try:
                     product = Product.objects.get(id=item_id)
@@ -103,19 +109,19 @@ def checkout(request):
         else:
             messages.error(request, "There was an error in your form. Please double-check.")
 
-    else:
-        # Create PaymentIntent
-        cart_data = cart_contents(request)
-        stripe_total = round(cart_data['grand_total'] * 100)
-        intent = stripe.PaymentIntent.create(
-            amount=stripe_total,
-            currency=settings.STRIPE_CURRENCY,
-            metadata={
-                'order_number': order_number,
-                'username': str(request.user) if request.user.is_authenticated else 'guest',
-            }
-        )
-
+    else: # GET request: Generate Stripe PaymentIntent
+        try:
+            cart_data = cart_contents(request)
+            stripe_total = round(cart_data['grand_total'] * 100)  # Convert to cents
+            intent = stripe.PaymentIntent.create(
+                amount=stripe_total,
+                currency=settings.STRIPE_CURRENCY,
+                metadata={'order_number': order_number, 'username': request.user.username if request.user.is_authenticated else 'guest'}
+            )
+        except stripe.error.StripeError as e:
+            messages.error(request, f"⚠️ Stripe PaymentIntent Error: {e}")
+            return redirect('view_cart')
+        
         # Pre-fill form
         if request.user.is_authenticated:
             try:
@@ -137,6 +143,7 @@ def checkout(request):
         else:
             order_form = OrderForm()
 
+    # Render Checkout Page
     return render(request, 'checkout/checkout.html', {
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
@@ -209,6 +216,7 @@ def stripe_webhook(request):
     payload = request.body
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
     endpoint_secret = settings.STRIPE_WH_SECRET
+    event: None
 
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)

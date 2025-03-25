@@ -1,48 +1,41 @@
 {% load static %}
 
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
   {% block meta %}
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   {% endblock %}
 
   {% block extra_meta %}
   {% endblock %}
 
-  <!-- Bootstrap CSS -->
-
+  <!-- Bootstrap & Core Styles -->
   {% block corecss %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}?v={{ time }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
   {% endblock %}
 
   {% block corejs %}
   <script src="https://kit.fontawesome.com/95a43c4ec4.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
-  <!-- stripe -->
   <script src="https://js.stripe.com/v3/"></script>
   {% endblock %}
 
   {% block extra_js %}
   {% endblock %}
 
+  <!-- Favicon -->
   {% block favicon %}
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
@@ -50,178 +43,141 @@
   <link rel="manifest" href="{% static 'site.webmanifest' %}">
   {% endblock %}
 
-  <title>{% block extra_tittle %} MUSEART {% endblock %}</title>
+  <title>{% block extra_title %}MuseArt{% endblock %}</title>
 
   {% block extra_css %}
   {% endblock %}
 </head>
-<script src="{% static 'js/cart.js' %}?v={{ time }}"></script>
+
 <body>
-  <header class="container-fluid fixed-top">
-    <div id="topnav" class="row bg-dark pt-lg-3 d-none d-lg-flex align-items-center">
-      <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
+  <!-- 🔹 Navbar -->
+  <header class="container-fluid fixed-top bg-dark">
+    <div class="row pt-lg-3 d-none d-lg-flex align-items-center">
+      <div class="col-lg-4 text-center text-lg-left">
         <a href="{% url 'home' %}" class="main-logo-link">
-          <img src="{% static 'images/museart.jpg' %}" alt="MuseArt logo" style="height: 80px;">
+          <img src="{% static 'images/museart.jpg' %}" alt="MuseArt Logo" style="height: 80px;">
         </a>
       </div>
-      <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
+      <div class="col-lg-4">
         <form method="GET" action="{% url 'products' %}">
-          <div class="input-group w-100">
-            <input class="form-control border border-red rounded-3" type="text" name="q"
-              placeholder="Discover Your Next Masterpiece...">
+          <div class="input-group">
+            <input class="form-control" type="text" name="q" placeholder="Discover Your Next Masterpiece...">
             <div class="input-group-append">
-              <button class="form-control btn btn-black border border-black rounded-0" type="submit">
-                <span class="icon">
-                  <i class="fas fa-search" style="color:rgb(255, 4, 4);"></i>
-                </span>
+              <button class="btn btn-danger" type="submit">
+                <i class="fas fa-search"></i>
               </button>
             </div>
           </div>
         </form>
       </div>
-      <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
-        <ul class="list-inline list-unstyled text-center text-lg-right my-0">
+      <div class="col-lg-4 text-right">
+        <ul class="list-inline mb-0">
           <li class="list-inline-item dropdown">
-            <a class="text-black nav-link" href="{% url 'products' %}" id="user-option" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <div class="text-center">
-                <div><i class="fas fa-user fa-lg"></i></div>
-                <p class="my-0">My Account</p>
-              </div>
+            <a class="text-white nav-link dropdown-toggle" href="#" id="user-option" data-toggle="dropdown">
+              <i class="fas fa-user fa-lg"></i> My Account
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="user-option">
+            <div class="dropdown-menu">
               {% if request.user.is_authenticated %}
-              {% if request.user.is_superuser %}
-              <a href="" class="dropdown-item">Product Management</a>
-              {% endif %}
-              <a href="" class="dropdown-item">My Profile</a>
-              <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                {% if request.user.is_superuser %}
+                  <a href="#" class="dropdown-item">Product Management</a>
+                {% endif %}
+                <a href="#" class="dropdown-item">My Profile</a>
+                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
               {% else %}
-              <a href="{% url 'account_signup' %}" class="dropdown-item">Sign up</a>
-              <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                <a href="{% url 'account_signup' %}" class="dropdown-item">Sign Up</a>
+                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
               {% endif %}
             </div>
           </li>
           <li class="list-inline-item">
-            <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link"
-              href="{% url 'view_cart' %}">
-              <div class="text-center">
-                <div><i class="fas fa-shopping-cart fa-lg"></i></div>
-                <p class="my-0"> Cart</p>
-              </div>
+            <a class="nav-link text-white" href="{% url 'view_cart' %}">
+              <i class="fas fa-shopping-cart fa-lg"></i> Cart
             </a>
           </li>
         </ul>
       </div>
     </div>
-    <div class="row bg-dark">
-      <nav class="navbar navbar-expand-lg navbar-light w-100">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
-          aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        {% include 'includes/mobile-top-header.html' %}
-        {% include 'includes/main-nav.html' %}
-      </nav>
-    </div>
 
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      {% include 'includes/mobile-top-header.html' %}
+      {% include 'includes/main-nav.html' %}
+    </nav>
   </header>
 
+  <!-- 🔹 Flash Messages -->
   {% if messages %}
   <div class="message-container">
     {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} alert-dismissible text-warning show" role="alert">
+    <div class="alert alert-{{ message.tags }} alert-dismissible text-warning show">
       {{ message }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endfor %}
   </div>
   {% endif %}
 
-  <!-- Toast Notifications -->
-  {% include 'includes/feedback-messages/toasts.html' %}
-
+  <!-- 🔹 Page Content -->
   {% block page_header %}{% endblock %}
-
   {% block content %}{% endblock %}
 
-  <!-- Footer Section -->
-  <footer class="footer bg-white text-black py-6 mt-5">
-    <div class="container text-lg-right">
-      <p>&copy; 2024 Museart. All Rights Reserved.</p>
-      <p>Keep up to date with our latest offers!</p>
-      <hr class="block-divider block-divider--short border-white">
-      <div class="social-links">
-        <a href="https://www.youtube.com/channel/UCe8FOuV0fn-nqO_QWrHTRkQ" target="_blank" class="text-warning mr-4">
-          <i class="fab fa-youtube"></i> Check our Youtube Channel
-        </a>
-        <a href="https://www.facebook.com/YourPage" target="_blank" class="text-black mr-4">
-          <i class="fab fa-facebook"></i> Follow us on Facebook
-        </a>
-      </div>
-    </div>
+  <!-- 🔹 Footer -->
+  <footer class="footer bg-dark text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- 📩 Mailchimp Newsletter Subscription (Left) -->
+            <div class="col-md-6">
+                <h4 class="text-warning font-weight-bold">📩 Subscribe for Offers</h4>
+                <p class="text-info-50">Get the latest updates and exclusive offers directly in your inbox.</p>
+                <form action="https://herokuapp.us8.list-manage.com/subscribe/post?u=530fe238577e7bb318b2183dc&amp;id=26d5ca9611"
+                      method="post" target="_blank" class="d-flex">
+                    <input type="email" name="EMAIL" class="form-control mr-2"
+                           placeholder="Enter your email" required style="max-width: 300px;">
+                    <button type="submit" class="btn btn-warning font-weight-bold">Subscribe</button>
+                </form>
+            </div>
 
-    <!-- Mailchimp Newsletter Signup -->
-    <div class="container col-12 col-md-7">
-      <h2 class="d-none d-md-block">Subscribe!</h2>
-      <p class="ml-2 ml-md-0">Get exclusive offers and discount codes by subscribing to our monthly newsletter</p>
-      <form action="https://herokuapp.us8.list-manage.com/subscribe/post?u=530fe238577e7bb318b2183dc&amp;id=26d5ca9611"
-        method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-        <div id="mc_embed_signup_scroll">
-          <div class="mc-field-group">
-            <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
-            <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required>
-          </div>
-          <div class="mc-field-group">
-            <label for="mce-FNAME">First Name</label>
-            <input type="text" name="FNAME" class="text" id="mce-FNAME">
-          </div>
-          <div class="mc-field-group">
-            <label for="mce-LNAME">Last Name</label>
-            <input type="text" name="LNAME" class="text" id="mce-LNAME">
-          </div>
-          <div aria-hidden="true" style="position: absolute; left: -5000px;">
-            <!-- Real people should not fill this in to avoid bot signups -->
-            <input type="text" name="b_530fe238577e7bb318b2183dc_26d5ca9611" tabindex="-1" value="">
-          </div>
-          <div class="optionalParent">
-            <div class="clear foot">
-                <input type="submit" value="Subscribe" name="subscribe"
-                    id="mc-embedded-subscribe" class="button mailchimp-subscribe">
-                
-                <p class="brandingLogo">
-                    <a href="http://eepurl.com/imHRyY"
-                        title="Mailchimp - email marketing made easy and fun">
-                        <img src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_dark_dtp.svg"
-                            alt="Mailchimp logo">
+            <!-- 🌍 Social Media & Copyright (Right) -->
+            <div class="col-md-6 text-md-right mt-4 mt-md-0">
+                <p class="font-weight-bold">&copy; 2024 <span class="text-warning">MuseArt</span>. All Rights Reserved.</p>
+                <p class="text-info-50">Stay connected and follow us on social media.</p>
+                <hr class="block-divider border-light">
+                <div class="social-links">
+                    <a href="https://www.youtube.com/channel/UCe8FOuV0fn-nqO_QWrHTRkQ" target="_blank"
+                       class="text-danger h5 mr-4">
+                        <i class="fab fa-youtube"></i> YouTube
                     </a>
-                </p>
+                    <a href="https://www.facebook.com/YourPage" target="_blank"
+                       class="text-white h5">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                </div>
             </div>
         </div>
-        
-        </div>
-      </form>
     </div>
-  </footer>
-  <!-- /.footer -->
+</footer>
 
+
+  <!-- 🔹 Scripts -->
   {% block postloadjs %}
   {{ block.super }}
+
   <script src="{% static 'js/message_dismisser.js' %}"></script>
   <script src="{% static 'js/toasts.js' %}">$('.toast').toast('show');</script>
   <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-  <script>
-    (function ($) {
-      window.fnames = new Array();
-      window.ftypes = new Array();
-      fnames[0] = 'EMAIL'; ftypes[0] = 'email';
-      fnames[1] = 'FNAME'; ftypes[1] = 'text';
-      fnames[2] = 'LNAME'; ftypes[2] = 'text';
+
+<script>
+    (function($) {
+        window.fnames = new Array(); 
+        window.ftypes = new Array();
+        fnames[0] = 'EMAIL'; ftypes[0] = 'email';
+        fnames[1] = 'FNAME'; ftypes[1] = 'text';
+        fnames[2] = 'LNAME'; ftypes[2] = 'text';
     }(jQuery));
     var $mcj = jQuery.noConflict(true);
-  </script>
+</script>
   {% endblock %}
 </body>
 </html>

@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}?v={{ time }}">
 {% endblock %}
 
 {% block page_header %}
@@ -22,7 +22,7 @@
 
         <!-- ✅ Order Summary -->
         <div class="col-12 col-lg-4 order-summary mb-5">
-            <h4>Order Summary</h4>
+            <h4>🛒 Order Summary</h4>
             <hr class="border-white opacity-50" />
             {% for item in cart_items %}
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -37,9 +37,9 @@
                 <hr class="border-white opacity-50" />
             {% endfor %}
             <div class="text-right">
-                <p>Order Total: ${{ total|floatformat:2 }}</p>
-                <p>Delivery: ${{ delivery|floatformat:2 }}</p>
-                <p class="h5 font-weight-bold">Grand Total: ${{ grand_total|floatformat:2 }}</p>
+                <p>Subtotal: ${{ total|floatformat:2 }}</p>
+                <p class="text-info">Delivery Fee: ${{ delivery|floatformat:2 }}</p>
+                <p class="h5 font-weight-bold text-warning">Grand Total: ${{ grand_total|floatformat:2 }}</p>
             </div>
         </div>
 
@@ -47,15 +47,14 @@
         <div class="col-12 col-lg-8">
             <form method="POST" id="payment-form">
                 {% csrf_token %}
-                <h4 class="mb-4">Complete Your Order</h4>
+                <h4 class="mb-4">💳 Complete Your Order</h4>
 
                 <!-- 🔒 Data for JavaScript (Stripe Setup) -->
                 <div id="order-data" data-order-number="{{ order_number }}"></div>
                 <input type="hidden" name="client_secret" value="{{ client_secret }}">
 
-
-                <!-- User Info -->
-                <div class="row">
+                <!-- 📝 User Info -->
+                <div class="row text-info">
                     {% for field in order_form %}
                         <div class="col-md-6 mb-3">
                             {{ field | as_crispy_field }}
@@ -63,27 +62,27 @@
                     {% endfor %}
                 </div>
 
-                <!-- Save Info Option -->
+                <!-- 📌 Save Info Option -->
                 <div class="form-check mb-4">
                     {% if user.is_authenticated %}
                         <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
                         <label class="form-check-label" for="id-save-info">Save this delivery information</label>
                     {% else %}
-                        <label class="form-check-label">
+                        <p>
                             <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
-                            <a class="text-info" href="{% url 'account_login' %}">login</a> to save this info
-                        </label>
+                            <a class="text-info" href="{% url 'account_login' %}">Login</a> to save this info.
+                        </p>
                     {% endif %}
                 </div>
 
                 <!-- 💳 Payment Section -->
                 <fieldset class="border p-4 mb-4">
-                    <legend class="w-auto">Payment Information</legend>
+                    <legend class="w-auto text-warning">🔐 Secure Payment</legend>
                     <div id="payment-element" class="mb-3"></div>
-                    <div id="card-errors" role="alert" class="text-danger mt-2"></div>
-                    <button type="submit" class="btn btn-success w-100" id="submit">Pay</button>
-                    <a href="{% url 'view_cart' %}" class="btn btn-outline-light w-100 mt-2">Back to Cart</a>
-                    <small class="d-block text-center mt-2">By clicking "Pay", your card will be charged securely via Stripe.</small>
+                    <div id="card-errors" class="text-danger mt-2"></div>
+                    <button type="submit" class="btn btn-success w-100" id="submit">Pay Securely</button>
+                    <a href="{% url 'view_cart' %}" class="btn btn-outline-danger w-100 mt-2">← Back to Cart</a>
+                    <small class="d-block text-info mt-2">Your card will be securely charged via Stripe.</small>
                 </fieldset>
             </form>
         </div>
@@ -91,9 +90,10 @@
 </div>
 
 <!-- 🌀 Payment Spinner -->
-<div id="payment-overlay" class="payment-spinner d-none justify-content-center align-items-center position-absolute w-100 h-100" style="background: rgba(0, 0, 0, 0.6); z-index: 9999;">
+<div id="payment-overlay" class="payment-spinner d-none justify-content-center align-items-center position-absolute w-100 h-100"
+     style="background: rgba(0, 0, 0, 0.6); z-index: 9999;">
     <div class="text-center">
-        <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing..." width="100" height="100">
+        <img src="{% static 'images/loading-spinner.gif' %}" alt="Processing Payment..." width="100" height="100">
         <p class="text-white mt-2">Processing your payment, please wait...</p>
     </div>
 </div>
@@ -101,9 +101,11 @@
 
 {% block postloadjs %}
 {{ block.super }}
+
 <!-- ✅ Inject data as JSON-readable content -->
 <script type="application/json" id="id_stripe_public_key">{{ stripe_public_key|escapejs }}</script>
 <script type="application/json" id="id_client_secret">{{ client_secret|escapejs }}</script>
+
 <!-- ✅ Load Stripe JS & Your Checkout Logic -->
 <script src="https://js.stripe.com/v3/"></script>
 <script src="{% static 'checkout/js/checkout.js' %}"></script>
