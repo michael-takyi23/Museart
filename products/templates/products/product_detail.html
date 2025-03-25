@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block page_header %}
-    <div class="container header-container">
+    <div class="container container-fluid mt-1">
         <div class="row">
             <div class="col"></div>
         </div>
@@ -47,7 +47,7 @@
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-12">
-                            <p class="mt-3"><strong>Quantity:</strong></p>
+                            <p class="mt-3 text-white"><strong>Quantity:</strong></p>
                             <div class="form-group w-50">
                                 <div class="input-group">
                                     <input class="form-control qty_input" type="number" 
@@ -60,13 +60,13 @@
                         </div>
 
                         <div class="col-12">
-                            <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 mt-5">
+                            <a href="{% url 'products' %}" class="btn btn-success rounded-2 mt-5">
                                 <span class="icon">
                                     <i class="fas fa-chevron-left"></i>
                                 </span>
                                 <span class="text-uppercase">Continue Shopping</span>
                             </a>
-                            <input type="submit" class="btn btn-outline-black rounded-0 text-uppercase mt-5" value="Add to Cart">
+                            <input type="submit" class="btn btn-dark rounded-2 text-uppercase mt-5" value="Add to Cart">
                         </div>
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
                     </div>

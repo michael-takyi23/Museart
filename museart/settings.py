@@ -242,11 +242,37 @@ STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
 STRIPE_PUBLIC_KEY = STRIPE_TEST_PUBLIC_KEY if DEBUG else STRIPE_LIVE_PUBLIC_KEY
 STRIPE_SECRET_KEY = STRIPE_TEST_SECRET_KEY if DEBUG else STRIPE_LIVE_SECRET_KEY
 
+
+# ✅ Primary Email Backend - Outlook SMTP
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.office365.com"  # Outlook SMTP server
+EMAIL_PORT = 587  # TLS port for Outlook
+EMAIL_USE_TLS = True  # Outlook requires TLS
+EMAIL_USE_SSL = False  # SSL must be disabled for Outlook
+EMAIL_HOST_USER = os.getenv("OUTLOOK_EMAIL", "museart2024@outlook.com")  # Store email securely
+EMAIL_HOST_PASSWORD = os.getenv("OUTLOOK_PASSWORD")  # Store password securely
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default sender email
+
+# ✅ Fallback: SendGrid (Only if SMTP Credentials Are Missing)
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+
+if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
+    if SENDGRID_API_KEY:
+        print("⚠️ Using SendGrid as fallback email provider.")
+        EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+        SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # Use False in production
+        EMAIL_HOST_USER = "apikey"  # SendGrid requires 'apikey' as the username
+        EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+        DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "museart2024@outlook.com")
+    else:
+        print("❌ No email provider is configured. Check your environment variables!")
+
+
 # SendGrid Email Configuration
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # Disable sandbox mode for production or real email testing
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"  # Specify the SendGrid backend
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")  # Fetch the API key securely
-DEFAULT_FROM_EMAIL = "museart2024@outlook.com"  
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # Disable sandbox mode for production or real email testing
+# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"  # Specify the SendGrid backend
+#  = os.getenv("SENDGRID_API_KEY")  # Fetch the API key securely
+# DEFAULT_FROM_EMAIL = "museart2024@outlook.com"  
 
 
 LOGGING = {

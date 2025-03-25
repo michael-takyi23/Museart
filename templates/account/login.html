@@ -8,8 +8,8 @@
 
 
 {% block page_header %}
-<div class="container header-container"></div>
-    <div class="container-fluid py-4 bg-gradient" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
+<div class="container header-fluid mt-2"></div>
+    <div class="container-fluid py-2 bg-gradient" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
         <h1 class="text-center text-white">Log In to Your Account</h1>
     </div>
 {% endblock %}
@@ -30,7 +30,7 @@
                 {% endif %}
             </div>
             {% endfor %}
-            <button class="btn btn-primary btn-block py-2 mb-2">Log In</button>
+            <button class="btn btn-success btn-block py-2 mb-2">Log In</button>
         </form>
         <p class="text-center small mb-0">
             Forgot your password? <a href="{% url 'account_reset_password' %}" class="text-primary">Reset it</a>.

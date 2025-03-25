@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block page_header %}
-<div class="container header-container">
+<div class="container header-fluid mt-1">
     <div class="row">
         <div class="col"></div>
     </div>
@@ -103,8 +103,8 @@
 {{ block.super }}
 
 <!-- ✅ Inject data as JSON-readable content -->
-<script type="application/json" id="id_stripe_public_key">{{ stripe_public_key|escapejs }}</script>
-<script type="application/json" id="id_client_secret">{{ client_secret|escapejs }}</script>
+{{ stripe_public_key | json_script:"id_stripe_public_key" }}
+{{ stripe_client_secret | json_script:"id_stripe_client_secret" }}
 
 <!-- ✅ Load Stripe JS & Your Checkout Logic -->
 <script src="https://js.stripe.com/v3/"></script>

@@ -1,19 +1,29 @@
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $('.qty_input').on('input change', function () {
+            var itemId = $(this).data('item_id');
+            var currentValue = parseInt($(this).val(), 10);
 
-    $('.qty_input').on('input', function() {
-        var itemId = $(this).data('item_id');
-        var currentValue = parseInt($(this).val());
+            // If value is NaN (non-numeric), reset to 1
+            if (isNaN(currentValue)) {
+                $(this).val(1);
+            }
+            // If value is below 1, reset to 1
+            else if (currentValue < 1) {
+                $(this).val(1);
+            }
+            // If value is above 99, reset to 99
+            else if (currentValue > 99) {
+                $(this).val(99);
+            }
+        });
 
-        // If value is below 1, reset to 1
-        if (currentValue < 1) {
-            $(this).val(1);
-        } 
-        
-         // If value is above 99, reset to 99
-        else if (currentValue > 99) {
-            $(this).val(99);
-        }
+        // ✅ Prevent non-numeric characters (except backspace & delete)
+        $('.qty_input').on('keypress', function (e) {
+            var charCode = e.which ? e.which : e.keyCode;
+            if (charCode < 48 || charCode > 57) {
+                e.preventDefault();
+            }
+        });
     });
-});
 </script>

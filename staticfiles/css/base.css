@@ -1,3 +1,4 @@
+/* ✅ General Fixes */
 
 body {
     background: url("../images/museart.jpg") no-repeat center center fixed;
@@ -6,6 +7,24 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     font-family: 'Roboto', sans-serif;
+}
+
+/* ✅ Fix Message Container */
+.message-container {
+    margin-top: 80px; /* Prevents navbar overlap */
+}
+
+/* ✅ Keep Toast Above Content */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2000;
+}
+
+.header-container {
+    padding-top: 100px; /* Avoids overlap with navbar */
+    text-align: center;
 }
 
 .icon {
@@ -143,17 +162,6 @@ strong {
     border-color: #A00000; 
 }
 
-.message-container {
-    margin-top: 156px;
-}
-
-.toast-container {
-    bottom: 20px;
-    right: 20px;
-    position: fixed;
-    z-index: 2000 !important;
-}
-
 .navbar {
     z-index: 1050 !important; /* Keep it below toast */
     position: sticky; /* Prevent layout shifts */
@@ -164,38 +172,23 @@ strong {
     color: #f10f0f;
 }
 
-
 /* -------------------------------- Media Queries */
 
-/* Slightly smaller container on xl screens */
+/* ✅ Responsive Fixes */
 @media (min-width: 1200px) {
-  .container {
-    max-width: 95%;
-  }
-}
-
-/* fixed bottom navbar only on medium and up */
-@media (min-width: 992px) {
-    .fixed-top-desktop-only {
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-    }
-
-    .header-container {
-        padding-bottom: 164px;
+    .container {
+        max-width: 95%;
     }
 }
 
-/* pad the top a bit when navbar is collapsed on mobile */
+/* ✅ Adjust Mobile View */
 @media (max-width: 991px) {
     .header-container {
-        padding-top: 116px;
+        padding-top: 120px;
     }
 
-    body {
-        height: calc(100vh - 116px);
+    .footer {
+        position: relative;
+        bottom: 0;
     }
 }

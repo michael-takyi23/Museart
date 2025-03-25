@@ -1,25 +1,38 @@
-
-
 document.addEventListener("DOMContentLoaded", function () {
     console.log("🔄 Initializing Stripe Checkout...");
 
-    const stripePublicKey = JSON.parse(document.getElementById('id_stripe_public_key').textContent);
-    const clientSecret = JSON.parse(document.getElementById('id_client_secret').textContent);
+    // ✅ Ensure elements exist before reading values
+    const stripePublicKeyEl = document.getElementById("id_stripe_public_key");
+    const clientSecretEl = document.getElementById("id_client_secret");
+
+    if (!stripePublicKeyEl || !clientSecretEl) {
+        console.error("❌ Stripe keys not found in template. Check Django context.");
+        alert("Error setting up payment. Please refresh and try again.");
+        return;
+    }
+
+    const stripePublicKey = document.getElementById('id_stripe_public_key').text.slice(1, -1);
+    const stripeClientSecret = document.getElementById('id_stripe_client_secret').text.slice(1, -1);
+
+    console.log("🔍 Stripe Public Key:", stripePublicKey);
+    console.log("🔍 Client Secret:", clientSecret);
 
     if (!stripePublicKey || !clientSecret) {
         alert("Error setting up payment. Please refresh and try again.");
         return;
     }
 
-    // Initialize Stripe
+    // ✅ Initialize Stripe
     const stripe = Stripe(stripePublicKey);
     const elements = stripe.elements({ clientSecret });
 
-    const paymentElement = elements.create('payment');
-    paymentElement.mount('#payment-element');
+    // ✅ Mount Stripe payment element
+    const paymentElement = elements.create("payment");
+    paymentElement.mount("#payment-element");
 
     console.log("✅ Stripe initialized successfully.");
 });
+
 
 function handlePaymentForm(stripe, elements, clientSecret) {
     const form = document.getElementById('payment-form');
