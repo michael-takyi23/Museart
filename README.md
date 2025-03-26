@@ -53,8 +53,66 @@ The following pages are visible to all users, logged in or not.
 ![payment-success-Stripe](static/images/paymentsuccessStripe.png).....
 
 
-The following pages are visible to only logged in users.
-7. **Order History**: Logged-in users can view their previous orders and access detailed information about past purchases.
+## Marketing Strategy for Museart
+---
+## Key Strategies
+1. Content Marketing
+- **Blog & Interviews** --- Publish artist interviews, behind-the-scenes features, and art care guides.  
+- **Email Newsletters** --- Deliver curated updates, promotions, and new collection highlights.
+
+2. Social Media Marketing
+- **Visual Platforms (Instagram & Pinterest)** --- High-quality images, Reels, and shoppable pins.  
+- **Video Content (YouTube)** --- behind-the-scenes creation process, artist Q&A sessions.
+
+3. Promotions & Discounts
+- **Seasonal Sales** --- (e.g., holiday discounts, Black Friday offers)  
+- **First-Time Buyer Incentives**  --- Discount codes or exclusive offers for new users.  
+- **Referral & Loyalty Programs** --- Encourage word-of-mouth promotion and repeat purchases.
+
+4. Paid Advertising (Budget Permitting)
+- **Targeted Social Media Ads**: Instagram, Pinterest, and Facebook, focusing on users interested in art, home decor, and interior design.  
+- **Google Ads**: Target users searching for specific artwork styles or artists.
+
+## Primary Platforms & Tools
+- **Facebook & YouTube**: Short-form and long-form video content to educate and entertain 
+- **Instagram** and **Pinterest** for decor-focused audiences and inspiration boards and for visuals and user engagement.   
+- **Email Marketing** for retaining and re-engaging existing subscribers through Personalized communication and promotions.  
+- **SEO** Optimizing site content to rank for relevant art-related keywords to attract users searching for art online.
+
+## Web Marketing
+A Youtube page was set up as the initial stage of a social media marketing strategy. With description and a url to the page, inviting visitors to view products and services. In case the page is taken down, screenshots are included below...
+![youtube](static/images/musetube1.png)
+![youtube](static/images/musetube2.png)
+![youtube](static/images/museyoutube.png)
+---
+## Target Audience
+
+- **Art Enthusiasts & Collectors**: Seeking authentic artworks and artist stories  
+- **Home Décor Shoppers**: Looking for unique decorative items  
+- **Emerging Artists**: Gaining visibility and community engagement
+---
+## Marketing Goals
+---
+1. **Increase Brand Awareness** and drive website traffic.  
+2. **Convert Browsers into Buyers** through engaging content and promotions.  
+3. **Showcase Independent Artists** and support their work.  
+4. **Build a Community** of art enthusiasts around Museart.
+---
+
+## Summary
+Museart’s marketing focuses on visually-driven social media platforms, educational and inspirational content, and targeted promotions to engage both casual browsers and dedicated art lovers. By supporting artists and delivering valuable, visually-rich content, Museart aims to build a reputable brand and a community of loyal customers.
+---
+
+## Models
+museart's core models include:
+
+1. **Product**: Contains all the information related to individual products (artworks), including name, description, price, image, and category.
+2. **Order**: Stores details of customer orders, including customer information, order total, and delivery address.
+3. **OrderLineItem**: Holds details about individual items in an order.
+4. **User Profile**: Allows users to save their delivery and personal information for future orders.
+
+## Project Management
+We are using GitHub Projects to manage tasks and workflows. Check out our [Kanban Board](https://github.com/michael-takyi23/MuseArt/projects/Museart-project) for the latest updates.
 
 ### Admin Features
 1. **Product Management**: Admins can add, edit, and remove products, as well as manage product categories.
@@ -67,13 +125,12 @@ The following pages are visible to only logged in users.
 3. **Stripe Payment Integration**: Payments are securely processed through Stripe’s payment gateway, ensuring safe transactions with industry-standard encryption.
 
 ## User Experience 
-
+---
 - **Design**: 
 The Roboto font is used throughout the project. It's a simple, very legible sans-serif font, considered an amazing font because of its versatility and modern appearance, particularly on headings and larger font sizes and has a clean, geometric look that is legible at small sizes. Favicon.io was used to generate a favicon for the project. A favicon is a small, 16x16 pixel icon used on web browsers to represent a website or a web page. Short for “favorite icon", they're also found on your browser's bookmark bar, history and in search results, alongside the page url.
 
 - **Color Palette**: 
 The following colour palette was used in the project. [Coolors](https://coolors.co/) is an online tool that was used in generating the color palette via MuseArt's project logo or hero image, which is visible on the landing page. 
- 
  ![colors](static/images/MuseArt_Color_Palette.png)
 
  ## Wireframes 
@@ -88,7 +145,7 @@ The following colour palette was used in the project. [Coolors](https://coolors.
   ![products Details](static/images/productsdetailsframe.png)
 
   ## Entity Relationship Diagram (ERD)
-Below is the database structure:
+    Below is the database structure:
  ![Museart ERD](static/images/museart_erd.png)
 
 ## Technologies Used
@@ -111,11 +168,22 @@ Below is the database structure:
 - **Deployment**:
   - Heroku for hosting the application.
   - AWS S3 for managing static and media files in production.
-
   ---
 
-## Installation
+## Testing
+You can run tests for the application using Django’s built-in test framework:
+```bash
+python manage.py test
 
+. Manual testing
+. Validator testing
+. User story testing
+. Automated testing
+
+```
+
+## Installation
+---
 ### Clone Repository
 1. Clone the repository from GitHub:
    ```bash
@@ -168,89 +236,6 @@ For testing purposes, use Stripe’s test card numbers, such as:
 CVC: Any 3 digits
 Expiry: Any future date
 ```
-
-## Web Marketing
-A facebook page was set up as the initial stage of a social media marketing strategy. The page mimics the styling of the site, with a Shop Now button in the page description. An introductory post was added to the page, containing another link to the site and inviting visitors to view the products and services on offer. In case the page is taken down, screenshots are included below...
-
-
-
-
-
-## Models
-museart's core models include:
-
-1. **Product**: Contains all the information related to individual products (artworks), including name, description, price, image, and category.
-2. **Order**: Stores details of customer orders, including customer information, order total, and delivery address.
-3. **OrderLineItem**: Holds details about individual items in an order.
-4. **User Profile**: Allows users to save their delivery and personal information for future orders.
-
-## Testing
-You can run tests for the application using Django’s built-in test framework:
-```bash
-python manage.py test
-
-. Manual testing
-. Validator testing
-. User story testing
-. Automated testing
-
-```
-
-## Project Management
-We are using GitHub Projects to manage tasks and workflows. Check out our [Kanban Board](https://github.com/michael-takyi23/MuseArt/projects/Museart-project) for the latest updates.
-
-
-# Marketing Strategy for Museart
----
-
-## Target Audience
-
-- **Art Enthusiasts & Collectors**: Seeking authentic artworks and artist stories  
-- **Home Décor Shoppers**: Looking for unique decorative items  
-- **Emerging Artists**: Gaining visibility and community engagement
-
----
-
-## Marketing Goals
----
-
-1. **Increase Brand Awareness** and drive website traffic.  
-2. **Convert Browsers into Buyers** through engaging content and promotions.  
-3. **Showcase Independent Artists** and support their work.  
-4. **Build a Community** of art enthusiasts around Museart.
-
----
-
-## Key Strategies
-
-1. Content Marketing
-- **Blog & Interviews** --- Publish artist interviews, behind-the-scenes features, and art care guides.  
-- **Email Newsletters** --- Deliver curated updates, promotions, and new collection highlights.
-
-2. Social Media Marketing
-- **Visual Platforms (Instagram & Pinterest)** --- High-quality images, Reels, and shoppable pins.  
-- **Video Content (YouTube)** --- behind-the-scenes creation process, artist Q&A sessions.
-
-3. Promotions & Discounts
-- **Seasonal Sales** --- (e.g., holiday discounts, Black Friday offers)  
-- **First-Time Buyer Incentives**  --- Discount codes or exclusive offers for new users.  
-- **Referral & Loyalty Programs** --- Encourage word-of-mouth promotion and repeat purchases.
-
-4. Paid Advertising (Budget Permitting)
-- **Targeted Social Media Ads**: Instagram, Pinterest, and Facebook, focusing on users interested in art, home decor, and interior design.  
-- **Google Ads**: Target users searching for specific artwork styles or artists.
-
-## Primary Platforms & Tools
-- **Instagram** and **Pinterest** for decor-focused audiences and inspiration boards and for visuals and user engagement.
-- **Facebook & YouTube**: Short-form and long-form video content to educate and entertain    
-- **Email Marketing** for retaining and re-engaging existing subscribers through Personalized communication and promotions.  
-- **SEO** Optimizing site content to rank for relevant art-related keywords to attract users searching for art online.
-
-## Summary
-Museart’s marketing focuses on visually-driven social media platforms, educational and inspirational content, and targeted promotions to engage both casual browsers and dedicated art lovers. By supporting artists and delivering valuable, visually-rich content, Museart aims to build a reputable brand and a community of loyal customers.
-
----
-
 ## Deployment
 museart is deployed on **Heroku** with a PostgreSQL database for production. Static and media files are served via **AWS S3**. To deploy:
 
@@ -260,7 +245,6 @@ museart is deployed on **Heroku** with a PostgreSQL database for production. Sta
    ```bash
    git push heroku main
 
-   
 ## Acknowledgement 
 
 1. Django: The powerful web framework that served as the foundation of this project.
@@ -273,7 +257,6 @@ museart is deployed on **Heroku** with a PostgreSQL database for production. Sta
 8. Heroku: For providing hosting and deployment support for museart.
 9. ChatGPT: This README and various technical solutions throughout the project were enhanced using ChatGPT, a large language model trained by OpenAI, for brainstorming, code suggestions, and guidance.
 
-
 ## Contributing
 
 If you’d like to contribute to museart, please fork the repository and create a pull request with your changes. All contributions are welcome!
@@ -284,4 +267,4 @@ This project is licensed under the MIT License.
 
 ---
 
-museart is a platform where the love for art and technology come together to provide users with a seamless and secure shopping experience. Thank you for visiting, more improvements in the future!
+Museart is a platform where the love for art and technology come together to provide users with a seamless and secure shopping experience. Thank you for visiting, more improvements in the future!

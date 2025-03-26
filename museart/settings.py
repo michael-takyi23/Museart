@@ -258,7 +258,6 @@ SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
 if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
     if SENDGRID_API_KEY:
-        print("⚠️ Using SendGrid as fallback email provider.")
         EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
         SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # Use False in production
         EMAIL_HOST_USER = "apikey"  # SendGrid requires 'apikey' as the username
