@@ -34,7 +34,7 @@ class OrderForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Phone Number',
-                'pattern': "\\+?[0-9\\s-]+",
+                'pattern': "^\+?[0-9\s\-]+$",
                 'title': 'Enter a valid phone number',
                 'required': True
             }),

@@ -13,6 +13,6 @@ urlpatterns = [
     # ✅ Caching Checkout Data Before Payment
     path('cache-checkout-data/', cache_checkout_data, name='cache_checkout_data'),
 
-    path('stripe webhook/', stripe_webhook, name='stripe_webhook'), 
+    path('stripe-webhook/', stripe_webhook, name='stripe_webhook'), 
 
 ]

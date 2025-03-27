@@ -5,14 +5,28 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+<style>
+    .glass-card {
+        background: rgba(0, 0, 0, 0.75);
+        border-radius: 1rem;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+    .section-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+</style>
 {% endblock %}
 
 {% block page_header %}
-<div class="container header-container">
+<div class="container header-fluid mt-2">
     <div class="row">
         <div class="col text-center">
-            <!-- ✅ Museart Logo -->
-            <img src="{% static 'images/museart.jpg' %}" alt="Museart Logo" class="img-fluid mb-2" style="max-height: 80px;">
+            <img src="{% static 'images/museart.jpg' %}" alt="Museart Logo" class="img-fluid my-3" style="max-height: 80px;">
         </div>
     </div>
 </div>
@@ -20,29 +34,26 @@
 
 {% block content %}
 <div class="overlay"></div>
-<div class="container mt-3">
-    <div class="row justify-content-center text-white">
+<div class="container my-5">
+    <div class="row justify-content-center">
         <div class="col-lg-10">
 
             <!-- 🎉 Thank You Section -->
-            <div class="text-center mb-4">
-                <h2 class="logo-font">🎉 Thank You for Your Order!</h2>
-                <p class="lead text-light">
-                    A confirmation email has been sent to <strong>{{ order.email }}</strong>.
-                </p>
-                <hr class="border-light">
+            <div class="text-center text-white mb-4">
+                <h2 class="display-5">🎉 Thank You for Your Order!</h2>
+                <p class="lead">A confirmation email has been sent to <strong>{{ order.email }}</strong>.</p>
+                <hr class="border-light w-50 mx-auto">
             </div>
 
             <!-- ✅ Order Summary Card -->
-            <div class="card p-4 shadow-lg bg-dark text-light">
-                <h3 class="text-center text-success mb-3">✅ Order Placed Successfully</h3>
-                <p class="text-center">We’re preparing your order and will ship it soon.</p>
+            <div class="card glass-card p-4 text-white">
+                <h4 class="text-center text-success mb-4">✅ Order Placed Successfully</h4>
 
-                <h4 class="text-center mt-4">🧾 Order Number: <strong>{{ order.order_number }}</strong></h4>
+                <h5 class="text-center mb-4">🧾 Order Number: <span class="text-info">{{ order.order_number }}</span></h5>
 
                 <!-- 📍 Shipping Info -->
-                <div class="mt-3">
-                    <h5>📍 Shipping Details:</h5>
+                <div class="mb-4">
+                    <h6 class="section-title">📍 Shipping Details</h6>
                     <p><strong>Name:</strong> {{ order.full_name }}</p>
                     <p><strong>Email:</strong> {{ order.email }}</p>
                     <p><strong>Phone:</strong> {{ order.phone_number }}</p>
@@ -55,27 +66,28 @@
                 </div>
 
                 <!-- 🛍️ Ordered Items -->
-                <div class="mt-3">
-                    <h5>🛍️ Items:</h5>
-                    <ul class="list-group list-group-flush bg-transparent">
+                <div class="mb-4">
+                    <h6 class="section-title">🛍️ Items Ordered</h6>
+                    <ul class="list-group list-group-flush">
                         {% for item in order.lineitems.all %}
-                            <li class="list-group-item bg-transparent text-white border-bottom">
-                                {{ item.product.name }} × {{ item.quantity }} — ${{ item.lineitem_total|floatformat:2 }}
+                            <li class="list-group-item bg-transparent text-white border-light">
+                                <strong>{{ item.product.name }}</strong> × {{ item.quantity }} 
+                                <span class="float-right">${{ item.lineitem_total|floatformat:2 }}</span>
                             </li>
                         {% endfor %}
                     </ul>
                 </div>
 
                 <!-- 💳 Payment Summary -->
-                <div class="mt-3">
-                    <h5>💳 Payment Summary:</h5>
+                <div class="mb-4">
+                    <h6 class="section-title">💳 Payment Summary</h6>
                     <p><strong>Subtotal:</strong> ${{ order.order_total|floatformat:2 }}</p>
                     <p><strong>Delivery:</strong> ${{ order.delivery_cost|floatformat:2 }}</p>
-                    <p class="h5"><strong>Total Paid:</strong> ${{ order.grand_total|floatformat:2 }}</p>
+                    <p class="h5"><strong>Total Paid:</strong> <span class="text-warning">${{ order.grand_total|floatformat:2 }}</span></p>
                 </div>
 
                 <!-- 📅 Delivery ETA -->
-                <div class="mt-3">
+                <div class="mb-4">
                     <p class="text-muted">
                         📅 <strong>Estimated Delivery:</strong> 
                         <span class="text-info">{{ order.date|date:"F d, Y" }}</span>
@@ -84,8 +96,8 @@
 
                 <!-- 🚀 Actions -->
                 <div class="text-center mt-3">
-                    <a href="{% url 'products' %}" class="btn btn-primary">🔁 Continue Shopping</a>
-                    <button onclick="window.print()" class="btn btn-outline-light ml-2">🖨️ Print Order</button>
+                    <a href="{% url 'products' %}" class="btn btn-outline-info px-4">🔁 Continue Shopping</a>
+                    <button onclick="window.print()" class="btn btn-outline-light px-4 ml-2">🖨️ Print Order</button>
                 </div>
             </div>
 

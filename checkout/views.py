@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 
 from .forms import OrderForm
 from .models import Order, OrderLineItem, generate_order_number
@@ -17,6 +17,7 @@ from products.models import Product
 from profiles.models import UserProfile
 from profiles.forms import UserProfileForm
 from cart.contexts import cart_contents
+
 
 # Stripe and Logger Setup
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -39,7 +40,6 @@ def cache_checkout_data(request):
     except Exception as e:
         return HttpResponse(content=str(e), status=400)
 
-
 # -----------------------------
 # GET/POST: Checkout Page Logic
 # -----------------------------
@@ -48,81 +48,96 @@ def checkout(request):
     if not stripe_public_key:
         messages.error(request, "⚠️ Stripe public key is missing. Please contact support.")
         return redirect('view_cart')
-    
-    cart = request.session.get('cart', {})
 
+    cart = request.session.get('cart', {})
     if not cart:
         messages.error(request, "Your cart is empty. Please add items before checking out.")
         return redirect('view_cart')
 
+    # Always generate a new order number and intent on each load
     order_number = generate_order_number()
 
     if request.method == 'POST':
-        form_data = {field: request.POST[field] for field in [
+        # ✅ Form submission: validate and save order
+        form_data = {field: request.POST.get(field, '') for field in [
             'full_name', 'email', 'phone_number', 'country', 'postcode',
             'town_or_city', 'street_address1', 'street_address2', 'county']}
 
         order_form = OrderForm(form_data)
         if order_form.is_valid():
-            # ✅ Create Order Object
-            order = order_form.save(commit=False)
-            cart_data = cart_contents(request)
+            try:
+                order = order_form.save(commit=False)
+                cart_data = cart_contents(request)
 
-            
-            # ✅ Build cart snapshot for order history
-            cart_snapshot = [
-                {
-                    'product_id': item['product'].id,
-                    'product_name': item['product'].name,
-                    'quantity': item['quantity'],
-                    'price': float(item['product'].price),
-                    'subtotal': float(item['subtotal']),
-                } for item in cart_data['cart_items']
-            ]
+                # ✅ Build a clean cart snapshot
+                cart_snapshot = [
+                    {
+                        'product_id': item['product'].id,
+                        'product_name': item['product'].name,
+                        'quantity': item['quantity'],
+                        'price': float(item['product'].price),
+                        'subtotal': float(item['subtotal']),
+                    }
+                    for item in cart_data['cart_items']
+                ]
 
-            # Attach Payment Intent ID Save order data
-            pid = request.POST.get('client_secret')
-            order.payment_intent_id = pid.split('_secret')[0] if pid else ''
-            order.original_cart = json.dumps(cart_snapshot)
-            order.order_total = cart_data['total']
-            order.delivery_cost = cart_data['delivery']
-            order.grand_total = cart_data['grand_total']
-            order.order_number = order_number
-            order.save()
+                # ✅ Attach payment and cart metadata
+                client_secret = request.POST.get('client_secret')
+                if not client_secret or '_secret' not in client_secret:
+                    messages.error(request, "Invalid payment session. Please try again.")
+                    return redirect('checkout')
 
-            # Save Order line items
-            for item_id, item_data in cart.items():
-                try:
-                    product = Product.objects.get(id=item_id)
-                    OrderLineItem.objects.create(
-                        order=order,
-                        product=product,
-                        quantity=item_data
-                    )
-                except Product.DoesNotExist:
-                    messages.error(request, "A product in your cart wasn't found.")
-                    order.delete()
-                    return redirect('view_cart')
+                pid = client_secret.split('_secret')[0]
+                order.payment_intent_id = pid
+                order.original_cart = json.dumps(cart_snapshot)
+                order.order_total = cart_data['total']
+                order.delivery_cost = cart_data['delivery']
+                order.grand_total = cart_data['grand_total']
+                order.order_number = order_number
+                order.save()
 
-            request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout:checkout_success', args=[order.order_number]))
+                # ✅ Save each line item
+                for item_id, item_data in cart.items():
+                    try:
+                        product = Product.objects.get(id=item_id)
+                        quantity = item_data['quantity'] if isinstance(item_data, dict) else item_data
+                        OrderLineItem.objects.create(order=order, product=product, quantity=quantity)
+                    except Product.DoesNotExist:
+                        messages.error(request, "A product in your cart was not found.")
+                        order.delete()
+                        return redirect('view_cart')
+
+                request.session['save_info'] = 'save-info' in request.POST
+                return redirect(reverse('checkout:checkout_success', args=[order.order_number]))
+
+            except Exception as e:
+                logger.exception("Checkout POST error")
+                messages.error(request, f"Something went wrong while processing your order. Error: {e}")
+                return redirect('checkout')
+
         else:
-            messages.error(request, "There was an error in your form. Please double-check.")
+            messages.error(request, "There was an error in your form. Please double-check your details.")
 
-    else: # GET request: Generate Stripe PaymentIntent
+    else:
+        # ✅ GET request: prepare checkout form and new PaymentIntent
         try:
             cart_data = cart_contents(request)
-            stripe_total = round(cart_data['grand_total'] * 100)  # Convert to cents
+            stripe_total = round(cart_data['grand_total'] * 100)  # cents
+
             intent = stripe.PaymentIntent.create(
                 amount=stripe_total,
                 currency=settings.STRIPE_CURRENCY,
-                metadata={'order_number': order_number, 'username': request.user.username if request.user.is_authenticated else 'guest'}
+                metadata={
+                    'order_number': order_number,
+                    'username': request.user.username if request.user.is_authenticated else 'guest'
+                }
             )
         except stripe.error.StripeError as e:
-            messages.error(request, f"⚠️ Stripe PaymentIntent Error: {e}")
+            logger.exception("Stripe PaymentIntent creation failed")
+            messages.error(request, f"⚠️ Stripe error: {str(e)}")
             return redirect('view_cart')
-        
-        # Pre-fill form
+
+        # ✅ Pre-fill delivery form for authenticated users
         if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
@@ -143,7 +158,7 @@ def checkout(request):
         else:
             order_form = OrderForm()
 
-    # Render Checkout Page
+    # ✅ Render checkout page
     return render(request, 'checkout/checkout.html', {
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
@@ -151,26 +166,47 @@ def checkout(request):
         'order_number': order_number,
     })
 
-
 # -----------------------------
 # GET: Polling - Get Order Number
 # -----------------------------
+@require_GET
 def get_order_number(request):
+    """
+    Polling endpoint to check order status by payment intent ID.
+    Returns order details if found, otherwise signals the frontend to retry.
+    """
     payment_intent_id = request.GET.get("payment_intent")
-    if not payment_intent_id:
-        return JsonResponse({"error": "Missing payment intent ID"}, status=400)
 
-    for attempt in range(30):
-        try:
-            order = Order.objects.get(payment_intent_id=payment_intent_id)
-            return JsonResponse({
-                "success": True,
-                "redirect_url": reverse("checkout:checkout_success", args=[order.order_number]),
-            })
-        except Order.DoesNotExist:
-            time.sleep(1)
+    # Validate input
+    if not payment_intent_id or not payment_intent_id.startswith('pi_'):
+        logger.error(f"Invalid payment intent ID: {payment_intent_id}")
+        return JsonResponse(
+            {"error": "Invalid or missing payment intent ID"},
+            status=400
+        )
 
-    return JsonResponse({"error": "Order not found"}, status=404)
+    try:
+        # Attempt to retrieve the order
+        order = Order.objects.select_related('user_profile').get(payment_intent_id=payment_intent_id)
+        
+        logger.info(f"Order found for payment intent {payment_intent_id}: {order.order_number}")
+
+        return JsonResponse({
+            "success": True,
+            "redirect_url": reverse("checkout:checkout_success", kwargs={'order_number': order.order_number}),
+            "order_number": order.order_number
+        })
+
+    except Order.DoesNotExist:
+        logger.debug(f"Order not found for payment intent {payment_intent_id}. Prompting frontend to retry.")
+        
+        return JsonResponse({
+            "error": "Order not found yet. Please retry shortly."
+        }, status=202)  # 202 Accepted (Processing)
+
+    except Exception as e:
+        logger.error(f"Error fetching order for payment intent {payment_intent_id}: {str(e)}", exc_info=True)
+        return JsonResponse({"error": "Internal server error"}, status=500)
 
 
 # -----------------------------

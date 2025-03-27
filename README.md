@@ -32,8 +32,6 @@ museart was developed to provide art lovers with a platform where they can easil
 ## Features
 
 ### User Features
-The following pages are visible to all users, logged in or not.
-
 1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](static/images/landing_page.jpg)
 
 2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart.![Artworks](static/images/products_page.png)
@@ -44,13 +42,38 @@ The following pages are visible to all users, logged in or not.
 
 .This is the standard allauth signup page, with fields for email, username, and password + password confirmation. All fields are required. ![create-account](static/images/create-account.png)
 
-4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](static/images/cart.png)
+4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](static/images/cart1.png)
 
-5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards. ![checkout-order-summary-delivery-info](static/images/checkout.png), 
-![checkout-payment](static/images/paymentinfofield.png),
+5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards. ![checkout-order-summary-delivery-info](static/images/checkout1.png), 
+![checkout-order-summary-delivery-info](static/images/checkout2.png), 
+![checkout-payment](static/images/paymentinfofield1.png),
+----
+6. ### Checkout Success Page: 
+After a successful payment, users are redirected to the Checkout Success page. This page serves as the final confirmation of a completed order and includes a summary of all order details.
 
-6. **Checkout Success Page**:The Checkout Success page shows a Payment Successful message to the user at the top with MuseArt logo, a thank you message and then order summary including the order number and delivery details.![checkout-success](static/images/checkoutSuccess.png).....
-![payment-success-Stripe](static/images/paymentsuccessStripe.png).....
+ **Purpose**
+Provide visual confirmation that the user's order has been successfully placed. Display a detailed summary of the order, including items, prices, and shipping information. Offer post-purchase actions such as printing the order or continuing shopping.
+
+ **Features**
+1. Order confirmation message including the customer's email address. 
+2. Unique order number for reference and support.
+3. Shipping address and contact details.
+4. List of purchased items with quantities and line totals.
+5. Payment summary with subtotal, delivery fee, and total amount paid.
+6. Estimated delivery date.
+7. Option to print the order summary or continue shopping.
+
+**Template**
+This page is rendered using the checkout/templates/checkout/checkout_success.html template. The layout uses Bootstrap for styling with a clean, modern aesthetic.
+
+**Developer Notes**
+The page is served via the checkout_success() view in checkout/views.py. It expects the Order object to be passed in context.
+If the user is authenticated and selected "save info" during checkout, their delivery details are saved to their profile.
+A confirmation email with a PDF invoice is generated and sent after order completion via the send_order_confirmation() helper function.
+![checkout-success](static/images/checkoutSuccess1.png)
+![checkout-success](static/images/checkoutSuccess2.png)
+----
+
 
 
 ## Marketing Strategy for Museart
