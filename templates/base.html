@@ -1,27 +1,39 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   {% block meta %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   {% endblock %}
 
-  {% block extra_meta %}
-  {% endblock %}
+  {% block extra_meta %}{% endblock %}
 
-  <!-- Bootstrap & Core Styles -->
   {% block corecss %}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/base.css' %}?v={{ time }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+    .navbar-dark .navbar-nav .nav-link {
+      color: rgba(255,255,255,0.8);
+    }
+    .navbar-dark .navbar-nav .nav-link:hover {
+      color: #fff;
+    }
+  </style>
   {% endblock %}
 
   {% block corejs %}
@@ -32,10 +44,8 @@
   <script src="https://js.stripe.com/v3/"></script>
   {% endblock %}
 
-  {% block extra_js %}
-  {% endblock %}
+  {% block extra_js %}{% endblock %}
 
-  <!-- Favicon -->
   {% block favicon %}
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
@@ -44,13 +54,9 @@
   {% endblock %}
 
   <title>{% block extra_title %}MuseArt{% endblock %}</title>
-
-  {% block extra_css %}
-  {% endblock %}
+  {% block extra_css %}{% endblock %}
 </head>
-
 <body>
-  <!-- 🔹 Navbar -->
   <header class="container container-fluid mt-1">
     <div class="row pt-lg-3 d-none d-lg-flex align-items-center">
       <div class="col-lg-4 text-center text-lg-left">
@@ -78,9 +84,7 @@
             </a>
             <div class="dropdown-menu">
               {% if request.user.is_authenticated %}
-                {% if request.user.is_superuser %}
-                  <a href="#" class="dropdown-item">Product Management</a>
-                {% endif %}
+                {% if request.user.is_superuser %}<a href="#" class="dropdown-item">Product Management</a>{% endif %}
                 <a href="#" class="dropdown-item">My Profile</a>
                 <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
               {% else %}
@@ -97,7 +101,6 @@
         </ul>
       </div>
     </div>
-
     <nav class="navbar navbar-expand-lg navbar-dark">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav">
         <span class="navbar-toggler-icon"></span>
@@ -107,77 +110,64 @@
     </nav>
   </header>
 
-  <!-- 🔹 Flash Messages -->
   {% if messages %}
   <div class="message-container">
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }} alert-dismissible text-warning show">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}<button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endfor %}
   </div>
   {% endif %}
 
-  <!-- 🔹 Page Content -->
-  {% block page_header %}{% endblock %}
-  {% block content %}{% endblock %}
+  <main>
+    {% block page_header %}{% endblock %}
+    {% block content %}{% endblock %}
+  </main>
 
-  <!-- 🔹 Footer -->
-  <footer class="footer bg-dark text-white">
+  <footer class="footer bg-dark text-white mt-auto py-4">
     <div class="container">
-        <div class="row align-items-center">
-            <!-- 📩 Mailchimp Newsletter Subscription (Left) -->
-            <div class="col-md-6">
-                <h4 class="text-warning font-weight-bold">📩 Subscribe for Offers</h4>
-                <p class="text-info-50">Get the latest updates and exclusive offers directly in your inbox.</p>
-                <form action="https://herokuapp.us8.list-manage.com/subscribe/post?u=530fe238577e7bb318b2183dc&amp;id=26d5ca9611"
-                      method="post" target="_blank" class="d-flex">
-                    <input type="email" name="EMAIL" class="form-control mr-2"
-                           placeholder="Enter your email" required style="max-width: 300px;">
-                    <button type="submit" class="btn btn-warning font-weight-bold">Subscribe</button>
-                </form>
-            </div>
-
-            <!-- 🌍 Social Media & Copyright (Right) -->
-            <div class="col-md-6 text-md-right mt-4 mt-md-0">
-                <p class="font-weight-bold">&copy; 2024 <span class="text-warning">MuseArt</span>. All Rights Reserved.</p>
-                <p class="text-info-50">Stay connected and follow us on social media.</p>
-                <hr class="block-divider border-light">
-                <div class="social-links">
-                    <a href="https://www.youtube.com/channel/UCe8FOuV0fn-nqO_QWrHTRkQ" target="_blank"
-                       class="text-danger h5 mr-4">
-                        <i class="fab fa-youtube"></i> YouTube
-                    </a>
-                    <a href="https://www.facebook.com/YourPage" target="_blank"
-                       class="text-white h5">
-                        <i class="fab fa-facebook"></i> Facebook
-                    </a>
-                </div>
-            </div>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h4 class="text-warning font-weight-bold">Subscribe for Offers</h4>
+          <p class="text-info-50">Get the latest updates and exclusive offers directly in your inbox.</p>
+          <form action="https://herokuapp.us8.list-manage.com/subscribe/post?u=530fe238577e7bb318b2183dc&amp;id=26d5ca9611" method="post" target="_blank" class="d-flex">
+            <input type="email" name="EMAIL" class="form-control mr-2" placeholder="Enter your email" required style="max-width: 300px;">
+            <button type="submit" class="btn btn-warning font-weight-bold">Subscribe</button>
+          </form>
         </div>
+        <div class="col-md-6 text-md-right mt-4 mt-md-0">
+          <p class="font-weight-bold">&copy; 2024 <span class="text-warning">MuseArt</span>. All Rights Reserved.</p>
+          <p class="text-info-50">Stay connected and follow us on social media.</p>
+          <hr class="block-divider border-light">
+          <div class="social-links">
+            <a href="https://www.youtube.com/channel/UCe8FOuV0fn-nqO_QWrHTRkQ" target="_blank" class="text-danger h5 mr-4">
+              <i class="fab fa-youtube"></i> YouTube
+            </a>
+            <a href="https://www.instagram.com/muse.artv1/" target="_blank" rel="noopener noreferrer" class="text-white d-flex align-items-center gap-2">
+              <i class="fab fa-instagram fa-lg"></i><span>Instagram</span>
+            </a>            
+          </div>
+        </div>
+      </div>
     </div>
-</footer>
+  </footer>
 
-
-  <!-- 🔹 Scripts -->
   {% block postloadjs %}
   {{ block.super }}
-
   <script src="{% static 'js/message_dismisser.js' %}"></script>
-  <script src="{% static 'js/toasts.js' %}">$('.toast').toast('show');</script>
+  <script src="{% static 'js/toasts.js' %}"></script>
   <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-
-<script>
+  <script>
     (function($) {
-        window.fnames = new Array(); 
-        window.ftypes = new Array();
-        fnames[0] = 'EMAIL'; ftypes[0] = 'email';
-        fnames[1] = 'FNAME'; ftypes[1] = 'text';
-        fnames[2] = 'LNAME'; ftypes[2] = 'text';
+      window.fnames = new Array(); 
+      window.ftypes = new Array();
+      fnames[0] = 'EMAIL'; ftypes[0] = 'email';
+      fnames[1] = 'FNAME'; ftypes[1] = 'text';
+      fnames[2] = 'LNAME'; ftypes[2] = 'text';
     }(jQuery));
     var $mcj = jQuery.noConflict(true);
-</script>
+  </script>
   {% endblock %}
 </body>
 </html>

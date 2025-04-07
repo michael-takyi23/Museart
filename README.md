@@ -32,9 +32,15 @@ museart was developed to provide art lovers with a platform where they can easil
 ## Features
 
 ### User Features
-1. **Homepage**: museart welcomes users with a beautiful landing page that showcases featured artworks and the latest art pieces.![Landing_page](static/images/landing_page.jpg)
+1. **Home App**: The Museart landing page welcomes users with a beautiful landing page with a visually immersive design that reflects the brand’s artistic identity. It features a bold logo, vibrant colors, and a clear call-to-action encouraging users to explore. Key elements include: A prominent search bar to help users quickly discover artworks. Navigation links for browsing by category or special offers. Account and cart access for a seamless shopping experience. A modern hero section with a “Shop Now” button to drive user engagement.
 
-2. **Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart.![Artworks](static/images/products_page.png)
+This page sets the tone for the rest of the platform — clean, creative, and conversion-focused.![Landing_page](static/images/landing_page.jpg)  
+
+
+2. **Products App**
+Product Listings**: Users can browse and search through various art categories like paintings and sculptures, view detailed product information, and add items to their cart. Detailed product pages with descriptions, pricing, and images, Category-based browsing , Admin integration for managing products
+
+![Artworks](static/images/products_page.png)
 
 3. **User Authentication**: Users can create accounts, log in, and manage their profiles, including their saved addresses and personal information.  
 .This is the standard allauth login page, custom styled.
@@ -42,9 +48,29 @@ museart was developed to provide art lovers with a platform where they can easil
 
 .This is the standard allauth signup page, with fields for email, username, and password + password confirmation. All fields are required. ![create-account](static/images/create-account.png)
 
-4. **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](static/images/cart1.png)
+4. Cart App
+Session-based shopping cart with item persistence
 
-5. **Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards. ![checkout-order-summary-delivery-info](static/images/checkout1.png), 
+Add, update, or remove items from the cart
+
+Automatic cart totals and delivery fee calculation
+
+Live cart preview in the navbar (optional) **Shopping Cart**: The cart feature allows users to add and remove items, view their cart contents, and adjust the quantity of products.![Shopping-cart](static/images/cart1.png)
+
+5. Checkout App
+Secure checkout flow powered by Stripe PaymentIntent
+
+Stripe Payment Element integration for card handling
+
+Order summary, form validation, and payment confirmation
+
+Dynamic order number generation and order history logging
+
+Checkout success page with order breakdown and confirmation email (PDF invoice included)
+
+Webhook support for verifying payment events
+
+**Checkout and Payment**: Secure payment processing is integrated with Stripe, allowing users to make payments using credit cards. ![checkout-order-summary-delivery-info](static/images/checkout1.png), 
 ![checkout-order-summary-delivery-info](static/images/checkout2.png), 
 ![checkout-payment](static/images/paymentinfofield1.png),
 ----
@@ -73,6 +99,17 @@ A confirmation email with a PDF invoice is generated and sent after order comple
 ![checkout-success](static/images/checkoutSuccess1.png)
 ![checkout-success](static/images/checkoutSuccess2.png)
 ----
+
+## Profiles App
+User profile management for authenticated users
+
+Persistent order history with access to past purchases
+
+Option to save default delivery information
+
+Integration with checkout to auto-fill saved details
+
+
 
 
 

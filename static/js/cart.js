@@ -94,4 +94,4 @@ document.addEventListener("DOMContentLoaded", function () {
         return document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
                document.querySelector('meta[name="csrf-token"]')?.content || '';
     }
-});
+}); 

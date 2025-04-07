@@ -21,8 +21,8 @@ from cart.contexts import cart_contents
 
 # Stripe and Logger Setup
 stripe.api_key = settings.STRIPE_SECRET_KEY
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
 
 # -----------------------------
 # POST: Cache Checkout Metadata
@@ -44,6 +44,9 @@ def cache_checkout_data(request):
 # GET/POST: Checkout Page Logic
 # -----------------------------
 def checkout(request):
+    # Initialize Stripe with API key (critical)
+    stripe.api_key = settings.STRIPE_SECRET_KEY  # <-- THIS WAS MISSING
+
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     if not stripe_public_key:
         messages.error(request, "⚠️ Stripe public key is missing. Please contact support.")
@@ -54,11 +57,9 @@ def checkout(request):
         messages.error(request, "Your cart is empty. Please add items before checking out.")
         return redirect('view_cart')
 
-    # Always generate a new order number and intent on each load
     order_number = generate_order_number()
 
     if request.method == 'POST':
-        # ✅ Form submission: validate and save order
         form_data = {field: request.POST.get(field, '') for field in [
             'full_name', 'email', 'phone_number', 'country', 'postcode',
             'town_or_city', 'street_address1', 'street_address2', 'county']}
@@ -69,60 +70,66 @@ def checkout(request):
                 order = order_form.save(commit=False)
                 cart_data = cart_contents(request)
 
-                # ✅ Build a clean cart snapshot
-                cart_snapshot = [
-                    {
-                        'product_id': item['product'].id,
-                        'product_name': item['product'].name,
-                        'quantity': item['quantity'],
-                        'price': float(item['product'].price),
-                        'subtotal': float(item['subtotal']),
-                    }
-                    for item in cart_data['cart_items']
-                ]
-
-                # ✅ Attach payment and cart metadata
+                # Create PaymentIntent if not exists (extra safety)
                 client_secret = request.POST.get('client_secret')
                 if not client_secret or '_secret' not in client_secret:
                     messages.error(request, "Invalid payment session. Please try again.")
                     return redirect('checkout')
 
                 pid = client_secret.split('_secret')[0]
+
+                try:
+                    # Verify the PaymentIntent exists
+                    stripe.PaymentIntent.retrieve(pid)
+                except stripe.error.StripeError as e:
+                    logger.error(f"PaymentIntent verification failed: {str(e)}")
+                    messages.error(request, "Payment session expired. Please try again.")
+                    return redirect('checkout')
+
                 order.payment_intent_id = pid
-                order.original_cart = json.dumps(cart_snapshot)
+                order.original_cart = json.dumps([{
+                    'product_id': item['product'].id,
+                    'product_name': item['product'].name,
+                    'quantity': item['quantity'],
+                    'price': float(item['product'].price),
+                    'subtotal': float(item['subtotal']),
+                } for item in cart_data['cart_items']])
                 order.order_total = cart_data['total']
                 order.delivery_cost = cart_data['delivery']
                 order.grand_total = cart_data['grand_total']
                 order.order_number = order_number
                 order.save()
 
-                # ✅ Save each line item
                 for item_id, item_data in cart.items():
                     try:
                         product = Product.objects.get(id=item_id)
                         quantity = item_data['quantity'] if isinstance(item_data, dict) else item_data
-                        OrderLineItem.objects.create(order=order, product=product, quantity=quantity)
+                        OrderLineItem.objects.create(
+                            order=order,
+                            product=product,
+                            quantity=quantity
+                        )
                     except Product.DoesNotExist:
-                        messages.error(request, "A product in your cart was not found.")
+                        logger.error(f"Product {item_id} not found")
                         order.delete()
+                        messages.error(request, "A product in your cart was not found.")
                         return redirect('view_cart')
 
                 request.session['save_info'] = 'save-info' in request.POST
                 return redirect(reverse('checkout:checkout_success', args=[order.order_number]))
 
+            except stripe.error.StripeError as e:
+                logger.exception("Stripe error during checkout")
+                messages.error(request, f"Payment processing error: {str(e)}")
             except Exception as e:
-                logger.exception("Checkout POST error")
-                messages.error(request, f"Something went wrong while processing your order. Error: {e}")
-                return redirect('checkout')
+                logger.exception("General checkout error")
+                messages.error(request, "Something went wrong while processing your order.")
+            return redirect('checkout')
 
-        else:
-            messages.error(request, "There was an error in your form. Please double-check your details.")
-
-    else:
-        # ✅ GET request: prepare checkout form and new PaymentIntent
+    else:  # GET request
         try:
             cart_data = cart_contents(request)
-            stripe_total = round(cart_data['grand_total'] * 100)  # cents
+            stripe_total = round(cart_data['grand_total'] * 100)
 
             intent = stripe.PaymentIntent.create(
                 amount=stripe_total,
@@ -133,15 +140,15 @@ def checkout(request):
                 }
             )
         except stripe.error.StripeError as e:
-            logger.exception("Stripe PaymentIntent creation failed")
-            messages.error(request, f"⚠️ Stripe error: {str(e)}")
+            logger.error(f"Stripe PaymentIntent creation failed: {str(e)}")
+            messages.error(request, "Payment system unavailable. Please try again later.")
             return redirect('view_cart')
 
-        # ✅ Pre-fill delivery form for authenticated users
+        # Pre-fill form for authenticated users
         if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
-                initial = {
+                order_form = OrderForm(initial={
                     'full_name': profile.user.get_full_name(),
                     'email': profile.user.email,
                     'phone_number': profile.default_phone_number,
@@ -151,14 +158,12 @@ def checkout(request):
                     'street_address1': profile.default_street_address1,
                     'street_address2': profile.default_street_address2,
                     'county': profile.default_county,
-                }
-                order_form = OrderForm(initial=initial)
+                })
             except UserProfile.DoesNotExist:
                 order_form = OrderForm()
         else:
             order_form = OrderForm()
 
-    # ✅ Render checkout page
     return render(request, 'checkout/checkout.html', {
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
